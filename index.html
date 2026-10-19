@@ -1,222 +1,636 @@
-##<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Aviation Atlas | Aircraft Spotting, Fleet Data & History</title>
-  <meta name="description" content="The definitive discovery platform for aircraft spotters, aviation enthusiasts, and flight historians.">
-  <link rel="stylesheet" href="styles.css">
+  <title>The Aviation Atlas | Tactical Aviation Dashboard & Fleet Registry</title>
+  <meta name="description" content="High-tech aviation intelligence dashboard featuring live radar simulations, tactical fleet specs, airport telemetry, and spotter archives.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --bg-card: #0b1120;
+      --bg-card-hover: #121b30;
+      --border-hud: #1a2942;
+      --border-active: #00f0ff;
+      --radar-cyan: #00f0ff;
+      --radar-green: #00ff66;
+      --radar-amber: #ffb700;
+      --text-main: #e2e8f0;
+      --text-dim: #94a3b8;
+      --text-muted: #475569;
+      --font-hud: 'Chakra Petch', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.05) 0%, transparent 70%),
+        linear-gradient(rgba(26, 41, 66, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26, 41, 66, 0.1) 1px, transparent 1px);
+      background-size: 100% 100%, 40px 40px, 40px 40px;
+    }
+
+    /* Top Bar Telemetry Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(5, 8, 17, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-hud);
+    }
+
+    .top-bar {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-hud);
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+      color: #fff;
+    }
+
+    .brand-badge {
+      background: var(--radar-cyan);
+      color: var(--bg-dark);
+      font-size: 0.7rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-family: var(--font-hud);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--radar-cyan);
+    }
+
+    .zulu-clock {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--radar-green);
+      background: rgba(0, 255, 102, 0.08);
+      border: 1px solid rgba(0, 255, 102, 0.2);
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    /* Hero Radar Section */
+    .hero-section {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2rem;
+    }
+
+    @media (max-width: 992px) {
+      .hero-section { grid-template-columns: 1fr; }
+    }
+
+    .radar-display-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hud);
+      border-radius: 8px;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hud-title {
+      font-family: var(--font-hud);
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      color: var(--radar-cyan);
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .radar-canvas-wrap {
+      width: 100%;
+      height: 380px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, rgba(5, 8, 17, 0.9) 70%);
+      border: 1px solid rgba(0, 240, 255, 0.15);
+      border-radius: 50%;
+      margin: 0 auto;
+      max-width: 380px;
+    }
+
+    .radar-sweep {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, rgba(0, 240, 255, 0.4) 0deg, transparent 60deg, transparent 360deg);
+      animation: radarScan 4s linear infinite;
+    }
+
+    @keyframes radarScan {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .radar-ring {
+      position: absolute;
+      border: 1px dashed rgba(0, 240, 255, 0.2);
+      border-radius: 50%;
+    }
+    .ring-1 { width: 33%; height: 33%; }
+    .ring-2 { width: 66%; height: 66%; }
+    .ring-3 { width: 100%; height: 100%; }
+
+    .radar-target {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--radar-green);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--radar-green);
+      cursor: pointer;
+    }
+    .radar-target::after {
+      content: attr(data-callsign);
+      position: absolute;
+      left: 14px;
+      top: -4px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--radar-green);
+      white-space: nowrap;
+    }
+
+    .target-1 { top: 30%; left: 65%; }
+    .target-2 { top: 70%; left: 25%; }
+    .target-3 { top: 45%; left: 40%; }
+
+    .telemetry-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hud);
+      border-radius: 8px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .telemetry-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+
+    .telemetry-label { color: var(--text-dim); }
+    .telemetry-value { color: var(--radar-cyan); font-weight: 700; }
+
+    /* Controls & Fleet Registry */
+    .main-content {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-header {
+      border-left: 3px solid var(--radar-cyan);
+      padding-left: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-header h2 {
+      font-family: var(--font-hud);
+      text-transform: uppercase;
+      font-size: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 280px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-hud);
+      color: #fff;
+      padding: 0.75rem 1rem;
+      font-family: var(--font-mono);
+      border-radius: 4px;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--radar-cyan);
+    }
+
+    .btn-filter {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hud);
+      color: var(--text-dim);
+      padding: 0.75rem 1.25rem;
+      font-family: var(--font-hud);
+      font-weight: 600;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn-filter.active, .btn-filter:hover {
+      background: var(--radar-cyan);
+      color: var(--bg-dark);
+      border-color: var(--radar-cyan);
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .aircraft-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hud);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .aircraft-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--radar-cyan);
+    }
+
+    .card-img-wrap {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .aircraft-card:hover .card-img-wrap img {
+      opacity: 1;
+    }
+
+    .card-tag {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: rgba(5, 8, 17, 0.85);
+      border: 1px solid var(--border-hud);
+      color: var(--radar-cyan);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+    }
+
+    .card-body {
+      padding: 1.25rem;
+    }
+
+    .card-body h3 {
+      font-family: var(--font-hud);
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-body p {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.75rem;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+
+    .spec-item span { color: var(--text-muted); display: block; }
+    .spec-item strong { color: var(--radar-amber); }
+
+    /* Interactive Quiz Section */
+    .quiz-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hud);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 3rem 0;
+    }
+
+    .quiz-option {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-hud);
+      padding: 0.85rem 1.25rem;
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .quiz-option:hover {
+      background: rgba(0, 240, 255, 0.1);
+      border-color: var(--radar-cyan);
+    }
+
+    /* Footer */
+    footer {
+      background: #020408;
+      border-top: 1px solid var(--border-hud);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Top Navigation & Telemetry Header -->
   <header>
-    <div class="nav-container">
-      <a href="index.html" class="logo">The Aviation <span>Atlas</span></a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">☰</button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="aircraft.html">Aircraft</a></li>
-        <li><a href="airports.html">Airports</a></li>
-        <li><a href="knowledge.html">Knowledge</a></li>
-        <li><a href="history.html">History</a></li>
-        <li><a href="games.html">Games</a></li>
+    <div class="top-bar">
+      <div class="brand">
+        THE AVIATION ATLAS <span class="brand-badge">HUD v2.4</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#radar" class="active">Radar HUD</a></li>
+        <li><a href="#fleet">Fleet Registry</a></li>
+        <li><a href="#airports">Airports</a></li>
+        <li><a href="#quiz">Academy Quiz</a></li>
       </ul>
+      <div class="zulu-clock" id="zuluClock">UTC 00:00:00Z</div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero" style="background: linear-gradient(180deg, rgba(7, 10, 18, 0.4) 0%, rgba(7, 10, 18, 0.95) 100%), url('https://images.unsplash.com/photo-1519074069444-1ba4ea16d68c?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;">
-    <div class="hero-content">
-      <div class="hero-text-block">
-        <span class="section-label">Aviation Enthusiast Portal</span>
-        <h1>Your World of <em>Flight</em> &amp; Aircraft</h1>
-        <p>Explore detailed aircraft registries, legendary airport hubs, flight mechanics, and the history of commercial and military aviation.</p>
-        <div class="hero-actions">
-          <a href="aircraft.html" class="btn-primary">Browse Aircraft</a>
-          <a href="airports.html" class="btn-secondary">Explore Airports</a>
-        </div>
+  <!-- Hero Section with Animated Radar and Live Telemetry -->
+  <section class="hero-section" id="radar">
+    <div class="radar-display-container">
+      <div class="hud-title">
+        <span>PRIMARY RADAR SIMULATION // SECTOR 04</span>
+        <span style="color: var(--radar-green);">● LIVE FEED</span>
       </div>
+      <div class="radar-canvas-wrap">
+        <div class="radar-sweep"></div>
+        <div class="radar-ring ring-1"></div>
+        <div class="radar-ring ring-2"></div>
+        <div class="radar-ring ring-3"></div>
+        
+        <!-- Interactive Radar Targets -->
+        <div class="radar-target target-1" data-callsign="BAW117 [B744]" onclick="inspectTarget('BAW117', 'Boeing 747-400', '34,000 FT', '480 KTS')"></div>
+        <div class="radar-target target-2" data-callsign="UAE201 [A388]" onclick="inspectTarget('UAE201', 'Airbus A380-800', '38,000 FT', '510 KTS')"></div>
+        <div class="radar-target target-3" data-callsign="AFR001 [CONC]" onclick="inspectTarget('AFR001', 'Concorde', '58,000 FT', '1,120 KTS')"></div>
+      </div>
+    </div>
+
+    <div class="telemetry-panel">
+      <div class="hud-title">SELECTED TARGET TELEMETRY</div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">CALLSIGN</span>
+        <span class="telemetry-value" id="tCallsign">BAW117</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">AIRCRAFT TYPE</span>
+        <span class="telemetry-value" id="tType">Boeing 747-400</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">ALTITUDE</span>
+        <span class="telemetry-value" id="tAlt">34,000 FT</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">GROUND SPEED</span>
+        <span class="telemetry-value" id="tSpeed">480 KTS</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">TRANSPONDER SQUAWK</span>
+        <span class="telemetry-value" style="color: var(--radar-amber);">4721 (ALT)</span>
+      </div>
+      <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: auto; font-family: var(--font-mono);">
+        * Click radar targets on the left display to lock target telemetry.
+      </p>
     </div>
   </section>
 
-  <!-- Featured Aircraft Section -->
-  <section class="section">
-    <div class="section-container">
-      <div class="section-header">
-        <div>
-          <span class="section-label">Fleet Database</span>
-          <h2 class="section-title">Legendary Airframes</h2>
-        </div>
-        <a href="aircraft.html" class="btn-secondary">Full Catalogue</a>
-      </div>
-
-      <div class="grid-3">
-        <!-- Aircraft Card 1 -->
-        <article class="card">
-          <div class="card-image-wrap">
-            <span class="card-tag">Widebody</span>
-            <img src="https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=800&q=80" alt="Boeing 747 in flight" loading="lazy">
-          </div>
-          <div class="card-body">
-            <h3>Boeing 747-400</h3>
-            <p>The undisputed Queen of the Skies. Four engines, iconic upper deck, and the aircraft that democratized long-haul global travel.</p>
-            <div class="card-specs">
-              <span>Type: <strong>Airliner</strong></span>
-              <span>Engines: <strong>4x Turbofan</strong></span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Aircraft Card 2 -->
-        <article class="card">
-          <div class="card-image-wrap">
-            <span class="card-tag">Superjumbo</span>
-            <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80" alt="Commercial airliner taking off" loading="lazy">
-          </div>
-          <div class="card-body">
-            <h3>Airbus A380-800</h3>
-            <p>A masterpiece of modern aerospace engineering featuring a full-length double deck capable of carrying over 500 passengers in quiet comfort.</p>
-            <div class="card-specs">
-              <span>Type: <strong>Widebody</strong></span>
-              <span>Span: <strong>79.75 m</strong></span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Aircraft Card 3 -->
-        <article class="card">
-          <div class="card-image-wrap">
-            <span class="card-tag">Supersonic</span>
-            <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=800&q=80" alt="Concorde supersonic jet" loading="lazy">
-          </div>
-          <div class="card-body">
-            <h3>Concorde</h3>
-            <p>Cruising at Mach 2.04 at 60,000 feet, this Anglo-French marvel cut transatlantic crossing times down to under three hours.</p>
-            <div class="card-specs">
-              <span>Speed: <strong>Mach 2.04</strong></span>
-              <span>Status: <strong>Retired</strong></span>
-            </div>
-          </div>
-        </article>
-      </div>
+  <!-- Fleet Registry Section -->
+  <main class="main-content" id="fleet">
+    <div class="section-header">
+      <h2>AIRCRAFT FLEET REGISTRY</h2>
+      <p style="color: var(--text-dim); font-size: 0.9rem;">Searchable database of commercial airliners, military jets, and historic airframes.</p>
     </div>
-  </section>
 
-  <!-- Aviation History Timeline Preview -->
-  <section class="section" style="background-color: var(--bg-surface);">
-    <div class="section-container">
-      <div class="section-header" style="text-align: center; display: block; margin-bottom: 4rem;">
-        <span class="section-label">Milestones</span>
-        <h2 class="section-title">The Evolution of Flight</h2>
-        <p class="section-desc" style="margin: 0 auto;">From wooden gliders at Kitty Hawk to modern high-bypass turbofans.</p>
-      </div>
-
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-year">1903</div>
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <h3>First Powered Flight</h3>
-            <p>The Wright brothers successfully pilot the Wright Flyer at Kitty Hawk, changing human mobility forever.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year">1952</div>
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <h3>The Jet Age</h3>
-            <p>de Havilland Comet introduces scheduled jet service, shrinking the globe and ushering in modern commercial aviation.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year">1969</div>
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <h3>Widebodies &amp; Supersonic</h3>
-            <p>The Boeing 747 takes its maiden flight alongside the supersonic Concorde, defining the pinnacle of aircraft engineering.</p>
-          </div>
-        </div>
-      </div>
-
-      <div style="text-align: center; margin-top: 3rem;">
-        <a href="history.html" class="btn-secondary">View Full Timeline</a>
-      </div>
+    <!-- Dynamic Filters -->
+    <div class="filter-bar">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search by name, manufacturer, or role..." onkeyup="filterFleet()">
+      <button class="btn-filter active" onclick="setFilter('all', this)">ALL</button>
+      <button class="btn-filter" onclick="setFilter('commercial', this)">COMMERCIAL</button>
+      <button class="btn-filter" onclick="setFilter('military', this)">MILITARY</button>
+      <button class="btn-filter" onclick="setFilter('historic', this)">HISTORIC</button>
     </div>
-  </section>
 
-  <!-- Newsletter Section -->
-  <section class="section">
-    <div class="section-container">
-      <div class="newsletter-card">
-        <span class="section-label">Flight Dispatch</span>
-        <h2 class="section-title">Join the Aviation Community</h2>
-        <p class="section-desc" style="margin: 0 auto;">Get new aircraft profiles, spotter guides, and historical deep dives delivered straight to your inbox.</p>
-        <form class="newsletter-form" id="newsletterForm" onsubmit="handleNewsletterSubmit(event)">
-          <input type="email" id="emailInput" placeholder="Enter your email address" required aria-label="Email address">
-          <button type="submit" class="btn-primary">Sign Up</button>
-        </form>
-        <p id="newsletterMessage" style="margin-top: 1rem; font-size: 0.85rem; color: var(--accent-gold); display: none;"></p>
+    <!-- Aircraft Cards Grid -->
+    <div class="grid-cards" id="fleetGrid">
+      
+      <!-- Boeing 747 -->
+      <div class="aircraft-card" data-category="commercial" data-search="boeing 747 widebody airliner airliner">
+        <div class="card-img-wrap">
+          <span class="card-tag">COMMERCIAL</span>
+          <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=600&q=80" alt="Boeing 747">
+        </div>
+        <div class="card-body">
+          <h3>Boeing 747-400</h3>
+          <p>The Queen of the Skies. Pioneered long-haul passenger flight with its distinctive partial upper deck.</p>
+          <div class="card-specs-grid">
+            <div class="spec-item"><span>RANGE</span><strong>13,450 KM</strong></div>
+            <div class="spec-item"><span>CRUISE</span><strong>MACH 0.85</strong></div>
+          </div>
+        </div>
       </div>
+
+      <!-- Airbus A380 -->
+      <div class="aircraft-card" data-category="commercial" data-search="airbus a380 double decker widebody">
+        <div class="card-img-wrap">
+          <span class="card-tag">SUPERJUMBO</span>
+          <img src="https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=600&q=80" alt="Airbus A380">
+        </div>
+        <div class="card-body">
+          <h3>Airbus A380-800</h3>
+          <p>The world's largest passenger aircraft, constructed with a full double deck for high-capacity hubs.</p>
+          <div class="card-specs-grid">
+            <div class="spec-item"><span>CAPACITY</span><strong>525 PAX</strong></div>
+            <div class="spec-item"><span>WINGSPAN</span><strong>79.75 M</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concorde -->
+      <div class="aircraft-card" data-category="historic" data-search="concorde supersonic bac sud aviation">
+        <div class="card-img-wrap">
+          <span class="card-tag">SUPERSONIC</span>
+          <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=600&q=80" alt="Concorde">
+        </div>
+        <div class="card-body">
+          <h3>BAC / Sud Concorde</h3>
+          <p>Supersonic passenger aircraft cruising at Mach 2.04 at 60,000 ft, flying London to NY in 3.5 hours.</p>
+          <div class="card-specs-grid">
+            <div class="spec-item"><span>MAX SPEED</span><strong>MACH 2.04</strong></div>
+            <div class="spec-item"><span>SERVICE CEILING</span><strong>60,000 FT</strong></div>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </section>
+
+    <!-- Interactive Spotter Quiz Section -->
+    <div class="quiz-container" id="quiz">
+      <div class="hud-title" style="margin-bottom: 0.5rem;">SPOTTER ACADEMY // EVALUATION MODULE</div>
+      <h3 style="font-family: var(--font-hud); font-size: 1.25rem; margin-bottom: 1rem;" id="quizQuestion">
+        Question 1: What is the international ICAO code for London Heathrow Airport?
+      </h3>
+
+      <div id="quizOptions">
+        <div class="quiz-option" onclick="checkAnswer(false)">A) EGLG</div>
+        <div class="quiz-option" onclick="checkAnswer(true)">B) EGLL</div>
+        <div class="quiz-option" onclick="checkAnswer(false)">C) LHR</div>
+        <div class="quiz-option" onclick="checkAnswer(false)">D) KJFK</div>
+      </div>
+      
+      <p id="quizFeedback" style="margin-top: 1rem; font-family: var(--font-mono); font-size: 0.85rem; color: var(--radar-green); display: none;"></p>
+    </div>
+  </main>
 
   <!-- Footer -->
   <footer>
-    <div class="footer-container">
-      <div class="footer-brand">
-        <a href="index.html" class="logo">The Aviation <span>Atlas</span></a>
-        <p>A digital publication and knowledge hub built for aircraft spotters, aviation students, and flight enthusiasts.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Explore</h4>
-        <ul>
-          <li><a href="aircraft.html">Aircraft Catalogue</a></li>
-          <li><a href="airports.html">Global Airports</a></li>
-          <li><a href="history.html">History Archive</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Academy</h4>
-        <ul>
-          <li><a href="knowledge.html">Flight Principles</a></li>
-          <li><a href="games.html">Spotter Quizzes</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Project</h4>
-        <ul>
-          <li><a href="https://github.com/alfiemayattwright1-glitch/the-aviation-atlas/" target="_blank" rel="noopener">GitHub Repository</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 The Aviation Atlas. All rights reserved.</p>
-      <p>Photography via Unsplash.</p>
-    </div>
+    <p>THE AVIATION ATLAS // TACTICAL FLIGHT KNOWLEDGE &amp; SPOTTER ARCHIVE</p>
+    <p style="margin-top: 0.5rem; color: var(--text-muted);">ALL TELEMETRY SIMULATED FOR DEMONSTRATION PURPOSES</p>
   </footer>
 
+  <!-- Dashboard JavaScript -->
   <script>
-    // Mobile navigation menu toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
+    // Live Zulu/UTC Clock Script
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getUTCHours()).padStart(2, '0');
+      const m = String(now.getUTCMinutes()).padStart(2, '0');
+      const s = String(now.getUTCSeconds()).padStart(2, '0');
+      document.getElementById('zuluClock').textContent = `UTC ${h}:${m}:${s}Z`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
 
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('nav-open');
-    });
+    // Radar Target Telemetry Locking
+    function inspectTarget(callsign, type, alt, speed) {
+      document.getElementById('tCallsign').textContent = callsign;
+      document.getElementById('tType').textContent = type;
+      document.getElementById('tAlt').textContent = alt;
+      document.getElementById('tSpeed').textContent = speed;
+    }
 
-    // Handle newsletter preview action
-    function handleNewsletterSubmit(e) {
-      e.preventDefault();
-      const email = document.getElementById('emailInput').value;
-      const msg = document.getElementById('newsletterMessage');
-      if (email) {
-        msg.textContent = 'Thank you for subscribing, ' + email + '!';
-        msg.style.display = 'block';
-        document.getElementById('emailInput').value = '';
+    // Fleet Filtering System
+    let currentCategory = 'all';
+
+    function setFilter(category, btn) {
+      currentCategory = category;
+      document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterFleet();
+    }
+
+    function filterFleet() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.aircraft-card');
+
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category');
+        const text = card.getAttribute('data-search').toLowerCase();
+
+        const matchCat = (currentCategory === 'all' || cat === currentCategory);
+        const matchSearch = text.includes(search);
+
+        if (matchCat && matchSearch) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Simple Interactive Quiz System
+    function checkAnswer(isCorrect) {
+      const feedback = document.getElementById('quizFeedback');
+      if (isCorrect) {
+        feedback.textContent = "✓ CORRECT SQUAWK: EGLL is the ICAO code for London Heathrow (LHR is the IATA code).";
+        feedback.style.color = "var(--radar-green)";
+      } else {
+        feedback.textContent = "✗ INCORRECT SQUAWK: Try again! EGLL is the correct 4-letter ICAO designation.";
+        feedback.style.color = "var(--radar-amber)";
       }
+      feedback.style.display = "block";
     }
   </script>
 </body>
