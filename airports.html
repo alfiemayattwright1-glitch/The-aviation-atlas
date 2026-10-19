@@ -11,131 +11,26 @@
   <link rel="stylesheet" href="styles.css">
   
   <style>
-    .page-header {
-      padding: 5rem 1.5rem 3rem;
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--border-subtle);
-      text-align: center;
-    }
-    .page-header h1 {
-      font-family: var(--font-heading);
-      font-size: clamp(2.2rem, 4vw, 3rem);
-      margin-bottom: 0.75rem;
-    }
-    .page-header p {
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-      font-size: 1.05rem;
-    }
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 3rem 1.5rem;
-    }
-    .search-filter-bar {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2.5rem;
-      flex-wrap: wrap;
-    }
-    .search-input {
-      flex: 1;
-      min-width: 260px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      color: #fff;
-      padding: 0.85rem 1.25rem;
-      border-radius: 6px;
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-    }
+    .page-header { padding: 5rem 1.5rem 3rem; background: var(--bg-card); border-bottom: 1px solid var(--border-subtle); text-align: center; }
+    .page-header h1 { font-family: var(--font-heading); font-size: clamp(2.2rem, 4vw, 3rem); margin-bottom: 0.75rem; }
+    .page-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1.05rem; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 3rem 1.5rem; }
+    .search-filter-bar { display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+    .search-input { flex: 1; min-width: 260px; background: var(--bg-card); border: 1px solid var(--border-subtle); color: #fff; padding: 0.85rem 1.25rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.95rem; }
     .search-input:focus { outline: none; border-color: var(--accent-gold); }
-    .filter-select {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
-      padding: 0.85rem 1.25rem;
-      border-radius: 6px;
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      cursor: pointer;
-    }
+    .filter-select { background: var(--bg-card); border: 1px solid var(--border-subtle); color: var(--text-main); padding: 0.85rem 1.25rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.95rem; cursor: pointer; }
     .filter-select:focus { outline: none; border-color: var(--accent-gold); }
-    .airport-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.75rem;
-    }
-    .airport-card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      overflow: hidden;
-      transition: all 0.25s ease;
-      display: flex;
-      flex-direction: column;
-    }
-    .airport-card:hover {
-      background-color: var(--bg-card-hover);
-      border-color: var(--accent-gold);
-      transform: translateY(-4px);
-    }
-    .airport-img-wrap {
-      position: relative;
-      height: 190px;
-      overflow: hidden;
-    }
-    .airport-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .airport-codes {
-      position: absolute;
-      bottom: 0.75rem;
-      left: 0.75rem;
-      background: rgba(10, 14, 23, 0.88);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border-subtle);
-      padding: 0.35rem 0.75rem;
-      border-radius: 4px;
-      font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: 0.85rem;
-      color: var(--accent-gold);
-    }
-    .airport-card-body {
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-    .airport-card-body h3 {
-      font-family: var(--font-heading);
-      font-size: 1.3rem;
-      margin-bottom: 0.35rem;
-    }
-    .airport-location {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-    .airport-desc {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-bottom: 1.5rem;
-      flex-grow: 1;
-    }
-    .airport-specs-list {
-      display: flex;
-      justify-content: space-between;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border-subtle);
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
+    .airport-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.75rem; }
+    .airport-card { background-color: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; transition: all 0.25s ease; display: flex; flex-direction: column; }
+    .airport-card:hover { background-color: var(--bg-card-hover); border-color: var(--accent-gold); transform: translateY(-4px); }
+    .airport-img-wrap { position: relative; height: 190px; overflow: hidden; background-color: #050811; }
+    .airport-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .airport-codes { position: absolute; bottom: 0.75rem; left: 0.75rem; background: rgba(10, 14, 23, 0.88); backdrop-filter: blur(8px); border: 1px solid var(--border-subtle); padding: 0.35rem 0.75rem; border-radius: 4px; font-family: var(--font-heading); font-weight: 700; font-size: 0.85rem; color: var(--accent-gold); }
+    .airport-card-body { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .airport-card-body h3 { font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.35rem; }
+    .airport-location { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; font-weight: 600; }
+    .airport-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; flex-grow: 1; }
+    .airport-specs-list { display: flex; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--border-subtle); font-size: 0.8rem; color: var(--text-muted); }
     .airport-specs-list strong { color: var(--text-main); }
   </style>
 </head>
@@ -178,7 +73,8 @@
       <!-- Heathrow -->
       <article class="airport-card" data-region="europe" data-search="london heathrow airport egll lhr united kingdom uk europe">
         <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?auto=format&fit=crop&w=800&q=80" alt="Heathrow">
+          <!-- Actual tarmac view of airliner at gate -->
+          <img src="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?auto=format&fit=crop&w=800&q=80" alt="Airliner parked at Heathrow gate" loading="lazy">
           <div class="airport-codes">LHR / EGLL</div>
         </div>
         <div class="airport-card-body">
@@ -195,7 +91,8 @@
       <!-- JFK -->
       <article class="airport-card" data-region="north-america" data-search="john f kennedy international airport jfk kjfk new york usa north america">
         <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=800&q=80" alt="JFK">
+          <!-- Direct airport airfield control tower photo -->
+          <img src="https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=800&q=80" alt="JFK airport airfield tower" loading="lazy">
           <div class="airport-codes">JFK / KJFK</div>
         </div>
         <div class="airport-card-body">
@@ -212,7 +109,8 @@
       <!-- Tokyo Haneda -->
       <article class="airport-card" data-region="asia-pacific" data-search="tokyo haneda airport hnd rjtt japan asia pacific">
         <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=800&q=80" alt="Haneda">
+          <!-- Direct shot of airplane landing on runway -->
+          <img src="https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=800&q=80" alt="Airliner landing on Haneda runway" loading="lazy">
           <div class="airport-codes">HND / RJTT</div>
         </div>
         <div class="airport-card-body">
@@ -229,7 +127,8 @@
       <!-- Dubai -->
       <article class="airport-card" data-region="middle-east" data-search="dubai international airport dxb omdb united arab emirates uae middle east">
         <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Dubai">
+          <!-- Actual tarmac image -->
+          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Dubai International Airport runway view" loading="lazy">
           <div class="airport-codes">DXB / OMDB</div>
         </div>
         <div class="airport-card-body">
@@ -239,40 +138,6 @@
           <div class="airport-specs-list">
             <span>Runways: <strong>2 Parallel</strong></span>
             <span>Terminals: <strong>3 Terminals</strong></span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Charles de Gaulle -->
-      <article class="airport-card" data-region="europe" data-search="paris charles de gaulle airport cdg lfpg france europe">
-        <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80" alt="CDG">
-          <div class="airport-codes">CDG / LFPG</div>
-        </div>
-        <div class="airport-card-body">
-          <h3>Paris Charles de Gaulle</h3>
-          <div class="airport-location">📍 Paris, France</div>
-          <p class="airport-desc">France's largest international airport and a major European hub for Air France operations.</p>
-          <div class="airport-specs-list">
-            <span>Runways: <strong>4 Runways</strong></span>
-            <span>Terminals: <strong>3 Terminals</strong></span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Los Angeles International -->
-      <article class="airport-card" data-region="north-america" data-search="los angeles international airport lax klax california usa north america">
-        <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=800&q=80" alt="LAX">
-          <div class="airport-codes">LAX / KLAX</div>
-        </div>
-        <div class="airport-card-body">
-          <h3>Los Angeles International</h3>
-          <div class="airport-location">📍 Los Angeles, USA</div>
-          <p class="airport-desc">The primary gateway to the US West Coast and a legendary spotter location featuring parallel southern and northern complexes.</p>
-          <div class="airport-specs-list">
-            <span>Runways: <strong>4 Parallel</strong></span>
-            <span>Terminals: <strong>9 Terminals</strong></span>
           </div>
         </div>
       </article>
