@@ -1,0 +1,630 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore aviation science, aircraft technology, navigation, weather and airport operations with The Aviation Atlas.">
+  <title>Aviation Knowledge | The Aviation Atlas</title>
+  <style>
+    :root {
+      --navy: #071426;
+      --navy-light: #10243e;
+      --gold: #e8b84a;
+      --white: #f4f7fb;
+      --muted: #aebbd0;
+      --panel: #102039;
+      --border: #263b57;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--navy);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.65;
+    }
+
+    header {
+      padding: 30px 18px;
+      text-align: center;
+      background: linear-gradient(135deg, #102b4a, #071426);
+      border-bottom: 2px solid var(--gold);
+    }
+
+    .brand {
+      color: var(--gold);
+      font-size: clamp(27px, 5vw, 42px);
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin: 0;
+    }
+
+    .tagline {
+      margin: 4px 0 0;
+      color: var(--muted);
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 13px;
+      background: #0b1b30;
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--gold);
+      background: var(--navy-light);
+    }
+
+    main {
+      max-width: 1150px;
+      margin: auto;
+      padding: 28px 18px 50px;
+    }
+
+    .intro {
+      text-align: center;
+      margin: 5px auto 28px;
+      max-width: 760px;
+    }
+
+    h2, h3 { line-height: 1.3; }
+
+    .intro h2 {
+      color: var(--gold);
+      font-size: clamp(25px, 4vw, 34px);
+      margin-bottom: 8px;
+    }
+
+    .intro p { color: var(--muted); }
+
+    .search-wrap {
+      max-width: 650px;
+      margin: 22px auto 12px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #0b1b30;
+      color: var(--white);
+      font-size: 16px;
+    }
+
+    input:focus, select:focus {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 24px;
+    }
+
+    .filter {
+      cursor: pointer;
+      color: var(--white);
+      background: var(--navy-light);
+      border: 1px solid var(--border);
+      padding: 9px 13px;
+      border-radius: 20px;
+    }
+
+    .filter:hover, .filter.selected {
+      color: var(--navy);
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .results-count {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      gap: 17px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 21px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: var(--gold);
+    }
+
+    .icon {
+      font-size: 30px;
+      margin-bottom: 5px;
+    }
+
+    .category {
+      color: var(--gold);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      font-weight: bold;
+    }
+
+    .card h3 {
+      font-size: 19px;
+      margin: 7px 0;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .read-btn {
+      margin-top: 8px;
+      padding: 10px 14px;
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      color: var(--gold);
+      background: transparent;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .read-btn:hover {
+      color: var(--navy);
+      background: var(--gold);
+    }
+
+    .empty {
+      display: none;
+      text-align: center;
+      color: var(--muted);
+      padding: 30px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      padding: 20px;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.82);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-content {
+      position: relative;
+      width: 100%;
+      max-width: 720px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 28px;
+      background: var(--panel);
+      border: 1px solid var(--gold);
+      border-radius: 12px;
+    }
+
+    .modal-content h2 { color: var(--gold); }
+
+    .modal-content p, .modal-content li {
+      color: var(--muted);
+    }
+
+    .close {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      background: transparent;
+      border: none;
+      color: var(--white);
+      font-size: 29px;
+      cursor: pointer;
+    }
+
+    .fact {
+      margin-top: 20px;
+      padding: 14px;
+      background: #09172a;
+      border-left: 3px solid var(--gold);
+      border-radius: 5px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 15px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    footer strong { color: var(--gold); }
+
+    @media (max-width: 500px) {
+      nav { gap: 2px; }
+      nav a { padding: 8px; font-size: 12px; }
+      .modal-content { padding: 24px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1 class="brand">THE AVIATION ATLAS</h1>
+  <p class="tagline">Your World of Aviation</p>
+</header>
+
+<nav aria-label="Main navigation">
+  <a href="index.html">Home</a>
+  <a href="aircraft.html">Aircraft</a>
+  <a href="airports.html">Airports</a>
+  <a href="knowledge.html" class="active">Knowledge</a>
+  <a href="history.html">History</a>
+  <a href="games.html">Games</a>
+</nav>
+
+<main>
+  <section class="intro">
+    <h2>The Aviation Knowledge Centre</h2>
+    <p>
+      Discover the science, technology and systems that make aviation possible.
+      From the forces that keep an aircraft airborne to the people who manage
+      the skies, explore the world of flight one topic at a time.
+    </p>
+
+    <div class="search-wrap">
+      <input id="search" type="search"
+        placeholder="Search aviation topics..."
+        aria-label="Search aviation topics">
+    </div>
+  </section>
+
+  <div class="filters" aria-label="Filter topics by category">
+    <button class="filter selected" data-category="all">All Topics</button>
+    <button class="filter" data-category="flight">Flight Science</button>
+    <button class="filter" data-category="engines">Engines</button>
+    <button class="filter" data-category="systems">Systems</button>
+    <button class="filter" data-category="operations">Operations</button>
+  </div>
+
+  <p class="results-count" id="count" aria-live="polite"></p>
+  <section class="grid" id="topics" aria-label="Aviation knowledge topics"></section>
+  <p class="empty" id="empty">No topics found. Try another search.</p>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true"
+  aria-labelledby="modal-title">
+  <div class="modal-content">
+    <button class="close" id="close" aria-label="Close topic">&times;</button>
+    <div class="category" id="modal-category"></div>
+    <h2 id="modal-title"></h2>
+    <div id="modal-body"></div>
+    <button class="read-btn" id="close-bottom">Back to topics</button>
+  </div>
+</div>
+
+<footer>
+  <strong>The Aviation Atlas</strong> — Your World of Aviation
+  <br>Educational reference project. Always use official aviation sources
+  for operational or safety-critical information.
+</footer>
+
+<script>
+const topics = [
+  {
+    title: "The Four Forces of Flight",
+    category: "flight",
+    label: "Flight Science",
+    icon: "🛫",
+    summary: "Learn how lift, weight, thrust and drag interact during flight.",
+    sections: [
+      ["Lift", "The aerodynamic force that acts broadly perpendicular to the airflow. Wings generate lift through their shape, angle of attack and the flow of air around them."],
+      ["Weight", "The force of gravity acting on the aircraft and its contents."],
+      ["Thrust", "The forward force produced by an engine or other propulsion system."],
+      ["Drag", "Aerodynamic resistance that acts against an aircraft's motion through the air."]
+    ],
+    fact: "In steady, level flight, lift balances weight and thrust balances drag approximately."
+  },
+  {
+    title: "How Wings Generate Lift",
+    category: "flight",
+    label: "Flight Science",
+    icon: "🪽",
+    summary: "Explore airflow, angle of attack and the pressure forces on a wing.",
+    sections: [
+      ["Airflow and pressure", "A wing changes the airflow around it and creates a pressure distribution. The resulting aerodynamic force has a component called lift."],
+      ["Angle of attack", "This is the angle between a wing's reference line and the oncoming airflow. Increasing it can increase lift up to a limit."],
+      ["Stall", "If the angle of attack becomes too high, airflow can separate significantly and lift can decrease. A stall is not simply an aircraft flying too slowly."]
+    ],
+    fact: "A wing can generate lift at different airspeeds, provided the required aerodynamic conditions are met."
+  },
+  {
+    title: "Jet Engines",
+    category: "engines",
+    label: "Engines",
+    icon: "🔥",
+    summary: "Discover how a gas turbine produces thrust for modern airliners.",
+    sections: [
+      ["Intake and compression", "Air enters the engine and is compressed, raising its pressure."],
+      ["Combustion", "Fuel is added and burned in the compressed air, increasing the energy of the gas."],
+      ["Turbine and exhaust", "Hot gas drives the turbine, which powers the compressor. The engine accelerates air rearwards to produce thrust."],
+      ["Turbofan engines", "Most modern airliners use turbofans. A large fan moves air through the engine core and around it, making this design efficient for airline operations."]
+    ],
+    fact: "A turbofan produces thrust from both the air passing through its core and the air moved by its fan."
+  },
+  {
+    title: "Turboprop Engines",
+    category: "engines",
+    label: "Engines",
+    icon: "🛩️",
+    summary: "Understand how a gas turbine drives a propeller.",
+    sections: [
+      ["How they work", "A gas turbine supplies power to a shaft that turns a propeller through a reduction gearbox."],
+      ["Where they are used", "Turboprops are common on regional aircraft and some military transports, particularly where short routes or suitable runways matter."],
+      ["Efficiency", "They can be very efficient at lower flight speeds compared with many jet-powered designs."]
+    ],
+    fact: "The propeller accelerates a large mass of air by a relatively modest amount to create thrust."
+  },
+  {
+    title: "Helicopter Flight",
+    category: "flight",
+    label: "Flight Science",
+    icon: "🚁",
+    summary: "Learn how rotor blades enable hovering and controlled movement.",
+    sections: [
+      ["Main rotor", "Rotating blades generate aerodynamic forces that support the helicopter and allow it to move."],
+      ["Collective control", "The collective changes the pitch of all main rotor blades together, affecting overall rotor thrust."],
+      ["Cyclic control", "The cyclic changes blade pitch according to rotor position, tilting the rotor's force to help move the helicopter."],
+      ["Anti-torque", "Many helicopters use a tail rotor or another anti-torque system to counter the torque produced by the main rotor."]
+    ],
+    fact: "A helicopter can hover when its rotor produces enough upward force to balance its weight."
+  },
+  {
+    title: "Aircraft Navigation",
+    category: "systems",
+    label: "Systems",
+    icon: "🧭",
+    summary: "Explore the tools pilots use to determine position and route.",
+    sections: [
+      ["Satellite navigation", "Systems such as GPS can provide position and timing information."],
+      ["Inertial navigation", "Inertial systems use sensors to estimate changes in movement and orientation, allowing position to be calculated over time."],
+      ["Radio navigation", "Ground-based radio aids can help aircraft determine direction or distance, depending on the system."],
+      ["Flight management", "Modern aircraft may use a flight management system to support route planning, navigation calculations and performance functions."]
+    ],
+    fact: "Pilots and aircraft systems use approved procedures and multiple information sources to manage navigation."
+  },
+  {
+    title: "Aviation Weather",
+    category: "operations",
+    label: "Operations",
+    icon: "🌦️",
+    summary: "Understand clouds, wind, turbulence, icing and thunderstorms.",
+    sections: [
+      ["Wind", "Wind affects an aircraft's movement over the ground and can change take-off, landing and route planning."],
+      ["Turbulence", "Irregular air movement can cause aircraft motion. It may occur near storms, mountains, jet streams or other atmospheric boundaries."],
+      ["Icing", "Under suitable conditions, supercooled water droplets can freeze on aircraft surfaces and affect aerodynamic performance."],
+      ["Thunderstorms", "Storms can contain severe turbulence, lightning, hail, strong wind and other hazards."]
+    ],
+    fact: "Weather reports and forecasts are important inputs to flight planning, but conditions can change."
+  },
+  {
+    title: "Air Traffic Control",
+    category: "operations",
+    label: "Operations",
+    icon: "🎧",
+    summary: "Find out how controllers help aircraft move safely through busy skies.",
+    sections: [
+      ["Ground control", "At many airports, ground controllers manage aircraft and vehicle movements on taxiways."],
+      ["Tower control", "Tower controllers manage relevant runway operations and nearby traffic according to local procedures."],
+      ["Approach control", "Approach controllers manage arriving and departing traffic in their assigned airspace."],
+      ["Area control", "Area controllers provide air traffic services to aircraft travelling through wider regions of airspace."]
+    ],
+    fact: "The exact division of responsibilities varies by country, airport and air traffic service."
+  },
+  {
+    title: "Airport Operations",
+    category: "operations",
+    label: "Operations",
+    icon: "🏢",
+    summary: "Explore the teams and processes that keep airports running.",
+    sections: [
+      ["Runways and taxiways", "Runways are used for take-off and landing. Taxiways connect runways with aprons and other airport areas."],
+      ["Aprons and stands", "Aircraft park on stands for passenger boarding, baggage handling, servicing and other ground activities."],
+      ["Ground handling", "Teams may coordinate baggage, cargo, refuelling, catering, cleaning and aircraft turnaround tasks."],
+      ["Terminal operations", "Passenger processing can include check-in, security screening, border controls where applicable and boarding."]
+    ],
+    fact: "A successful aircraft turnaround depends on coordination between many airport and airline teams."
+  },
+  {
+    title: "Flight Instruments",
+    category: "systems",
+    label: "Systems",
+    icon: "📟",
+    summary: "Learn about instruments that display speed, altitude and attitude.",
+    sections: [
+      ["Airspeed", "The airspeed indicator displays an airspeed value derived from air pressure measurements."],
+      ["Altimeter", "A pressure altimeter estimates altitude from atmospheric pressure using a selected pressure setting."],
+      ["Attitude indicator", "This instrument shows aircraft pitch and bank relative to a reference."],
+      ["Modern displays", "Glass cockpits combine flight information on electronic displays, while retaining required systems and procedures."]
+    ],
+    fact: "Instrument readings require correct interpretation and use within the aircraft's approved procedures."
+  },
+  {
+    title: "Aircraft Structures",
+    category: "systems",
+    label: "Systems",
+    icon: "🏗️",
+    summary: "Discover fuselages, wings, landing gear and structural materials.",
+    sections: [
+      ["Fuselage", "The fuselage is the main body of an aircraft and may contain the cockpit, cabin, cargo areas and supporting structure."],
+      ["Wings", "Wings generate lift and can contain fuel tanks, control surfaces and structural components."],
+      ["Landing gear", "Landing gear supports the aircraft on the ground and absorbs loads during landing and taxiing."],
+      ["Materials", "Aircraft may use aluminium alloys, titanium, steel and composite materials, selected to suit the design requirements."]
+    ],
+    fact: "Aircraft structures are designed and inspected to meet demanding strength, fatigue and safety requirements."
+  },
+  {
+    title: "Aircraft Safety",
+    category: "operations",
+    label: "Operations",
+    icon: "🛡️",
+    summary: "Understand maintenance, checklists, training and safety management.",
+    sections: [
+      ["Maintenance", "Scheduled inspections and maintenance help ensure aircraft remain airworthy under applicable regulations."],
+      ["Checklists", "Checklists help crews perform required tasks consistently and verify important aircraft configurations."],
+      ["Training", "Pilots and other aviation professionals receive role-specific training and recurrent assessment."],
+      ["Safety management", "Aviation organisations use reporting, risk assessment and investigation to identify hazards and improve safety."]
+    ],
+    fact: "Aviation safety relies on multiple layers of prevention, monitoring and response rather than a single measure."
+  }
+];
+
+const grid = document.getElementById("topics");
+const search = document.getElementById("search");
+const count = document.getElementById("count");
+const empty = document.getElementById("empty");
+const modal = document.getElementById("modal");
+let activeCategory = "all";
+
+function renderTopics() {
+  const query = search.value.trim().toLowerCase();
+
+  const filtered = topics.filter(topic => {
+    const matchesCategory =
+      activeCategory === "all" || topic.category === activeCategory;
+
+    const searchable = [
+      topic.title,
+      topic.label,
+      topic.summary,
+      ...topic.sections.flat()
+    ].join(" ").toLowerCase();
+
+    return matchesCategory && searchable.includes(query);
+  });
+
+  grid.innerHTML = filtered.map(topic => {
+    const index = topics.indexOf(topic);
+    return `
+      <article class="card">
+        <div class="icon" aria-hidden="true">${topic.icon}</div>
+        <div class="category">${topic.label}</div>
+        <h3>${topic.title}</h3>
+        <p>${topic.summary}</p>
+        <button class="read-btn" data-topic="${index}">
+          Explore topic →
+        </button>
+      </article>
+    `;
+  }).join("");
+
+  count.textContent = `${filtered.length} topic${filtered.length === 1 ? "" : "s"} found`;
+  empty.style.display = filtered.length ? "none" : "block";
+}
+
+function openTopic(index) {
+  const topic = topics[index];
+  if (!topic) return;
+
+  document.getElementById("modal-category").textContent = topic.label;
+  document.getElementById("modal-title").textContent = topic.title;
+
+  const body = document.getElementById("modal-body");
+  body.replaceChildren();
+
+  topic.sections.forEach(section => {
+    const heading = document.createElement("h3");
+    heading.textContent = section[0];
+
+    const paragraph = document.createElement("p");
+    paragraph.textContent = section[1];
+
+    body.append(heading, paragraph);
+  });
+
+  const fact = document.createElement("div");
+  fact.className = "fact";
+
+  const strong = document.createElement("strong");
+  strong.textContent = "Atlas fact: ";
+
+  fact.append(strong, document.createTextNode(topic.fact));
+  body.append(fact);
+
+  modal.classList.add("open");
+  document.getElementById("close").focus();
+}
+
+function closeModal() {
+  modal.classList.remove("open");
+}
+
+grid.addEventListener("click", event => {
+  const button = event.target.closest("[data-topic]");
+  if (button) openTopic(Number(button.dataset.topic));
+});
+
+search.addEventListener("input", renderTopics);
+
+document.querySelectorAll(".filter").forEach(button => {
+  button.addEventListener("click", () => {
+    activeCategory = button.dataset.category;
+
+    document.querySelectorAll(".filter").forEach(item => {
+      const selected = item === button;
+      item.classList.toggle("selected", selected);
+      item.setAttribute("aria-pressed", String(selected));
+    });
+
+    renderTopics();
+  });
+
+  button.setAttribute(
+    "aria-pressed",
+    String(button.classList.contains("selected"))
+  );
+});
+
+document.getElementById("close").addEventListener("click", closeModal);
+document.getElementById("close-bottom").addEventListener("click", closeModal);
+
+modal.addEventListener("click", event => {
+  if (event.target === modal) closeModal();
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeModal();
+});
+
+renderTopics();
+</script>
+
+</body>
+</html>
