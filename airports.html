@@ -19,9 +19,9 @@
     .search-input { flex: 1; min-width: 260px; background: var(--bg-card); border: 1px solid var(--border-subtle); color: #fff; padding: 0.85rem 1.25rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.95rem; }
     .search-input:focus { outline: none; border-color: var(--accent-gold); }
     .filter-select { background: var(--bg-card); border: 1px solid var(--border-subtle); color: var(--text-main); padding: 0.85rem 1.25rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.95rem; cursor: pointer; }
-    .filter-select:focus { outline: none; border-color: var(--accent-gold); }
+    
     .airport-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.75rem; }
-    .airport-card { background-color: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; transition: all 0.25s ease; display: flex; flex-direction: column; }
+    .airport-card { background-color: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; transition: all 0.25s ease; display: flex; flex-direction: column; cursor: pointer; }
     .airport-card:hover { background-color: var(--bg-card-hover); border-color: var(--accent-gold); transform: translateY(-4px); }
     .airport-img-wrap { position: relative; height: 210px; overflow: hidden; background-color: #050811; }
     .airport-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
@@ -32,6 +32,58 @@
     .airport-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; flex-grow: 1; }
     .airport-specs-list { display: flex; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--border-subtle); font-size: 0.8rem; color: var(--text-muted); }
     .airport-specs-list strong { color: var(--text-main); }
+    .click-hint { color: var(--accent-gold); font-size: 0.8rem; font-weight: 700; margin-top: 0.75rem; display: block; }
+
+    /* Detail Modal Popup */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(5, 8, 17, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--accent-gold);
+      border-radius: 8px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none; border: none;
+      color: #fff; font-size: 1.5rem; cursor: pointer;
+    }
+    .modal-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .modal-specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    .modal-specs-table td {
+      padding: 0.6rem;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.9rem;
+    }
+    .modal-specs-table td:first-child {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -53,7 +105,7 @@
 
   <section class="page-header">
     <h1>Global Airport Hubs</h1>
-    <p>Comprehensive directory of international gateways, runway configurations, and aviation facility specs.</p>
+    <p>Click on any airport card below to view detailed airfield statistics, runway details, and terminal info.</p>
   </section>
 
   <main class="container">
@@ -70,10 +122,10 @@
 
     <div class="airport-grid" id="airportGrid">
       
-      <!-- Heathrow Aerial Airfield View -->
-      <article class="airport-card" data-region="europe" data-search="london heathrow airport egll lhr united kingdom uk europe">
+      <!-- Heathrow -->
+      <article class="airport-card" data-region="europe" data-search="london heathrow airport egll lhr united kingdom uk europe" onclick="openDetails('London Heathrow Airport', 'LHR / EGLL', 'London, United Kingdom', '2 Parallel (09L/27R, 09R/27L)', '4 Operational (T2, T3, T4, T5)', '83 ft / 25 m', 'London Heathrow is Europe\'s busiest airport by passenger traffic and acts as the primary international hub for British Airways.', 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=800&q=80')">
         <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=800&q=80" alt="Aerial bird's-eye view of airfield and runway system" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=800&q=80" alt="Heathrow Airfield" loading="lazy">
           <div class="airport-codes">LHR / EGLL</div>
         </div>
         <div class="airport-card-body">
@@ -84,13 +136,14 @@
             <span>Runways: <strong>2 Parallel</strong></span>
             <span>Terminals: <strong>4 Operational</strong></span>
           </div>
+          <span class="click-hint">Click for full airfield info &rarr;</span>
         </div>
       </article>
 
-      <!-- JFK Satellite / Bird's Eye Runway Layout -->
-      <article class="airport-card" data-region="north-america" data-search="john f kennedy international airport jfk kjfk new york usa north america">
+      <!-- JFK -->
+      <article class="airport-card" data-region="north-america" data-search="john f kennedy international airport jfk kjfk new york usa north america" onclick="openDetails('John F. Kennedy International Airport', 'JFK / KJFK', 'New York City, USA', '4 Active (04L/22R, 04R/22L, 13L/31R, 13R/31L)', '5 Active Terminals', '13 ft / 4 m', 'JFK International is the busiest international passenger gateway into North America, handling over 90 international air carriers.', 'https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=800&q=80')">
         <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=800&q=80" alt="Bird's-eye satellite perspective of airport terminal and runways" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=800&q=80" alt="JFK Runway System" loading="lazy">
           <div class="airport-codes">JFK / KJFK</div>
         </div>
         <div class="airport-card-body">
@@ -101,13 +154,14 @@
             <span>Runways: <strong>4 Active</strong></span>
             <span>Terminals: <strong>5 Active</strong></span>
           </div>
+          <span class="click-hint">Click for full airfield info &rarr;</span>
         </div>
       </article>
 
-      <!-- Tokyo Haneda Overhead Airfield View -->
-      <article class="airport-card" data-region="asia-pacific" data-search="tokyo haneda airport hnd rjtt japan asia pacific">
+      <!-- Tokyo Haneda -->
+      <article class="airport-card" data-region="asia-pacific" data-search="tokyo haneda airport hnd rjtt japan asia pacific" onclick="openDetails('Tokyo Haneda Airport', 'HND / RJTT', 'Tokyo, Japan', '4 Runways (16L/34R, 16R/34L, 04/22, 05/23)', '3 Terminals (T1, T2, T3)', '21 ft / 6 m', 'Tokyo Haneda is one of Asia\'s busiest airports, primary hub for Japan Airlines and All Nippon Airways, located directly on Tokyo Bay.', 'https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=800&q=80')">
         <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=800&q=80" alt="Aerial perspective of coastal airport runway complex" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=800&q=80" alt="Tokyo Haneda Coastal Runway" loading="lazy">
           <div class="airport-codes">HND / RJTT</div>
         </div>
         <div class="airport-card-body">
@@ -118,13 +172,14 @@
             <span>Runways: <strong>4 Runways</strong></span>
             <span>Terminals: <strong>3 Terminals</strong></span>
           </div>
+          <span class="click-hint">Click for full airfield info &rarr;</span>
         </div>
       </article>
 
-      <!-- Dubai Bird's Eye Terminal & Runway View -->
-      <article class="airport-card" data-region="middle-east" data-search="dubai international airport dxb omdb united arab emirates uae middle east">
+      <!-- Dubai -->
+      <article class="airport-card" data-region="middle-east" data-search="dubai international airport dxb omdb united arab emirates uae middle east" onclick="openDetails('Dubai International Airport', 'DXB / OMDB', 'Dubai, UAE', '2 Parallel (12L/30R, 12R/30L)', '3 Terminals (including Concourse A A380 facility)', '62 ft / 19 m', 'Dubai International is the primary airport serving Dubai and the world\'s busiest airport by international passenger traffic.', 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80')">
         <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Overhead perspective of airport tarmac" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Dubai Tarmac" loading="lazy">
           <div class="airport-codes">DXB / OMDB</div>
         </div>
         <div class="airport-card-body">
@@ -135,11 +190,30 @@
             <span>Runways: <strong>2 Parallel</strong></span>
             <span>Terminals: <strong>3 Terminals</strong></span>
           </div>
+          <span class="click-hint">Click for full airfield info &rarr;</span>
         </div>
       </article>
 
     </div>
   </main>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeDetails()">&times;</button>
+      <img id="mImg" src="" alt="" class="modal-img">
+      <h2 id="mTitle" style="font-family: var(--font-heading); margin-bottom: 0.25rem;"></h2>
+      <div id="mLocation" style="color: var(--accent-gold); font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem;"></div>
+      <p id="mDesc" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;"></p>
+      
+      <table class="modal-specs-table">
+        <tr><td>Location Codes</td><td id="mCodes"></td></tr>
+        <tr><td>Runway Layout</td><td id="mRunways"></td></tr>
+        <tr><td>Passenger Terminals</td><td id="mTerminals"></td></tr>
+        <tr><td>Field Elevation</td><td id="mElevation"></td></tr>
+      </table>
+    </div>
+  </div>
 
   <footer>
     <p>&copy; 2026 The Aviation Atlas. All rights reserved.</p>
@@ -147,6 +221,7 @@
 
   <script>
     function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+
     function filterAirports() {
       const query = document.getElementById('airportSearch').value.toLowerCase();
       const region = document.getElementById('regionFilter').value;
@@ -155,6 +230,23 @@
         const matchR = region === 'all' || card.getAttribute('data-region') === region;
         card.style.display = (matchQ && matchR) ? 'flex' : 'none';
       });
+    }
+
+    function openDetails(title, codes, location, runways, terminals, elevation, desc, imgUrl) {
+      document.getElementById('mTitle').textContent = title;
+      document.getElementById('mCodes').textContent = codes;
+      document.getElementById('mLocation').textContent = '📍 ' + location;
+      document.getElementById('mRunways').textContent = runways;
+      document.getElementById('mTerminals').textContent = terminals;
+      document.getElementById('mElevation').textContent = elevation;
+      document.getElementById('mDesc').textContent = desc;
+      document.getElementById('mImg').src = imgUrl;
+
+      document.getElementById('detailModal').style.display = 'flex';
+    }
+
+    function closeDetails() {
+      document.getElementById('detailModal').style.display = 'none';
     }
   </script>
 </body>
