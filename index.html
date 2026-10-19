@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Explore aircraft, airports, aviation history, plane spotting and aviation games with The Aviation Atlas.">
+<title>The Aviation Atlas | Your World of Aviation</title>
+<style>
+:root{--bg:#07111f;--panel:#101f32;--panel2:#192d46;--text:#f4f7fc;--muted:#a9b8cc;--gold:#f3c66b;--line:#293d55}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.6}
+button{font:inherit;cursor:pointer}
+header{position:sticky;top:0;z-index:10;background:#081321f2;border-bottom:1px solid var(--line)}
+.nav{max-width:1200px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{font-size:19px;font-weight:900}.brand span{color:var(--gold)}
+nav{display:flex;gap:7px;flex-wrap:wrap}
+nav button,.secondary{background:transparent;color:var(--text);border:1px solid var(--line);padding:9px 12px;border-radius:9px}
+nav button:hover,.secondary:hover{border-color:var(--gold)}
+main{max-width:1200px;margin:auto;padding:22px 20px 60px}
+.hero{min-height:400px;border-radius:22px;overflow:hidden;display:flex;align-items:flex-end;padding:clamp(24px,5vw,52px);background:linear-gradient(90deg,#06101af5,#06101a9c 60%,#06101a30),url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1800&q=85') center/cover}
+.eyebrow{color:var(--gold);font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase}
+h1{font-size:clamp(40px,6vw,70px);line-height:1.04;margin:12px 0;max-width:700px;letter-spacing:-2px}
+.hero p{color:#d7e2ef;max-width:570px;font-size:17px}
+.primary{background:var(--gold);color:#152033;border:0;border-radius:10px;padding:11px 15px;font-weight:800}
+.primary:hover{filter:brightness(1.08)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+section{margin-top:38px;scroll-margin-top:100px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:15px}
+h2{font-size:25px;margin:0;letter-spacing:-.5px}h3{margin:10px 0 5px}
+.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;min-width:0}
+.card img{width:100%;height:165px;object-fit:cover;display:block;background:#20344c}
+.card-body{padding:17px}.card p{color:var(--muted);font-size:14px}
+.tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:bold}
+.card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.card-actions button{font-size:13px}
+.game{background:linear-gradient(135deg,#142a43,#0c1829)}
+.game-icon{font-size:32px}
+.choice-list{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:15px}
+.choice{background:var(--panel2);border:1px solid #334c68;border-radius:10px;color:white;padding:12px;text-align:left}
+.choice:hover:not(:disabled){border-color:var(--gold)}
+.choice:disabled{opacity:.75}
+.result{min-height:48px;margin-top:12px;color:var(--gold);font-weight:bold}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:22px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.chip{border:1px solid #42566d;border-radius:99px;padding:9px 12px;background:#0a1727;color:var(--text)}
+.chip.active{background:var(--gold);color:#152033;border-color:var(--gold)}
+.empty{border:1px dashed #40536a;border-radius:13px;padding:22px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:28px 20px;color:var(--muted);text-align:center}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--gold);color:#101b2b;padding:12px 18px;border-radius:10px;display:none;z-index:20;font-weight:bold;max-width:90%}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){main{padding:14px 12px 45px}.nav{padding:12px}nav{width:100%}nav button{flex:1;padding:8px 5px;font-size:12px}.grid{grid-template-columns:1fr}h1{letter-spacing:-1px}.hero{padding:24px;min-height:350px}.choice-list{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header>
+<div class="nav">
+  <div class="brand">THE AVIATION <span>ATLAS</span></div>
+  <nav aria-label="Main navigation">
+    <button data-scroll="discover">Discover</button>
+    <button data-scroll="games">Games</button>
+    <button data-scroll="saved">Saved</button>
+    <button data-scroll="interests">My interests</button>
+  </nav>
+</div>
+</header>
+
+<main>
+<div class="hero">
+  <div>
+    <div class="eyebrow">Your world of aviation</div>
+    <h1>Look up.<br>Discover more.</h1>
+    <p>Discover remarkable aircraft, incredible airports, aviation history and challenges that put your knowledge to the test.</p>
+    <div class="actions">
+      <button class="primary" data-scroll="for-you">Explore my Atlas →</button>
+      <button class="secondary" data-scroll="games">Play a challenge</button>
+    </div>
+  </div>
+</div>
+
+<section id="for-you">
+  <div class="section-head">
+    <div><div class="eyebrow">Picked for your interests</div><h2>Your next great read</h2></div>
+    <span class="muted" id="personal-label">Personalised reading</span>
+  </div>
+  <div class="grid" id="recommendations"></div>
+</section>
+
+<section id="games">
+  <div class="section-head">
+    <div><div class="eyebrow">Test your knowledge</div><h2>The Atlas Flight Club</h2></div>
+    <span class="muted">Play · Learn · Improve</span>
+  </div>
+  <div class="grid">
+    <article class="card game"><div class="card-body">
+      <div class="game-icon">✈️</div><div class="tag">Game 01 · Aircraft</div>
+      <h3>Guess the Aircraft</h3><p id="aircraft-question"></p>
+      <div class="choice-list" id="aircraft-choices"></div>
+      <div class="result" id="aircraft-result" aria-live="polite"></div>
+      <button class="secondary" id="aircraft-next">Next question ↗</button>
+    </div></article>
+    <article class="card game"><div class="card-body">
+      <div class="game-icon">🌍</div><div class="tag">Game 02 · Airports</div>
+      <h3>Airport Code Challenge</h3><p id="airport-question"></p>
+      <div class="choice-list" id="airport-choices"></div>
+      <div class="result" id="airport-result" aria-live="polite"></div>
+      <button class="secondary" id="airport-next">Next question ↗</button>
+    </div></article>
+    <article class="card game"><div class="card-body">
+      <div class="game-icon">🧠</div><div class="tag">Game 03 · Daily challenge</div>
+      <h3>One Question a Day</h3><p id="daily-question"></p>
+      <div class="choice-list" id="daily-choices"></div>
+      <div class="result" id="daily-result" aria-live="polite"></div>
+      <p class="muted" id="score">Your quiz score: 0 correct</p>
+    </div></article>
+  </div>
+</section>
+
+<section id="discover">
+  <div class="section-head"><div><div class="eyebrow">Explore the world</div><h2>Choose your next destination</h2></div></div>
+  <div class="grid" id="categories"></div>
+</section>
+
+<section id="saved">
+  <div class="section-head"><div><div class="eyebrow">Your personal collection</div><h2>Saved to your Atlas</h2></div><span class="muted">Saved on this device</span></div>
+  <div class="grid" id="saved-list"></div>
+</section>
+
+<section id="interests">
+  <div class="section-head"><div><div class="eyebrow">Make it yours</div><h2>What fascinates you?</h2></div></div>
+  <div class="panel">
+    <p class="muted">Choose your favourite subjects and your recommended reading will update.</p>
+    <div class="chips" id="interest-options"></div>
+    <button class="primary" id="apply-interests">Update my recommendations</button>
+  </div>
+</section>
+
+<section>
+  <div class="panel">
+    <div class="eyebrow">More than a website</div>
+    <h2>Your next aviation obsession starts here.</h2>
+    <p class="muted">Discover a new aircraft, learn an airport code, test your knowledge and build your own collection of aviation stories.</p>
+    <button class="primary" data-scroll="for-you">Find something interesting →</button>
+  </div>
+</section>
+</main>
+
+<footer><strong>THE AVIATION ATLAS</strong> · Your World of Aviation<br><span class="muted">An independent aviation discovery project.</span></footer>
+<div id="toast" role="status"></div>
+
+<script>
+"use strict";
+
+const articles = [
+{id:"a1",title:"Inside the Airbus A380",cat:"Commercial aviation",desc:"Explore the engineering and passenger experience behind the iconic double-deck airliner.",img:"https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=900&q=80",time:"7 min read"},
+{id:"a2",title:"How Airports Actually Work",cat:"Airports",desc:"From taxiways to terminals, discover how airports coordinate aircraft and people.",img:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80",time:"6 min read"},
+{id:"a3",title:"The Golden Age of Flight",cat:"Aviation history",desc:"Explore inventions and pioneering journeys that transformed air travel.",img:"https://images.unsplash.com/photo-1474302770737-173ee21bab63?auto=format&fit=crop&w=900&q=80",time:"8 min read"},
+{id:"a4",title:"A Beginner's Guide to Plane Spotting",cat:"Plane spotting",desc:"Learn about aircraft identification, flight tracking and responsible spotting.",img:"https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=900&q=80",time:"5 min read"},
+{id:"a5",title:"Military Aircraft Explained",cat:"Military aviation",desc:"Understand the roles of fighters, transports, trainers and surveillance aircraft.",img:"https://images.unsplash.com/photo-1559060017-445fb9722f2a?auto=format&fit=crop&w=900&q=80",time:"9 min read"},
+{id:"a6",title:"Why Aircraft Fly So High",cat:"How flight works",desc:"Discover the basics of lift, air density and why cruising altitude matters.",img:"https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=900&q=80",time:"4 min read"},
+{id:"a7",title:"The World's Most Remarkable Airports",cat:"Airports",desc:"Discover airports known for their approaches, locations and design.",img:"https://images.unsplash.com/photo-1518306721680-6e8a6e6e2d8b?auto=format&fit=crop&w=900&q=80",time:"7 min read"},
+{id:"a8",title:"Recognising Aircraft Families",cat:"Plane spotting",desc:"Use engines, winglets, windows and landing gear as clues to identify aircraft.",img:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80",time:"6 min read"},
+{id:"a9",title:"The Future of Sustainable Flight",cat:"How flight works",desc:"Explore ideas being developed to reduce aviation's environmental impact.",img:"https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=900&q=80",time:"6 min read"}
+];
+
+const categories = [
+{title:"Commercial Aviation",cat:"Commercial aviation",icon:"🛫",desc:"Airliners, airlines and passenger flight."},
+{title:"Military Aviation",cat:"Military aviation",icon:"🛩️",desc:"Aircraft roles, technology and history."},
+{title:"Airports Around the World",cat:"Airports",icon:"🌐",desc:"Terminals, runways and fascinating destinations."},
+{title:"Plane Spotting",cat:"Plane spotting",icon:"📸",desc:"Aircraft identification and spotting guides."},
+{title:"Aviation History",cat:"Aviation history",icon:"📜",desc:"People, machines and moments that changed flight."},
+{title:"How Flight Works",cat:"How flight works",icon:"🔬",desc:"The science and engineering behind aviation."}
+];
+
+const interestNames = categories.map(c => c.cat);
+function readStorage(key,fallback){try{const v=localStorage.getItem(key);return v===null?fallback:JSON.parse(v)}catch(e){return fallback}}
+function writeStorage(key,value){try{localStorage.setItem(key,JSON.stringify(value))}catch(e){notify("Storage unavailable or full in this browser.")}}
+
+let interests = readStorage("atlas-interests",["Commercial aviation","Plane spotting"]);
+let saved = readStorage("atlas-saved",[]);
+let score = readStorage("atlas-score",0);
+let quizIndex = {aircraft:0,airport:0};
+let dailyAnswered = readStorage("atlas-daily-date","") === new Date().toDateString();
+
+function notify(message){
+  const toast=document.getElementById("toast");
+  toast.textContent=message;toast.style.display="block";
+  clearTimeout(notify.timer);
+  notify.timer=setTimeout(()=>toast.style.display="none",2300);
+}
+
+document.querySelectorAll("[data-scroll]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const el=document.getElementById(btn.dataset.scroll);
+    if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+});
+
+function articleCard(a){
+  return `<article class="card">
+    <img src="${a.img}" alt="" loading="lazy" onerror="this.style.display='none'">
+    <div class="card-body"><div class="tag">${a.cat}</div>
+    <h3>${a.title}</h3><p>${a.desc}</p><p class="muted">${a.time}</p>
+    <div class="card-actions">
+      <button class="primary read-btn" data-id="${a.id}">Read preview</button>
+      <button class="secondary save-btn" data-id="${a.id}">${saved.includes(a.id)?"★ Saved":"☆ Save"}</button>
+    </div></div></article>`;
+}
+
+function bindArticleButtons(container){
+  container.querySelectorAll(".save-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const id=btn.dataset.id;
+      saved=saved.includes(id)?saved.filter(x=>x!==id):[...saved,id];
+      writeStorage("atlas-saved",saved);
+      renderRecommendations();renderSaved();
+      notify(saved.includes(id)?"Added to your Atlas.":"Removed from saved articles.");
+    });
+  });
+  container.querySelectorAll(".read-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const a=articles.find(x=>x.id===btn.dataset.id);
+      if(a)alert(a.title+"\n\n"+a.desc+"\n\nThis is a preview in the prototype. Full articles can be added as separate pages.");
+    });
+  });
+}
+
+function renderRecommendations(){
+  const sorted=[...articles].sort((a,b)=>Number(interests.includes(b.cat))-Number(interests.includes(a.cat)));
+  const el=document.getElementById("recommendations");
+  el.innerHTML=sorted.slice(0,3).map(articleCard).join("");
+  bindArticleButtons(el);
+  document.getElementById("personal-label").textContent=interests.length?`Based on ${interests.length} interests`:"Popular aviation reads";
+}
+
+function renderCategories(){
+  const el=document.getElementById("categories");
+  el.innerHTML=categories.map(c=>`<article class="card"><div class="card-body">
+    <div class="game-icon">${c.icon}</div><div class="tag">Explore a topic</div>
+    <h3>${c.title}</h3><p>${c.desc}</p>
+    <button class="secondary topic-btn" data-cat="${c.cat}">Explore this topic →</button>
+  </div></article>`).join("");
+  el.querySelectorAll(".topic-btn").forEach(btn=>btn.addEventListener("click",()=>{
+    const list=articles.filter(a=>a.cat===btn.dataset.cat);
+    const rec=document.getElementById("recommendations");
+    rec.innerHTML=list.length?list.map(articleCard).join():'<div class="empty">More stories in this topic are coming soon.</div>';
+    bindArticleButtons(rec);
+    document.getElementById("for-you").scrollIntoView({behavior:"smooth"});
+  }));
+}
+
+function renderSaved(){
+  const el=document.getElementById("saved-list");
+  const list=articles.filter(a=>saved.includes(a.id));
+  el.innerHTML=list.length?list.map(articleCard).join(""):'<div class="empty">No saved reads yet. Tap ☆ Save on an article to build your collection.</div>';
+  bindArticleButtons(el);
+}
+
+function renderInterests(){
+  const el=document.getElementById("interest-options");
+  el.innerHTML=interestNames.map(name=>`<button class="chip ${interests.includes(name)?"active":""}" data-interest="${name}" aria-pressed="${interests.includes(name)}">${name}</button>`).join("");
+  el.querySelectorAll(".chip").forEach(btn=>btn.addEventListener("click",()=>{
+    const name=btn.dataset.interest;
+    interests=interests.includes(name)?interests.filter(x=>x!==name):[...interests,name];
+    btn.classList.toggle("active",interests.includes(name));
+    btn.setAttribute("aria-pressed",String(interests.includes(name)));
+  }));
+}
+
+document.getElementById("apply-interests").addEventListener("click",()=>{
+  writeStorage("atlas-interests",interests);
+  renderRecommendations();
+  notify("Your recommendations have been updated.");
+  document.getElementById("for-you").scrollIntoView({behavior:"smooth"});
+});
+
+const games = {
+aircraft:[
+{q:"Which aircraft is famous for its distinctive double-deck design?",choices:["Airbus A380","Boeing 737","Concorde","Cessna 172"],answer:"Airbus A380",why:"The Airbus A380 has a full-length upper deck."},
+{q:"Which supersonic passenger aircraft retired in 2003?",choices:["Concorde","Airbus A320","Boeing 747","DC-10"],answer:"Concorde",why:"Concorde operated commercial supersonic flights for decades."},
+{q:"Which aircraft family is widely used for short- and medium-haul flights?",choices:["Airbus A320 family","Airbus Beluga","Antonov An-225","Lockheed U-2"],answer:"Airbus A320 family",why:"The A320 family is common on short- and medium-haul routes."}
+],
+airport:[
+{q:"Which city uses the airport code LHR?",choices:["London","Lisbon","Los Angeles","Lahore"],answer:"London",why:"LHR is London Heathrow Airport."},
+{q:"Which city uses the code JFK?",choices:["New York","Tokyo","Paris","Singapore"],answer:"New York",why:"JFK serves New York City."},
+{q:"Which city uses the code CDG?",choices:["Copenhagen","Cairo","Paris","Chicago"],answer:"Paris",why:"CDG is Paris Charles de Gaulle Airport."}
+],
+daily:[
+{q:"What primarily generates lift on a conventional aircraft wing?",choices:["Aerodynamic forces from airflow","The aircraft's headlights","Cabin pressure alone","The landing gear"],answer:"Aerodynamic forces from airflow",why:"Wing shape and airflow create aerodynamic lift."},
+{q:"What does ATC stand for?",choices:["Air Traffic Control","Aircraft Travel Cabin","Air Terminal Code","Aviation Training Course"],answer:"Air Traffic Control",why:"ATC coordinates aircraft movements for safety and efficiency."},
+{q:"What is a runway used for?",choices:["Take-off and landing","Refuelling only","Passenger security checks","Aircraft painting"],answer:"Take-off and landing",why:"Runways provide the surface for aircraft take-offs and landings."}
+]};
+
+function renderGame(type){
+  const item=games[type][quizIndex[type]%games[type].length];
+  document.getElementById(type+"-question").textContent=item.q;
+  document.getElementById(type+"-result").textContent="";
+  const choices=document.getElementById(type+"-choices");
+  choices.innerHTML=item.choices.map(c=>`<button class="choice" data-answer="${c}">${c}</button>`).join("");
+  choices.querySelectorAll("button").forEach(btn=>btn.addEventListener("click",()=>{
+    if(btn.disabled)return;
+    choices.querySelectorAll("button").forEach(b=>b.disabled=true);
+    const correct=btn.dataset.answer===item.answer;
+    document.getElementById(type+"-result").textContent=(correct?"Correct! ":"Not quite. ")+item.why;
+    if(correct){
+      score++;writeStorage("atlas-score",score);
+      document.getElementById("score").textContent=`Your quiz score: ${score} correct`;
+    }
+  }));
+}
+
+document.getElementById("aircraft-next").addEventListener("click",()=>{quizIndex.aircraft++;renderGame("aircraft")});
+document.getElementById("airport-next").addEventListener("click",()=>{quizIndex.airport++;renderGame("airport")});
+
+function renderDaily(){
+  const item=games.daily[new Date().getDate()%games.daily.length];
+  document.getElementById("daily-question").textContent=item.q;
+  const choices=document.getElementById("daily-choices");
+  const result=document.getElementById("daily-result");
+  choices.innerHTML=item.choices.map(c=>`<button class="choice" data-answer="${c}">${c}</button>`).join("");
+  if(dailyAnswered){
+    result.textContent="Today's challenge is complete. Come back tomorrow!";
+    choices.querySelectorAll("button").forEach(b=>b.disabled=true);
+    return;
+  }
+  choices.querySelectorAll("button").forEach(btn=>btn.addEventListener("click",()=>{
+    if(dailyAnswered)return;
+    dailyAnswered=true;
+    const correct=btn.dataset.answer===item.answer;
+    if(correct){score++;writeStorage("atlas-score",score)}
+    writeStorage("atlas-daily-date",new Date().toDateString());
+    document.getElementById("score").textContent=`Your quiz score: ${score} correct`;
+    result.textContent=(correct?"Correct! ":"Not quite. ")+item.why;
+    choices.querySelectorAll("button").forEach(b=>b.disabled=true);
+  }));
+}
+
+renderRecommendations();
+renderCategories();
+renderSaved();
+renderInterests();
+renderGame("aircraft");
+renderGame("airport");
+renderDaily();
+document.getElementById("score").textContent=`Your quiz score: ${score} correct`;
+</script>
+</body>
+</html>
