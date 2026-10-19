@@ -1,0 +1,675 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Play aviation quizzes and test your aircraft knowledge at The Aviation Atlas.">
+<title>Aviation Games | The Aviation Atlas</title>
+<style>
+:root {
+  --navy:#071426;
+  --light:#10243e;
+  --gold:#e8b84a;
+  --white:#f4f7fb;
+  --muted:#aebbd0;
+  --panel:#102039;
+  --border:#263b57;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--navy);
+  color:var(--white);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.6;
+}
+header {
+  text-align:center;
+  padding:30px 16px;
+  background:linear-gradient(135deg,#102b4a,#071426);
+  border-bottom:2px solid var(--gold);
+}
+.brand {
+  margin:0;
+  color:var(--gold);
+  font-size:clamp(27px,5vw,42px);
+  font-weight:800;
+  letter-spacing:1px;
+}
+.tagline {color:var(--muted);margin:4px 0 0}
+nav {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:7px;
+  padding:13px;
+  background:#0b1b30;
+  border-bottom:1px solid var(--border);
+}
+nav a {
+  color:var(--white);
+  text-decoration:none;
+  padding:8px 11px;
+  border-radius:6px;
+  font-size:14px;
+}
+nav a:hover,nav a.active {
+  color:var(--gold);
+  background:var(--light);
+}
+main {max-width:1050px;margin:auto;padding:28px 17px 50px}
+.intro {text-align:center;max-width:750px;margin:0 auto 28px}
+.intro h2 {color:var(--gold);font-size:clamp(27px,4vw,36px);margin-bottom:8px}
+.intro p {color:var(--muted)}
+.game-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+  margin-bottom:30px;
+}
+.game-card {
+  padding:22px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+.game-card h3 {margin:8px 0;color:var(--gold)}
+.game-card p {color:var(--muted);font-size:14px}
+.game-icon {font-size:32px}
+button,select {
+  font:inherit;
+}
+.primary,.secondary,.answer {
+  cursor:pointer;
+  border-radius:7px;
+  padding:11px 15px;
+  font-weight:bold;
+}
+.primary {
+  color:var(--navy);
+  background:var(--gold);
+  border:1px solid var(--gold);
+}
+.primary:hover {background:#f5cf73}
+.secondary {
+  color:var(--gold);
+  background:transparent;
+  border:1px solid var(--gold);
+}
+.secondary:hover {background:var(--light)}
+.primary:focus-visible,.secondary:focus-visible,
+.answer:focus-visible,select:focus-visible {
+  outline:2px solid var(--gold);
+  outline-offset:3px;
+}
+.quiz {
+  max-width:760px;
+  margin:auto;
+  padding:25px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:13px;
+}
+.quiz h2 {color:var(--gold);margin-top:0}
+.quiz-top {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  color:var(--muted);
+  font-size:14px;
+}
+.progress {
+  height:7px;
+  background:#263b57;
+  border-radius:10px;
+  overflow:hidden;
+  margin:15px 0 24px;
+}
+.progress-fill {
+  height:100%;
+  width:0;
+  background:var(--gold);
+  transition:width .2s;
+}
+.question {
+  font-size:clamp(20px,3vw,25px);
+  font-weight:bold;
+  margin-bottom:20px;
+}
+.answers {display:grid;gap:10px}
+.answer {
+  width:100%;
+  text-align:left;
+  color:var(--white);
+  background:#0b1b30;
+  border:1px solid var(--border);
+}
+.answer:hover:not(:disabled) {border-color:var(--gold)}
+.answer:disabled {cursor:default;opacity:1}
+.answer.correct {
+  border-color:#58c98b;
+  background:#123b32;
+}
+.answer.incorrect {
+  border-color:#ed8585;
+  background:#46252e;
+}
+.feedback {
+  display:none;
+  padding:14px;
+  margin-top:17px;
+  background:#09172a;
+  border-left:3px solid var(--gold);
+  border-radius:5px;
+}
+.feedback.show {display:block}
+.feedback p {margin:5px 0;color:var(--muted)}
+.quiz-actions {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+.result {
+  display:none;
+  text-align:center;
+  padding:15px 0 5px;
+}
+.result.show {display:block}
+.result-score {
+  color:var(--gold);
+  font-size:48px;
+  font-weight:800;
+}
+.result p {color:var(--muted)}
+.hidden {display:none!important}
+footer {
+  text-align:center;
+  padding:25px 15px;
+  color:var(--muted);
+  border-top:1px solid var(--border);
+  font-size:13px;
+}
+footer strong {color:var(--gold)}
+@media(max-width:500px) {
+  nav {gap:2px}
+  nav a {padding:8px;font-size:12px}
+  .quiz {padding:18px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1 class="brand">THE AVIATION ATLAS</h1>
+  <p class="tagline">Your World of Aviation</p>
+</header>
+
+<nav aria-label="Main navigation">
+  <a href="index.html">Home</a>
+  <a href="aircraft.html">Aircraft</a>
+  <a href="airports.html">Airports</a>
+  <a href="knowledge.html">Knowledge</a>
+  <a href="history.html">History</a>
+  <a href="games.html" class="active">Games</a>
+</nav>
+
+<main>
+  <section class="intro">
+    <h2>The Aviation Games Centre</h2>
+    <p>
+      Test your aviation knowledge, challenge yourself with aircraft facts
+      and see how much you know about the world of flight. Choose a quiz,
+      answer the questions and try to beat your best score.
+    </p>
+  </section>
+
+  <section class="game-grid" aria-label="Available games">
+    <article class="game-card">
+      <div class="game-icon" aria-hidden="true">✈️</div>
+      <h3>Aviation Knowledge Quiz</h3>
+      <p>
+        Test your knowledge of aircraft, airports, engines, navigation
+        and aviation history with 15 multiple-choice questions.
+      </p>
+      <button class="primary" id="start-aviation">Play quiz</button>
+    </article>
+
+    <article class="game-card">
+      <div class="game-icon" aria-hidden="true">🛫</div>
+      <h3>Aircraft Challenge</h3>
+      <p>
+        Identify famous aircraft from clues about their purpose,
+        design and place in aviation history.
+      </p>
+      <button class="primary" id="start-aircraft">Start challenge</button>
+    </article>
+
+    <article class="game-card">
+      <div class="game-icon" aria-hidden="true">🏆</div>
+      <h3>Your Quiz Record</h3>
+      <p>
+        Track your best scores on this device. Play again to improve
+        your knowledge and personal record.
+      </p>
+      <p id="record">Best score: No games completed yet</p>
+    </article>
+  </section>
+
+  <section class="quiz hidden" id="quiz" aria-labelledby="quiz-title">
+    <div class="quiz-top">
+      <span id="quiz-mode">Aviation Knowledge Quiz</span>
+      <span id="question-count">Question 1 of 15</span>
+      <span id="score">Score: 0</span>
+    </div>
+
+    <div class="progress" aria-label="Quiz progress">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <h2 id="quiz-title">Ready for take-off?</h2>
+    <div id="question-area">
+      <div class="question" id="question"></div>
+      <div class="answers" id="answers"></div>
+      <div class="feedback" id="feedback" aria-live="polite">
+        <strong id="feedback-title"></strong>
+        <p id="feedback-text"></p>
+      </div>
+      <div class="quiz-actions">
+        <button class="primary" id="next" disabled>Next question →</button>
+        <button class="secondary" id="quit">Back to games</button>
+      </div>
+    </div>
+
+    <div class="result" id="result" aria-live="polite">
+      <div class="game-icon" aria-hidden="true">🏆</div>
+      <h2 id="result-title">Quiz complete!</h2>
+      <div class="result-score" id="final-score">0/15</div>
+      <p id="result-message"></p>
+      <div class="quiz-actions" style="justify-content:center">
+        <button class="primary" id="play-again">Play again</button>
+        <button class="secondary" id="result-home">Back to games</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <strong>The Aviation Atlas</strong> — Your World of Aviation
+  <br>Educational games for aviation enthusiasts.
+</footer>
+
+<script>
+const aviationQuestions = [
+  {
+    q:"Which aircraft manufacturer produces the A350?",
+    a:["Boeing","Airbus","Embraer","Bombardier"],
+    correct:1,
+    why:"The Airbus A350 is a twin-engine, long-range wide-body airliner."
+  },
+  {
+    q:"What are the four main forces of flight?",
+    a:["Lift, weight, thrust and drag","Speed, power, heat and pressure","Pitch, roll, yaw and turn","Fuel, air, gravity and wind"],
+    correct:0,
+    why:"Lift, weight, thrust and drag are the four commonly described forces acting on an aircraft in flight."
+  },
+  {
+    q:"Which aircraft is famous for commercial supersonic passenger travel?",
+    a:["Airbus A320","Boeing 747","Concorde","Douglas DC-3"],
+    correct:2,
+    why:"Concorde carried passengers at supersonic speeds during its commercial service."
+  },
+  {
+    q:"What does ATC stand for?",
+    a:["Aircraft Turbine Control","Air Traffic Control","Aviation Travel Code","Automatic Thrust Calculation"],
+    correct:1,
+    why:"Air Traffic Control helps manage aircraft movements and maintain safe separation within its area of responsibility."
+  },
+  {
+    q:"Which force opposes an aircraft moving through the air?",
+    a:["Lift","Thrust","Drag","Weight"],
+    correct:2,
+    why:"Drag is aerodynamic resistance that acts against motion through the air."
+  },
+  {
+    q:"What is the primary purpose of a helicopter's main rotor?",
+    a:["Generate aerodynamic force","Store fuel","Measure altitude","Cool the cabin"],
+    correct:0,
+    why:"The main rotor produces aerodynamic forces that support and manoeuvre the helicopter."
+  },
+  {
+    q:"Which aircraft was the first widely recognised successful powered, controlled aeroplane?",
+    a:["Spitfire","Wright Flyer","Boeing 707","Concorde"],
+    correct:1,
+    why:"The Wright brothers' Flyer completed its historic powered flights in December 1903."
+  },
+  {
+    q:"What does a conventional altimeter primarily estimate?",
+    a:["Fuel temperature","Ground speed","Altitude from pressure","Engine thrust"],
+    correct:2,
+    why:"A pressure altimeter uses atmospheric pressure and a pressure setting to indicate altitude."
+  },
+  {
+    q:"Which airport code belongs to London Heathrow?",
+    a:["LGW","LHR","LCY","STN"],
+    correct:1,
+    why:"LHR is the three-letter IATA airport code for London Heathrow."
+  },
+  {
+    q:"What does a turbofan engine's fan help do?",
+    a:["Move air to produce thrust","Control the landing gear","Measure wind direction","Operate the brakes"],
+    correct:0,
+    why:"The fan moves a large quantity of air, contributing substantially to a turbofan's thrust."
+  },
+  {
+    q:"Which aircraft is known as the Superjumbo?",
+    a:["Airbus A380","Boeing 737","Cessna 172","Airbus A400M"],
+    correct:0,
+    why:"The Airbus A380 is a very large, full-length double-deck passenger airliner."
+  },
+  {
+    q:"What is the main purpose of aircraft landing gear?",
+    a:["Generate lift in cruise","Support the aircraft on the ground","Navigate by satellite","Increase cabin pressure"],
+    correct:1,
+    why:"Landing gear supports the aircraft during ground operations and absorbs landing loads."
+  },
+  {
+    q:"Which organisation is the United Nations' specialised agency for civil aviation?",
+    a:["ICAO","FIFA","UNESCO","WMO"],
+    correct:0,
+    why:"The International Civil Aviation Organization (ICAO) develops international standards and recommended practices for civil aviation."
+  },
+  {
+    q:"What does a runway primarily provide?",
+    a:["A route for aircraft take-off and landing","A passenger waiting area","A place to store baggage","A control tower"],
+    correct:0,
+    why:"Runways are prepared surfaces used for aircraft take-off and landing."
+  },
+  {
+    q:"Which aircraft type is designed to take off and land vertically using rotor blades?",
+    a:["Glider","Helicopter","Conventional airliner","Turboprop airliner"],
+    correct:1,
+    why:"Helicopters use rotors to generate lift and can generally take off and land vertically."
+  }
+];
+
+const aircraftQuestions = [
+  {
+    q:"Which aircraft has a distinctive hump on the upper front of its fuselage?",
+    a:["Boeing 747","Airbus A320","Concorde","Spitfire"],
+    correct:0,
+    why:"The Boeing 747 is recognised by its raised upper-deck section near the nose."
+  },
+  {
+    q:"Which aircraft is a famous British Second World War fighter?",
+    a:["Airbus A380","Spitfire","Boeing 787","Airbus A350"],
+    correct:1,
+    why:"The Supermarine Spitfire was a British fighter that served during the Second World War."
+  },
+  {
+    q:"Which aircraft is designed primarily for long-range strategic reconnaissance and high-speed flight?",
+    a:["Cessna 172","SR-71 Blackbird","Airbus A320","Boeing 737"],
+    correct:1,
+    why:"The SR-71 Blackbird was a high-speed, high-altitude reconnaissance aircraft."
+  },
+  {
+    q:"Which aircraft is a very large military transport developed by Airbus?",
+    a:["A400M Atlas","Concorde","Boeing 777","Spitfire"],
+    correct:0,
+    why:"The Airbus A400M Atlas is a military transport aircraft designed to carry personnel and cargo."
+  },
+  {
+    q:"Which aircraft is associated with the nickname Dreamliner?",
+    a:["Boeing 787","Airbus A380","Boeing 747","Airbus A320"],
+    correct:0,
+    why:"Dreamliner is the name commonly associated with the Boeing 787 family."
+  },
+  {
+    q:"Which aircraft family is widely used for short- and medium-haul airline routes?",
+    a:["Airbus A320 family","SR-71 family","Spitfire family","Concorde family"],
+    correct:0,
+    why:"The Airbus A320 family is widely used by airlines on short- and medium-haul routes."
+  },
+  {
+    q:"Which aircraft is a famous British-French supersonic airliner?",
+    a:["Concorde","Cessna 172","C-130 Hercules","Boeing 737"],
+    correct:0,
+    why:"Concorde was jointly developed by British and French aerospace organisations."
+  },
+  {
+    q:"Which aircraft is a well-known military transport with four turboprop engines?",
+    a:["C-130 Hercules","Airbus A350","Boeing 787","Concorde"],
+    correct:0,
+    why:"The Lockheed C-130 Hercules is a versatile military transport aircraft powered by four turboprop engines."
+  },
+  {
+    q:"Which aircraft is a large twin-engine long-haul Boeing airliner?",
+    a:["Boeing 777","Spitfire","A400M","R22"],
+    correct:0,
+    why:"The Boeing 777 is a wide-body twin-engine airliner used on long-distance routes."
+  },
+  {
+    q:"Which aircraft is a small, widely recognised two-seat training helicopter?",
+    a:["Robinson R22","Airbus A380","Boeing 747","A400M"],
+    correct:0,
+    why:"The Robinson R22 is a light helicopter commonly used for training and other light-duty roles."
+  }
+];
+
+const quiz = document.getElementById("quiz");
+const questionArea = document.getElementById("question-area");
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const feedback = document.getElementById("feedback");
+const feedbackTitle = document.getElementById("feedback-title");
+const feedbackText = document.getElementById("feedback-text");
+const nextBtn = document.getElementById("next");
+const result = document.getElementById("result");
+const progressFill = document.getElementById("progress-fill");
+const scoreEl = document.getElementById("score");
+const questionCount = document.getElementById("question-count");
+const recordEl = document.getElementById("record");
+
+let questions = [];
+let current = 0;
+let score = 0;
+let answered = false;
+let mode = "aviation";
+
+function getBest(key) {
+  try {
+    const value = Number(localStorage.getItem(key));
+    return Number.isFinite(value) && value >= 0 ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+function setBest(key, value) {
+  try {
+    localStorage.setItem(key, String(value));
+  } catch {
+    // The quiz still works if device storage is unavailable.
+  }
+}
+
+function updateRecord() {
+  const aviationBest = getBest("atlasAviationBest");
+  const aircraftBest = getBest("atlasAircraftBest");
+
+  if (aviationBest === null && aircraftBest === null) {
+    recordEl.textContent = "Best score: No games completed yet";
+    return;
+  }
+
+  const parts = [];
+  if (aviationBest !== null) {
+    parts.push("Aviation: " + aviationBest + "/15");
+  }
+  if (aircraftBest !== null) {
+    parts.push("Aircraft: " + aircraftBest + "/10");
+  }
+  recordEl.textContent = "Personal bests — " + parts.join(" · ");
+}
+
+function startGame(selectedMode) {
+  mode = selectedMode;
+  questions = (
+    mode === "aircraft" ? aircraftQuestions : aviationQuestions
+  ).map(item => ({...item}));
+
+  current = 0;
+  score = 0;
+  answered = false;
+
+  document.getElementById("quiz-mode").textContent =
+    mode === "aircraft" ? "Aircraft Challenge" : "Aviation Knowledge Quiz";
+
+  document.getElementById("quiz-title").textContent =
+    mode === "aircraft" ? "Identify the aircraft!" : "Test your aviation knowledge";
+
+  quiz.classList.remove("hidden");
+  questionArea.classList.remove("hidden");
+  result.classList.remove("show");
+
+  quiz.scrollIntoView({behavior:"smooth", block:"start"});
+  renderQuestion();
+}
+
+function renderQuestion() {
+  answered = false;
+  const item = questions[current];
+
+  questionCount.textContent =
+    `Question ${current + 1} of ${questions.length}`;
+
+  scoreEl.textContent = `Score: ${score}`;
+  progressFill.style.width =
+    `${(current / questions.length) * 100}%`;
+
+  questionEl.textContent = item.q;
+  answersEl.replaceChildren();
+  feedback.classList.remove("show");
+  nextBtn.disabled = true;
+  nextBtn.textContent =
+    current === questions.length - 1 ? "See results →" : "Next question →";
+
+  item.a.forEach((answer, index) => {
+    const button = document.createElement("button");
+    button.className = "answer";
+    button.textContent =
+      `${String.fromCharCode(65 + index)}. ${answer}`;
+    button.addEventListener("click", () => chooseAnswer(index));
+    answersEl.append(button);
+  });
+}
+
+function chooseAnswer(index) {
+  if (answered) return;
+  answered = true;
+
+  const item = questions[current];
+  const buttons = answersEl.querySelectorAll("button");
+  const correct = index === item.correct;
+
+  if (correct) score++;
+
+  buttons.forEach((button, i) => {
+    button.disabled = true;
+    if (i === item.correct) button.classList.add("correct");
+    if (i === index && !correct) button.classList.add("incorrect");
+  });
+
+  feedbackTitle.textContent = correct ? "Correct! ✓" : "Not quite.";
+  feedbackText.textContent = item.why;
+  feedback.classList.add("show");
+
+  scoreEl.textContent = `Score: ${score}`;
+  nextBtn.disabled = false;
+  nextBtn.focus();
+}
+
+function finishGame() {
+  questionArea.classList.add("hidden");
+  result.classList.add("show");
+  progressFill.style.width = "100%";
+
+  const total = questions.length;
+  const percentage = Math.round((score / total) * 100);
+
+  document.getElementById("final-score").textContent =
+    `${score}/${total}`;
+
+  let title = "Good effort!";
+  let message = "Keep learning and have another go.";
+
+  if (percentage === 100) {
+    title = "Perfect flight! ✈️";
+    message = "Outstanding — you answered every question correctly.";
+  } else if (percentage >= 80) {
+    title = "Excellent flying!";
+    message = "You have a strong grasp of these aviation topics.";
+  } else if (percentage >= 60) {
+    title = "Well done!";
+    message = "You know quite a bit already. Keep building your knowledge.";
+  }
+
+  document.getElementById("result-title").textContent = title;
+  document.getElementById("result-message").textContent =
+    `${message} You scored ${percentage}%.`;
+
+  const key = mode === "aircraft"
+    ? "atlasAircraftBest"
+    : "atlasAviationBest";
+
+  const best = getBest(key);
+  if (best === null || score > best) {
+    setBest(key, score);
+    document.getElementById("result-message").textContent +=
+      " New personal best!";
+  }
+
+  updateRecord();
+  document.getElementById("play-again").focus();
+}
+
+function returnToGames() {
+  quiz.classList.add("hidden");
+  document.querySelector(".intro").scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+}
+
+nextBtn.addEventListener("click", () => {
+  if (!answered) return;
+
+  if (current < questions.length - 1) {
+    current++;
+    renderQuestion();
+  } else {
+    finishGame();
+  }
+});
+
+document.getElementById("start-aviation").addEventListener("click", () => {
+  startGame("aviation");
+});
+
+document.getElementById("start-aircraft").addEventListener("click", () => {
+  startGame("aircraft");
+});
+
+document.getElementById("quit").addEventListener("click", returnToGames);
+document.getElementById("result-home").addEventListener("click", returnToGames);
+
+document.getElementById("play-again").addEventListener("click", () => {
+  startGame(mode);
+});
+
+updateRecord();
+</script>
+</body>
+</html>
