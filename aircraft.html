@@ -33,7 +33,7 @@
     .card-specs strong { color: var(--text-main); }
     .click-hint { color: var(--accent-gold); font-size: 0.8rem; font-weight: 700; margin-top: 0.75rem; display: block; }
 
-    /* Detail Modal Popup */
+    /* Modal Styling */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -119,11 +119,11 @@
 
     <div class="aircraft-grid" id="aircraftGrid">
       
-      <!-- Boeing 747-400 -->
+      <!-- Boeing 747-400 (Shows genuine 747 with upper hump) -->
       <article class="aircraft-card" data-type="commercial" data-search="boeing 747 queen of the skies commercial widebody airliner" onclick="openDetails('Boeing 747-400', 'Boeing', '13,450 km', 'Mach 0.85', '4x Pratt & Whitney PW4000', '65.1 m', 'The Boeing 747-400 is an iconic long-range widebody passenger jet featuring a distinctive double-deck layout and four turbofan engines.', 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80')">
         <div class="card-img-wrap">
           <span class="card-tag">Commercial</span>
-          <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80" alt="Boeing 747-400" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80" alt="Boeing 747" loading="lazy">
         </div>
         <div class="card-body">
           <h3>Boeing 747-400</h3>
@@ -136,7 +136,7 @@
         </div>
       </article>
 
-      <!-- Airbus A380-800 -->
+      <!-- Airbus A380-800 (Shows genuine double-decker A380) -->
       <article class="aircraft-card" data-type="commercial" data-search="airbus a380 superjumbo double decker widebody" onclick="openDetails('Airbus A380-800', 'Airbus', '15,200 km', 'Mach 0.85', '4x Engine Alliance GP7200', '79.75 m', 'The Airbus A380 is the world\'s largest commercial passenger jet, equipped with a full-length double deck capable of transporting over 500 passengers in quiet long-haul comfort.', 'https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=800&q=80')">
         <div class="card-img-wrap">
           <span class="card-tag">Superjumbo</span>
@@ -153,11 +153,11 @@
         </div>
       </article>
 
-      <!-- Concorde -->
-      <article class="aircraft-card" data-type="supersonic" data-search="concorde supersonic jet bac sud aviation passenger airliner" onclick="openDetails('BAC / Sud Concorde', 'Aérospatiale / BAC', '7,250 km', 'Mach 2.04', '4x Rolls-Royce/Snecma Olympus 593', '25.6 m', 'Concorde was a turbojet-powered supersonic passenger airliner that operated transatlantic routes at more than twice the speed of sound.', 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=800&q=80')">
+      <!-- Concorde (Shows genuine supersonic Concorde delta wing) -->
+      <article class="aircraft-card" data-type="supersonic" data-search="concorde supersonic jet bac sud aviation passenger airliner" onclick="openDetails('BAC / Sud Concorde', 'Aérospatiale / BAC', '7,250 km', 'Mach 2.04', '4x Rolls-Royce/Snecma Olympus 593', '25.6 m', 'Concorde was a turbojet-powered supersonic passenger airliner that operated transatlantic routes at more than twice the speed of sound.', 'https://upload.wikimedia.org/wikipedia/commons/ thumb/f/f9/Concorde_Air_France.JPG/1280px-Concorde_Air_France.JPG')">
         <div class="card-img-wrap">
           <span class="card-tag">Supersonic</span>
-          <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=800&q=80" alt="Concorde supersonic jet" loading="lazy">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Concorde_Air_France.JPG/1280px-Concorde_Air_France.JPG" alt="Concorde Supersonic Jet" loading="lazy">
         </div>
         <div class="card-body">
           <h3>BAC / Sud Concorde</h3>
