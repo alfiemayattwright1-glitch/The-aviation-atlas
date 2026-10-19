@@ -3,177 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aviation Quizzes & Spotter Challenges | The Aviation Atlas</title>
-  <meta name="description" content="Test your aviation knowledge, airport codes, aircraft identification skills, and history trivia with score tracking.">
+  <title>Spotter Academy Quizzes | The Aviation Atlas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   
   <style>
-    .page-header {
-      padding: 5rem 1.5rem 3rem;
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--border-subtle);
-      text-align: center;
-    }
-
-    .page-header h1 {
-      font-family: var(--font-heading);
-      font-size: clamp(2.2rem, 4vw, 3rem);
-      margin-bottom: 0.75rem;
-    }
-
-    .page-header p {
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-      font-size: 1.05rem;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem;
-    }
-
-    .score-board {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 1.25rem 1.75rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-
-    .score-item {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-    }
-
-    .score-item strong {
-      color: var(--accent-gold);
-      font-size: 1.2rem;
-      margin-left: 0.35rem;
-    }
-
-    .quiz-card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 2rem;
-    }
-
-    .question-tag {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--accent-gold);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.75rem;
-      display: inline-block;
-    }
-
-    .question-title {
-      font-family: var(--font-heading);
-      font-size: 1.4rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.35;
-    }
-
-    .options-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .option-btn {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
-      padding: 1rem 1.25rem;
-      border-radius: 6px;
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .option-btn:hover:not([disabled]) {
-      background: rgba(212, 175, 55, 0.1);
-      border-color: var(--accent-gold);
-    }
-
-    .option-btn.correct {
-      background: rgba(34, 197, 94, 0.15) !important;
-      border-color: #22c55e !important;
-      color: #4ade80 !important;
-    }
-
-    .option-btn.incorrect {
-      background: rgba(239, 68, 68, 0.15) !important;
-      border-color: #ef4444 !important;
-      color: #f87171 !important;
-    }
-
-    .feedback-box {
-      padding: 1rem 1.25rem;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
-      display: none;
-    }
-
-    .feedback-box.show {
-      display: block;
-    }
-
-    .feedback-box.correct-bg {
-      background: rgba(34, 197, 94, 0.1);
-      border: 1px solid rgba(34, 197, 94, 0.3);
-      color: #4ade80;
-    }
-
-    .feedback-box.incorrect-bg {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      color: #f87171;
-    }
-
-    .controls-row {
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    .btn-next {
-      background-color: var(--accent-gold);
-      color: var(--bg-dark);
-      border: none;
-      padding: 0.85rem 1.75rem;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-      display: none;
-    }
-
-    .btn-next:hover {
-      background-color: #e5c158;
-    }
+    .page-header { padding: 5rem 1.5rem 3rem; background: var(--bg-card); border-bottom: 1px solid var(--border-subtle); text-align: center; }
+    .page-header h1 { font-family: var(--font-heading); font-size: clamp(2.2rem, 4vw, 3rem); margin-bottom: 0.75rem; }
+    .page-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1.05rem; }
+    .container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .score-board { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.25rem 1.75rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+    .score-item { font-size: 0.95rem; color: var(--text-muted); }
+    .score-item strong { color: var(--accent-gold); font-size: 1.2rem; margin-left: 0.35rem; }
+    .quiz-card { background-color: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 2rem; }
+    .question-tag { font-size: 0.8rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; display: inline-block; }
+    .question-title { font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 1.5rem; line-height: 1.35; }
+    .options-grid { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 1.5rem; }
+    .option-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); color: var(--text-main); padding: 1rem 1.25rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.95rem; text-align: left; cursor: pointer; transition: all 0.2s ease; }
+    .option-btn:hover:not([disabled]) { background: rgba(212, 175, 55, 0.1); border-color: var(--accent-gold); }
+    .option-btn.correct { background: rgba(34, 197, 94, 0.15) !important; border-color: #22c55e !important; color: #4ade80 !important; }
+    .option-btn.incorrect { background: rgba(239, 68, 68, 0.15) !important; border-color: #ef4444 !important; color: #f87171 !important; }
+    .feedback-box { padding: 1rem 1.25rem; border-radius: 6px; font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; display: none; }
+    .feedback-box.show { display: block; }
+    .feedback-box.correct-bg { background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); color: #4ade80; }
+    .feedback-box.incorrect-bg { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; }
+    .controls-row { display: flex; justify-content: flex-end; }
+    .btn-next { background-color: var(--accent-gold); color: var(--bg-dark); border: none; padding: 0.85rem 1.75rem; border-radius: 6px; font-weight: 700; font-size: 0.95rem; cursor: pointer; display: none; }
+    .btn-next:hover { background-color: #e5c158; }
   </style>
 </head>
 <body>
 
-  <!-- Navigation Header -->
   <header>
     <div class="nav-container">
       <a href="index.html" class="logo">The Aviation <span>Atlas</span></a>
-      <button class="mobile-menu-btn" id="menuBtn" onclick="toggleMenu()">☰</button>
+      <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="aircraft.html">Aircraft</a></li>
@@ -185,177 +51,135 @@
     </div>
   </header>
 
-  <!-- Page Header -->
   <section class="page-header">
     <h1>Spotter Academy Quizzes</h1>
-    <p>Test your aircraft identification skills, ICAO airport codes, and flight trivia with live score tracking.</p>
+    <p>Test your aviation expertise. Limited to 5 games per calendar day.</p>
   </section>
 
-  <!-- Main Content -->
   <main class="container">
-    
     <div class="score-board">
+      <div class="score-item">Games Played Today: <strong id="gamesPlayedCount">0</strong> / 5</div>
       <div class="score-item">Current Score: <strong id="currentScore">0</strong></div>
-      <div class="score-item">Best Score: <strong id="bestScore">0</strong></div>
     </div>
 
     <div class="quiz-card" id="quizCard">
-      <span class="question-tag" id="questionCategory">Category: Aircraft Identification</span>
+      <span class="question-tag" id="questionCategory">Category: General Aviation</span>
       <h2 class="question-title" id="questionText">Loading Question...</h2>
-
-      <div class="options-grid" id="optionsContainer">
-        <!-- Dynamic Options Generated via JS -->
-      </div>
-
+      <div class="options-grid" id="optionsContainer"></div>
       <div class="feedback-box" id="feedbackBox"></div>
-
       <div class="controls-row">
         <button class="btn-next" id="nextBtn" onclick="nextQuestion()">Next Question &rarr;</button>
       </div>
     </div>
-
   </main>
 
-  <!-- Footer -->
   <footer>
-    <p>&copy; 2026 The Aviation Atlas. Built for aviation enthusiasts, spotters, and students worldwide.</p>
+    <p>&copy; 2026 The Aviation Atlas. All rights reserved.</p>
   </footer>
 
   <script>
-    function toggleMenu() {
-      const links = document.getElementById('navLinks');
-      links.classList.toggle('open');
-    }
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
 
-    // Quiz Questions Data
-    const questions = [
-      {
-        category: "Airport ICAO Codes",
-        question: "What is the 4-letter ICAO designation code for London Heathrow Airport?",
-        options: ["EGLG", "EGLL", "KJFK", "LHR"],
-        correctIndex: 1,
-        explanation: "EGLL is the official ICAO designator for London Heathrow, whereas LHR is its 3-letter IATA code."
-      },
-      {
-        category: "Aircraft Specifications",
-        question: "Which iconic passenger airliner was nicknamed the 'Queen of the Skies'?",
-        options: ["Airbus A380", "Concorde", "Boeing 747", "Douglas DC-3"],
-        correctIndex: 2,
-        explanation: "The Boeing 747 earned the title 'Queen of the Skies' due to its partial upper deck and major impact on global long-haul travel."
-      },
-      {
-        category: "Supersonic Flight",
-        question: "What was the typical supersonic cruising speed of Concorde in commercial service?",
-        options: ["Mach 1.20", "Mach 2.04", "Mach 3.00", "Mach 0.85"],
-        correctIndex: 1,
-        explanation: "Concorde routinely cruised at Mach 2.04 at altitudes of up to 60,000 feet."
-      },
-      {
-        category: "Aerodynamics",
-        question: "In steady, unaccelerated level flight, which force directly opposes Aircraft Weight?",
-        options: ["Thrust", "Drag", "Lift", "Gravity"],
-        correctIndex: 2,
-        explanation: "Lift generated by the wings directly opposes the force of Weight acting downward."
-      }
+    // Expanded Question Bank
+    const questionBank = [
+      { category: "Airport Codes", question: "What is the ICAO code for London Heathrow?", options: ["EGLL", "EGLG", "LHR", "KJFK"], correct: 0, exp: "EGLL is the 4-letter ICAO code." },
+      { category: "Aircraft", question: "Which aircraft is known as the Queen of the Skies?", options: ["Airbus A380", "Boeing 747", "Concorde", "Boeing 777"], correct: 1, exp: "The Boeing 747 earned this title due to its size and upper deck." },
+      { category: "Supersonic", question: "What was Concorde's typical cruising speed?", options: ["Mach 1.1", "Mach 2.04", "Mach 3.5", "Mach 0.9"], correct: 1, exp: "Concorde cruised at Mach 2.04." },
+      { category: "Aerodynamics", question: "Which force opposes Aircraft Weight?", options: ["Drag", "Thrust", "Lift", "Gravity"], correct: 2, exp: "Lift generated by wings opposes weight." },
+      { category: "Engines", question: "What does ETOPS stand for in aviation?", options: ["Extended-range Twin-engine Operational Performance Standards", "Engine Turbine Overheat Protection System", "Emergency Takeoff Procedure Sequence", "None"], correct: 0, exp: "ETOPS governs twin-engine long-haul flights." },
+      { category: "History", question: "In what year did the Wright brothers make their first flight?", options: ["1901", "1903", "1905", "1910"], correct: 1, exp: "December 17, 1903 at Kitty Hawk." },
+      { category: "Airports", question: "What is the IATA code for Tokyo Haneda Airport?", options: ["NRT", "HND", "KIX", "ITM"], correct: 1, exp: "HND is Tokyo Haneda." }
     ];
 
-    let currentQuestionIndex = 0;
+    // Daily Game Limit Logic via localStorage
+    function checkDailyLimit() {
+      const today = new Date().toDateString();
+      let record = JSON.parse(localStorage.getItem('aviationAtlasDailyGames')) || { date: today, count: 0 };
+      if (record.date !== today) {
+        record = { date: today, count: 0 };
+        localStorage.setItem('aviationAtlasDailyGames', JSON.stringify(record));
+      }
+      return record.count;
+    }
+
+    function incrementDailyLimit() {
+      const today = new Date().toDateString();
+      let record = JSON.parse(localStorage.getItem('aviationAtlasDailyGames')) || { date: today, count: 0 };
+      record.count += 1;
+      localStorage.setItem('aviationAtlasDailyGames', JSON.stringify(record));
+    }
+
+    let playedCount = checkDailyLimit();
+    document.getElementById('gamesPlayedCount').textContent = playedCount;
+
+    let currentQIndex = 0;
     let score = 0;
     let answered = false;
 
-    // Local Storage for High Score
-    let savedBestScore = localStorage.getItem('aviationAtlasBestScore') || 0;
-    document.getElementById('bestScore').textContent = savedBestScore;
+    function initGame() {
+      if (playedCount >= 5) {
+        document.getElementById('quizCard').innerHTML = `
+          <h2 class="question-title">Daily Game Limit Reached</h2>
+          <p style="color: var(--text-muted);">You have played all 5 allocated games for today. Come back tomorrow for more challenges!</p>
+        `;
+        return;
+      }
+      loadQuestion();
+    }
 
     function loadQuestion() {
       answered = false;
-      const q = questions[currentQuestionIndex];
-      
-      document.getElementById('questionCategory').textContent = `Category: ${q.category}`;
-      document.getElementById('questionText').textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}: ${q.question}`;
-      
-      const optionsContainer = document.getElementById('optionsContainer');
-      optionsContainer.innerHTML = '';
-      
-      const feedbackBox = document.getElementById('feedbackBox');
-      feedbackBox.className = 'feedback-box';
-      feedbackBox.style.display = 'none';
+      const q = questionBank[Math.floor(Math.random() * questionBank.length)];
+      currentQIndex = q; // store active
 
+      document.getElementById('questionCategory').textContent = `Category: ${q.category}`;
+      document.getElementById('questionText').textContent = q.question;
+      
+      const container = document.getElementById('optionsContainer');
+      container.innerHTML = '';
+      document.getElementById('feedbackBox').style.display = 'none';
       document.getElementById('nextBtn').style.display = 'none';
 
       q.options.forEach((opt, idx) => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
         btn.textContent = `${String.fromCharCode(65 + idx)}) ${opt}`;
-        btn.onclick = () => selectOption(idx, btn);
-        optionsContainer.appendChild(btn);
+        btn.onclick = () => selectOption(idx, q.correct, q.exp, btn);
+        container.appendChild(btn);
       });
     }
 
-    function selectOption(selectedIndex, selectedBtn) {
+    function selectOption(selected, correct, exp, btn) {
       if (answered) return;
       answered = true;
 
-      const q = questions[currentQuestionIndex];
       const buttons = document.querySelectorAll('.option-btn');
-      const feedbackBox = document.getElementById('feedbackBox');
+      buttons.forEach(b => b.disabled = true);
+      const fb = document.getElementById('feedbackBox');
 
-      buttons.forEach(b => b.setAttribute('disabled', 'true'));
-
-      if (selectedIndex === q.correctIndex) {
-        selectedBtn.classList.add('correct');
+      if (selected === correct) {
+        btn.classList.add('correct');
         score += 10;
         document.getElementById('currentScore').textContent = score;
-
-        if (score > savedBestScore) {
-          savedBestScore = score;
-          localStorage.setItem('aviationAtlasBestScore', savedBestScore);
-          document.getElementById('bestScore').textContent = savedBestScore;
-        }
-
-        feedbackBox.textContent = `✓ Correct! ${q.explanation}`;
-        feedbackBox.classList.add('show', 'correct-bg');
+        fb.textContent = `✓ Correct! ${exp}`;
+        fb.className = 'feedback-box show correct-bg';
       } else {
-        selectedBtn.classList.add('incorrect');
-        buttons[q.correctIndex].classList.add('correct');
-
-        feedbackBox.textContent = `✗ Incorrect. ${q.explanation}`;
-        feedbackBox.classList.add('show', 'incorrect-bg');
+        btn.classList.add('incorrect');
+        buttons[correct].classList.add('correct');
+        fb.textContent = `✗ Incorrect. ${exp}`;
+        fb.className = 'feedback-box show incorrect-bg';
       }
-
       document.getElementById('nextBtn').style.display = 'block';
     }
 
     function nextQuestion() {
-      currentQuestionIndex++;
-      if (currentQuestionIndex < questions.length) {
-        loadQuestion();
-      } else {
-        showQuizResults();
-      }
+      incrementDailyLimit();
+      playedCount = checkDailyLimit();
+      document.getElementById('gamesPlayedCount').textContent = playedCount;
+      initGame();
     }
 
-    function showQuizResults() {
-      const quizCard = document.getElementById('quizCard');
-      quizCard.innerHTML = `
-        <span class="question-tag">Evaluation Complete</span>
-        <h2 class="question-title">Quiz Finished!</h2>
-        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
-          You scored <strong>${score} points</strong> out of ${questions.length * 10} total points.
-        </p>
-        <button class="btn-next" style="display:inline-block;" onclick="restartQuiz()">Restart Quiz</button>
-      `;
-    }
-
-    function restartQuiz() {
-      currentQuestionIndex = 0;
-      score = 0;
-      document.getElementById('currentScore').textContent = 0;
-      location.reload();
-    }
-
-    // Initialize Quiz
-    loadQuestion();
+    initGame();
   </script>
 </body>
 </html>
