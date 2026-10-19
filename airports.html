@@ -1,0 +1,804 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore international airports, their runways, terminals, airlines and aviation history with The Aviation Atlas.">
+  <title>Airport Directory | The Aviation Atlas</title>
+  <style>
+    :root {
+      --navy: #071a30;
+      --blue: #12395c;
+      --gold: #d7ad60;
+      --paper: #f4f6f9;
+      --white: #fff;
+      --ink: #17283a;
+      --muted: #627185;
+      --line: #dce3eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      background: #041120;
+      color: #d8e1ec;
+      padding: 9px 6%;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 1.3px;
+    }
+
+    .brand span { color: var(--gold); }
+
+    .navlinks {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .navlinks a:hover { color: var(--gold); }
+
+    .hero {
+      color: white;
+      padding: 68px 24px 60px;
+      background:
+        linear-gradient(100deg, rgba(4,17,32,.97), rgba(8,36,63,.88)),
+        linear-gradient(135deg, #143d60, #071a30);
+    }
+
+    .hero-inner, main, .footer-inner {
+      max-width: 1120px;
+      margin: auto;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(35px, 6vw, 58px);
+      line-height: 1.1;
+      margin: 12px 0 18px;
+      letter-spacing: -1.5px;
+    }
+
+    .hero p {
+      color: #d1dce8;
+      max-width: 680px;
+      font-size: 17px;
+      margin: 0;
+    }
+
+    .stats {
+      display: flex;
+      gap: 42px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--gold);
+      font-size: 25px;
+    }
+
+    .stat span {
+      font-size: 12px;
+      color: #c7d2df;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    main { padding: 40px 24px 70px; }
+
+    .heading { margin-bottom: 22px; }
+
+    h2 {
+      color: var(--navy);
+      font-size: 27px;
+      line-height: 1.25;
+      margin: 0 0 8px;
+    }
+
+    .heading p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .search-panel {
+      background: white;
+      border: 1px solid var(--line);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 26px;
+    }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 220px;
+      gap: 12px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cbd5e1;
+      background: white;
+      border-radius: 5px;
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    input:focus, select:focus {
+      outline: 2px solid #7da6cc;
+      outline-offset: 1px;
+    }
+
+    .result-count {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .18s, box-shadow .18s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(7,26,48,.09);
+    }
+
+    .card-top {
+      background: var(--navy);
+      color: white;
+      min-height: 115px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .airport-code {
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 31px;
+      letter-spacing: 2px;
+      line-height: 1.2;
+    }
+
+    .airport-type {
+      display: inline-block;
+      margin-top: 9px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #d5dfeb;
+    }
+
+    .card-top::after {
+      content: "✈";
+      position: absolute;
+      right: 12px;
+      bottom: -30px;
+      font-size: 100px;
+      color: rgba(255,255,255,.08);
+      transform: rotate(-10deg);
+    }
+
+    .card-body {
+      padding: 19px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card h3 {
+      color: var(--navy);
+      margin: 0 0 4px;
+      font-size: 20px;
+      line-height: 1.3;
+    }
+
+    .location {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 13px;
+    }
+
+    .card p {
+      font-size: 14px;
+      margin: 0 0 18px;
+      color: #425267;
+    }
+
+    .details {
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      margin-top: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .detail span {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+
+    .detail strong { font-size: 13px; }
+
+    .read-more {
+      margin-top: 18px;
+      border: 0;
+      background: var(--navy);
+      color: white;
+      padding: 12px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .read-more:hover { background: var(--blue); }
+
+    .empty {
+      display: none;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+    }
+
+    .notice {
+      margin-top: 35px;
+      padding: 22px;
+      border-left: 4px solid var(--gold);
+      background: white;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer {
+      background: #041120;
+      color: #c5d0dd;
+      padding: 32px 24px;
+      font-size: 13px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    footer strong { color: white; }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(1,10,20,.78);
+      z-index: 10;
+      padding: 20px;
+      overflow-y: auto;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-box {
+      width: 100%;
+      max-width: 680px;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .modal-head {
+      background: var(--navy);
+      color: white;
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 15px;
+    }
+
+    .modal-head h2 { color: white; margin-top: 10px; }
+
+    .close {
+      background: transparent;
+      border: 1px solid #8090a3;
+      color: white;
+      border-radius: 4px;
+      padding: 7px 11px;
+      cursor: pointer;
+    }
+
+    .modal-content { padding: 25px; }
+
+    .modal-content h3 {
+      color: var(--navy);
+      margin-top: 24px;
+    }
+
+    .modal-content p { color: #425267; }
+
+    .fact-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .fact-table td {
+      border-bottom: 1px solid var(--line);
+      padding: 11px 8px;
+      vertical-align: top;
+    }
+
+    .fact-table td:first-child {
+      color: var(--muted);
+      width: 40%;
+    }
+
+    @media (max-width: 800px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 560px) {
+      .grid, .search-row { grid-template-columns: 1fr; }
+      .stats { gap: 22px; }
+      .nav { align-items: flex-start; }
+      .navlinks { gap: 13px; }
+      .hero { padding-top: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">Independent aviation reference · Airport directory</div>
+
+  <header>
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="index.html">THE AVIATION <span>ATLAS</span></a>
+      <div class="navlinks">
+        <a href="index.html">Home</a>
+        <a href="aircraft.html">Aircraft</a>
+        <a href="airports.html">Airports</a>
+        <a href="knowledge.html">Knowledge</a>
+        <a href="history.html">History</a>
+        <a href="games.html">Games</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">The airport collection</div>
+      <h1>Explore the world's airports.</h1>
+      <p>
+        Discover major international hubs, regional gateways and remarkable
+        airfields. Learn about airport codes, runway layouts, locations,
+        operations and the role each airport plays in global aviation.
+      </p>
+      <div class="stats">
+        <div class="stat"><strong id="total-count">18</strong><span>Airport profiles</span></div>
+        <div class="stat"><strong>6</strong><span>Regions represented</span></div>
+        <div class="stat"><strong>01</strong><span>Growing catalogue</span></div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section>
+      <div class="heading">
+        <h2>Airport directory</h2>
+        <p>Search by airport name, IATA code, ICAO code or country.</p>
+      </div>
+
+      <div class="search-panel">
+        <div class="search-row">
+          <input id="search" type="search"
+            placeholder="Search airports, cities or codes..."
+            aria-label="Search airports">
+          <select id="country" aria-label="Filter airports by country">
+            <option value="all">All countries</option>
+          </select>
+        </div>
+        <div class="result-count" id="result-count" aria-live="polite"></div>
+      </div>
+
+      <div class="grid" id="airport-grid"></div>
+      <div class="empty" id="empty">
+        No airports match your search. Try a different name, code or country.
+      </div>
+    </section>
+
+    <div class="notice">
+      <strong>Data and accuracy</strong><br>
+      This is an introductory selection, not a complete airport database.
+      Runway lengths, airport facilities and operating arrangements can change.
+      Check official airport and aviation-authority publications before relying
+      on operational information. The directory will need more verified records
+      to grow into a catalogue of thousands of airports.
+    </div>
+  </main>
+
+  <div class="modal" id="airport-modal" role="dialog"
+       aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div>
+          <div class="airport-code" id="modal-code"></div>
+          <h2 id="modal-title"></h2>
+          <div id="modal-location"></div>
+        </div>
+        <button class="close" id="close-modal" aria-label="Close airport details">
+          Close ✕
+        </button>
+      </div>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>The Aviation Atlas</strong><br>Your World of Aviation</div>
+      <div>Aircraft · Airports · Knowledge · History</div>
+      <div>Independent aviation reference project</div>
+    </div>
+  </footer>
+
+  <script>
+    const airports = [
+      {
+        name:"Heathrow Airport", city:"London", country:"United Kingdom",
+        iata:"LHR", icao:"EGLL", type:"International hub",
+        runways:"2", elevation:"25 m",
+        description:"Heathrow is a major international airport serving London and the wider United Kingdom. It is a significant hub for long-haul passenger travel.",
+        history:"The airport developed from an airfield in the west of London and opened for civilian use in the post-war period. It expanded over subsequent decades as international air travel grew.",
+        operations:"Heathrow handles international and domestic passenger services, cargo movements and connecting traffic. Its runway capacity and surrounding urban environment shape its operations.",
+        note:"Runway count refers to its two principal parallel runways. Check official airport information for current operating details."
+      },
+      {
+        name:"Gatwick Airport", city:"London area", country:"United Kingdom",
+        iata:"LGW", icao:"EGKK", type:"International airport",
+        runways:"1 main runway", elevation:"62 m",
+        description:"Gatwick is a major airport south of London, serving domestic and international routes with a large range of scheduled and leisure services.",
+        history:"Gatwick developed from an earlier aerodrome and grew into one of the UK's principal commercial airports during the expansion of post-war air travel.",
+        operations:"Its traffic includes short-haul European services and long-haul routes. The airport is known for operating with a single main runway.",
+        note:"Runway operating arrangements can vary; consult the airport's official publications for current details."
+      },
+      {
+        name:"Manchester Airport", city:"Manchester", country:"United Kingdom",
+        iata:"MAN", icao:"EGCC", type:"International hub",
+        runways:"2", elevation:"78 m",
+        description:"Manchester Airport is a major UK airport outside London, connecting northern England with destinations across Europe and beyond.",
+        history:"Opened in 1938 as Ringway Airport, it expanded considerably as passenger aviation developed. It became an important international gateway for northern England.",
+        operations:"The airport serves scheduled passenger flights, charter services and cargo. It supports a wide range of domestic and international routes.",
+        note:"Facilities and route networks change over time; consult official airport information for current services."
+      },
+      {
+        name:"John F. Kennedy International", city:"New York City", country:"United States",
+        iata:"JFK", icao:"KJFK", type:"International hub",
+        runways:"4", elevation:"4 m",
+        description:"JFK is a major international airport serving New York City, with extensive transatlantic and other long-haul services.",
+        history:"Opened as New York International Airport in 1948, it was later renamed in memory of President John F. Kennedy.",
+        operations:"The airport serves international and domestic passengers and cargo. Multiple runways support its large and complex flight operation.",
+        note:"Runway configuration and usage may change with maintenance and weather."
+      },
+      {
+        name:"Los Angeles International", city:"Los Angeles", country:"United States",
+        iata:"LAX", icao:"KLAX", type:"International hub",
+        runways:"4", elevation:"38 m",
+        description:"Los Angeles International Airport is a major gateway on the US Pacific coast and an important centre for transpacific travel.",
+        history:"The airport began commercial operations in the 1930s and expanded substantially with the growth of jet aviation and international travel.",
+        operations:"LAX handles domestic and international passengers, cargo, and a broad network of airline services.",
+        note:"Terminal assignments and airline facilities are subject to change."
+      },
+      {
+        name:"Chicago O'Hare International", city:"Chicago", country:"United States",
+        iata:"ORD", icao:"KORD", type:"International hub",
+        runways:"8", elevation:"204 m",
+        description:"O'Hare is a major airport serving the Chicago region and an important connecting hub in the US airline network.",
+        history:"Developed from a wartime airfield, O'Hare grew rapidly after the Second World War and became one of the country's most important airline airports.",
+        operations:"The airport's multiple runways and extensive terminal facilities support high volumes of domestic and international traffic.",
+        note:"Runway and taxiway configurations are complex; use official aeronautical information for operational details."
+      },
+      {
+        name:"Hartsfield-Jackson Atlanta", city:"Atlanta", country:"United States",
+        iata:"ATL", icao:"KATL", type:"Major connecting hub",
+        runways:"5", elevation:"313 m",
+        description:"Atlanta's airport is a major passenger hub in the United States and has frequently ranked among the world's busiest airports by passenger traffic.",
+        history:"The airport began as a former auto-racing site and developed into a major aviation facility as Atlanta's importance as a transport centre grew.",
+        operations:"A large connecting network allows passengers to transfer between domestic and international flights. The airport also handles significant cargo activity.",
+        note:"Busiest-airport rankings depend on the year and whether passenger or aircraft movement figures are used."
+      },
+      {
+        name:"Dubai International", city:"Dubai", country:"United Arab Emirates",
+        iata:"DXB", icao:"OMDB", type:"International hub",
+        runways:"2", elevation:"19 m",
+        description:"Dubai International is a major connecting hub linking Europe, Asia, Africa and other regions through extensive international services.",
+        history:"Opened in 1960, the airport expanded as Dubai developed into a major international business and travel centre.",
+        operations:"It is strongly associated with long-haul connecting traffic and the operations of Emirates and other international carriers.",
+        note:"Passenger volumes and terminal arrangements change; consult official airport information."
+      },
+      {
+        name:"Singapore Changi", city:"Singapore", country:"Singapore",
+        iata:"SIN", icao:"WSSS", type:"International hub",
+        runways:"3 runway strips", elevation:"7 m",
+        description:"Changi is a major Southeast Asian aviation hub, known for extensive international connectivity and passenger facilities.",
+        history:"Opened in 1981, Changi expanded through successive development projects as Singapore strengthened its role in regional and global air transport.",
+        operations:"The airport supports long-haul and regional passenger flights, cargo traffic and connections across Asia and beyond.",
+        note:"Runway availability and operating configuration depend on airport development and operational arrangements."
+      },
+      {
+        name:"Tokyo Haneda", city:"Tokyo", country:"Japan",
+        iata:"HND", icao:"RJTT", type:"Major passenger airport",
+        runways:"4", elevation:"11 m",
+        description:"Haneda is one of Tokyo's principal airports and handles extensive domestic traffic alongside a substantial international network.",
+        history:"Opened in 1931, Haneda grew alongside Tokyo. International services expanded significantly in the twenty-first century.",
+        operations:"The airport serves domestic and international airlines and is important for travel between Tokyo and other Japanese cities.",
+        note:"Airport statistics vary by reporting year and measurement."
+      },
+      {
+        name:"Tokyo Narita", city:"Narita", country:"Japan",
+        iata:"NRT", icao:"RJAA", type:"International airport",
+        runways:"2", elevation:"41 m",
+        description:"Narita is an important international gateway for the Tokyo region, with significant passenger and cargo operations.",
+        history:"Opened in 1978 after a lengthy and contested development process, Narita became a central airport for international services to the Tokyo region.",
+        operations:"The airport serves long-haul and regional routes and has an important role in air freight.",
+        note:"Airline allocations between Narita and Haneda vary by carrier and route."
+      },
+      {
+        name:"Hong Kong International", city:"Hong Kong", country:"China",
+        iata:"HKG", icao:"VHHH", type:"International hub",
+        runways:"3", elevation:"9 m",
+        description:"Hong Kong International Airport is a major passenger and cargo gateway in East Asia.",
+        history:"Opened on the island of Chek Lap Kok in 1998, replacing the former Kai Tak Airport in central Kowloon.",
+        operations:"The airport has a major role in international passenger services and global air freight.",
+        note:"The airport's runway system and facilities have developed over time; check official sources for current details."
+      },
+      {
+        name:"Sydney Kingsford Smith", city:"Sydney", country:"Australia",
+        iata:"SYD", icao:"YSSY", type:"International airport",
+        runways:"3", elevation:"6 m",
+        description:"Sydney Airport is Australia's principal international gateway and a major centre for domestic air travel.",
+        history:"The airport's origins date to the early days of aviation in the 1920s. It developed into a major commercial airport as air travel expanded.",
+        operations:"It handles domestic and international passenger flights, freight and connecting services.",
+        note:"Noise restrictions and curfews affect some operations. Consult official airport information for current rules."
+      },
+      {
+        name:"Frankfurt Airport", city:"Frankfurt", country:"Germany",
+        iata:"FRA", icao:"EDDF", type:"International hub",
+        runways:"4", elevation:"111 m",
+        description:"Frankfurt Airport is a major European connecting hub and a significant centre for passenger and cargo transport.",
+        history:"Opened in 1936, the airport developed into one of Europe's key aviation gateways during the post-war expansion of air travel.",
+        operations:"The airport serves extensive European and intercontinental passenger networks and substantial cargo traffic.",
+        note:"The number of runways does not alone determine available capacity; configuration and operating restrictions also matter."
+      },
+      {
+        name:"Amsterdam Airport Schiphol", city:"Amsterdam", country:"Netherlands",
+        iata:"AMS", icao:"EHAM", type:"International hub",
+        runways:"6", elevation:"-3 m",
+        description:"Schiphol is a major European airport serving Amsterdam and the Netherlands, with extensive international connections.",
+        history:"The airport began as a military airfield in 1916 and developed into an international commercial hub after the First World War.",
+        operations:"Schiphol serves passenger airlines, cargo operators and connecting traffic. Its low-lying location makes water management and drainage important.",
+        note:"Runway use depends on wind, weather, noise procedures and air traffic conditions."
+      },
+      {
+        name:"Adolfo Suárez Madrid-Barajas", city:"Madrid", country:"Spain",
+        iata:"MAD", icao:"LEMD", type:"International hub",
+        runways:"4", elevation:"610 m",
+        description:"Madrid-Barajas is Spain's principal international gateway and an important connection point between Europe and Latin America.",
+        history:"Opened in 1931, the airport expanded as Madrid grew and international air travel developed.",
+        operations:"The airport serves European, domestic and long-haul routes, with strong links to Latin America.",
+        note:"Airport traffic and route data change over time."
+      },
+      {
+        name:"São Paulo–Guarulhos", city:"São Paulo", country:"Brazil",
+        iata:"GRU", icao:"SBGR", type:"International hub",
+        runways:"2", elevation:"750 m",
+        description:"Guarulhos is a major international airport serving São Paulo and one of Brazil's leading gateways for long-haul travel.",
+        history:"Opened in 1985, the airport developed to serve the growing demand for air transport in the São Paulo metropolitan region.",
+        operations:"It handles domestic and international passenger services and cargo traffic.",
+        note:"The airport is at relatively high elevation; aircraft performance can be affected by elevation and temperature."
+      },
+      {
+        name:"Cape Town International", city:"Cape Town", country:"South Africa",
+        iata:"CPT", icao:"FACT", type:"International airport",
+        runways:"1 principal runway", elevation:"46 m",
+        description:"Cape Town International serves South Africa's Western Cape and connects the region with domestic and international destinations.",
+        history:"The airport developed through the twentieth century and became an important gateway for tourism and regional travel.",
+        operations:"It handles domestic services, regional African routes and selected long-haul international flights.",
+        note:"Wind conditions and surrounding terrain are important considerations in local flight operations."
+      }
+    ];
+
+    const grid = document.getElementById("airport-grid");
+    const search = document.getElementById("search");
+    const countrySelect = document.getElementById("country");
+    const resultCount = document.getElementById("result-count");
+    const empty = document.getElementById("empty");
+    const modal = document.getElementById("airport-modal");
+
+    document.getElementById("total-count").textContent = airports.length;
+
+    const countries = [...new Set(airports.map(a => a.country))].sort();
+    countries.forEach(country => {
+      const option = document.createElement("option");
+      option.value = country;
+      option.textContent = country;
+      countrySelect.appendChild(option);
+    });
+
+    function renderAirports() {
+      const term = search.value.trim().toLowerCase();
+      const selectedCountry = countrySelect.value;
+
+      const results = airports.filter(a => {
+        const searchable = [
+          a.name, a.city, a.country, a.iata, a.icao, a.type, a.description
+        ].join(" ").toLowerCase();
+
+        return searchable.includes(term) &&
+          (selectedCountry === "all" || a.country === selectedCountry);
+      });
+
+      grid.innerHTML = results.map(a => {
+        const index = airports.indexOf(a);
+        return `
+          <article class="card">
+            <div class="card-top">
+              <div class="airport-code">${a.iata}</div>
+              <div class="airport-type">${a.type}</div>
+            </div>
+            <div class="card-body">
+              <h3>${a.name}</h3>
+              <div class="location">${a.city}, ${a.country}</div>
+              <p>${a.description}</p>
+              <div class="details">
+                <div class="detail">
+                  <span>ICAO code</span><strong>${a.icao}</strong>
+                </div>
+                <div class="detail">
+                  <span>Elevation</span><strong>${a.elevation}</strong>
+                </div>
+              </div>
+              <button class="read-more" data-index="${index}">
+                Explore airport →
+              </button>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      resultCount.textContent =
+        `Showing ${results.length} of ${airports.length} airport profiles`;
+      empty.style.display = results.length ? "none" : "block";
+      grid.style.display = results.length ? "grid" : "none";
+    }
+
+    function openAirport(index) {
+      const a = airports[index];
+      if (!a) return;
+
+      document.getElementById("modal-code").textContent =
+        `${a.iata} / ${a.icao}`;
+      document.getElementById("modal-title").textContent = a.name;
+      document.getElementById("modal-location").textContent =
+        `${a.city}, ${a.country}`;
+
+      document.getElementById("modal-content").innerHTML = `
+        <h3>Airport overview</h3>
+        <p>${a.description}</p>
+
+        <h3>Airport information</h3>
+        <table class="fact-table">
+          <tr><td>Airport name</td><td>${a.name}</td></tr>
+          <tr><td>City or region</td><td>${a.city}</td></tr>
+          <tr><td>Country</td><td>${a.country}</td></tr>
+          <tr><td>IATA code</td><td>${a.iata}</td></tr>
+          <tr><td>ICAO code</td><td>${a.icao}</td></tr>
+          <tr><td>Airport type</td><td>${a.type}</td></tr>
+          <tr><td>Runway information</td><td>${a.runways}</td></tr>
+          <tr><td>Elevation</td><td>${a.elevation}</td></tr>
+        </table>
+
+        <h3>History and development</h3>
+        <p>${a.history}</p>
+
+        <h3>Airport operations</h3>
+        <p>${a.operations}</p>
+
+        <h3>Data note</h3>
+        <p>${a.note}</p>
+        <p><small>This is an educational overview, not an operational flight-planning source. Verify current details through official airport publications and aeronautical information services.</small></p>
+      `;
+
+      modal.classList.add("open");
+      document.getElementById("close-modal").focus();
+    }
+
+    grid.addEventListener("click", event => {
+      const button = event.target.closest("button[data-index]");
+      if (button) openAirport(Number(button.dataset.index));
+    });
+
+    search.addEventListener("input", renderAirports);
+    countrySelect.addEventListener("change", renderAirports);
+
+    document.getElementById("close-modal").addEventListener("click", () => {
+      modal.classList.remove("open");
+    });
+
+    modal.addEventListener("click", event => {
+      if (event.target === modal) modal.classList.remove("open");
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") modal.classList.remove("open");
+    });
+
+    renderAirports();
+  </script>
+</body>
+</html>
