@@ -14,7 +14,7 @@
     .hero {
       position: relative;
       padding: 6rem 1.5rem 5rem;
-      background: linear-gradient(180deg, rgba(10, 14, 23, 0.6) 0%, var(--bg-dark) 100%),
+      background: linear-gradient(180deg, rgba(10, 14, 23, 0.65) 0%, var(--bg-dark) 100%),
                   url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
       text-align: center;
       border-bottom: 1px solid var(--border-subtle);
@@ -112,4 +112,90 @@
         <span class="hub-link-text">Browse Aircraft &rarr;</span>
       </a>
 
-      <a href="airports.html" class="hub-card
+      <a href="airports.html" class="hub-card">
+        <div class="hub-icon">🛫</div>
+        <h3>Airport Hubs</h3>
+        <p>Discover world airport terminals, runway configurations, ICAO/IATA lookup codes, and spotter locations.</p>
+        <span class="hub-link-text">Explore Airports &rarr;</span>
+      </a>
+
+      <a href="knowledge.html" class="hub-card">
+        <div class="hub-icon">📖</div>
+        <h3>Flight Knowledge</h3>
+        <p>Learn aerodynamics, jet engine mechanics, navigation fundamentals, and pilot training principles.</p>
+        <span class="hub-link-text">Start Learning &rarr;</span>
+      </a>
+
+      <a href="history.html" class="hub-card">
+        <div class="hub-icon">📜</div>
+        <h3>Aviation History</h3>
+        <p>Chronological timeline tracking Wright Brothers, early jet pioneers, supersonic flight, and modern space planes.</p>
+        <span class="hub-link-text">View Timeline &rarr;</span>
+      </a>
+
+      <a href="games.html" class="hub-card">
+        <div class="hub-icon">🎯</div>
+        <h3>Spotter Quizzes</h3>
+        <p>Test your aircraft identification skills, airport code memory, and aviation trivia with stored score tracking.</p>
+        <span class="hub-link-text">Play Quizzes &rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section" style="border-top: 1px solid var(--border-subtle);">
+    <div class="section-title-wrap">
+      <h2>Latest Dispatch &amp; Spotter News</h2>
+      <p>Recent developments across global fleet operations, spotter submissions, and editorial news.</p>
+    </div>
+
+    <div class="news-grid">
+      <article class="featured-article">
+        <!-- Direct flight shot of commercial jetliner cruising -->
+        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80" alt="Commercial passenger jet flying above clouds" class="article-img">
+        <div class="article-body">
+          <div class="article-meta">Fleet Analysis • Editorial</div>
+          <h3>The Next Generation of Ultra-Long-Haul Travel</h3>
+          <p>How modern twin-engine airliners are transforming non-stop transatlantic and transpacific routing while replacing classic four-engine widebodies.</p>
+          <a href="knowledge.html" class="btn btn-secondary">Read Aircraft Analysis</a>
+        </div>
+      </article>
+
+      <div class="news-sidebar">
+        <div class="news-item">
+          <div class="article-meta">Spotter Community</div>
+          <h4>Heathrow Queen's Terminal Spotter Guide</h4>
+          <p>Top viewing locations and camera lens recommendations for South Runway departures.</p>
+        </div>
+
+        <div class="news-item">
+          <div class="article-meta">Historical Archive</div>
+          <h4>70 Years of Commercial Jet Aviation</h4>
+          <p>Reflecting on the de Havilland Comet and the inaugural transatlantic jet services.</p>
+        </div>
+
+        <div class="news-item">
+          <div class="article-meta">Academy Update</div>
+          <h4>Understanding High-Bypass Turbofans</h4>
+          <p>A simple breakdown of thrust generation and engine efficiency in modern airliners.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="community-box">
+      <h3>Join The Aviation Community</h3>
+      <p>Get quarterly spotter guides, fleet retirement alerts, and platform updates sent to your inbox.</p>
+      <a href="games.html" class="btn btn-primary">Take the Spotter Challenge</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 The Aviation Atlas. Built for aviation enthusiasts, spotters, and students worldwide.</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
