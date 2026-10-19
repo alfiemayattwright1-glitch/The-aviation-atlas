@@ -4,348 +4,517 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Explore aircraft, airports, aviation history, plane spotting and aviation games with The Aviation Atlas.">
+<meta name="description" content="Explore aviation facts, aircraft, airports, aviation history and take the Aviation Atlas quiz.">
 <title>The Aviation Atlas | Your World of Aviation</title>
 <style>
 :root{--bg:#07111f;--panel:#101f32;--panel2:#192d46;--text:#f4f7fc;--muted:#a9b8cc;--gold:#f3c66b;--line:#293d55}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.6}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.65}
 button{font:inherit;cursor:pointer}
-header{position:sticky;top:0;z-index:10;background:#081321f2;border-bottom:1px solid var(--line)}
-.nav{max-width:1200px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.brand{font-size:19px;font-weight:900}.brand span{color:var(--gold)}
+header{position:sticky;top:0;z-index:10;background:#081321f5;border-bottom:1px solid var(--line)}
+.nav{max-width:1100px;margin:auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-weight:900;font-size:19px}.brand span,.gold{color:var(--gold)}
 nav{display:flex;gap:7px;flex-wrap:wrap}
 nav button,.secondary{background:transparent;color:var(--text);border:1px solid var(--line);padding:9px 12px;border-radius:9px}
 nav button:hover,.secondary:hover{border-color:var(--gold)}
-main{max-width:1200px;margin:auto;padding:22px 20px 60px}
-.hero{min-height:400px;border-radius:22px;overflow:hidden;display:flex;align-items:flex-end;padding:clamp(24px,5vw,52px);background:linear-gradient(90deg,#06101af5,#06101a9c 60%,#06101a30),url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1800&q=85') center/cover}
+main{max-width:1100px;margin:auto;padding:22px 18px 55px}
+.hero{min-height:370px;display:flex;align-items:flex-end;padding:clamp(25px,5vw,50px);border-radius:22px;background:linear-gradient(90deg,#06101af5,#06101a9c),url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1600&q=85') center/cover}
 .eyebrow{color:var(--gold);font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase}
-h1{font-size:clamp(40px,6vw,70px);line-height:1.04;margin:12px 0;max-width:700px;letter-spacing:-2px}
-.hero p{color:#d7e2ef;max-width:570px;font-size:17px}
-.primary{background:var(--gold);color:#152033;border:0;border-radius:10px;padding:11px 15px;font-weight:800}
-.primary:hover{filter:brightness(1.08)}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-section{margin-top:38px;scroll-margin-top:100px}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:15px}
-h2{font-size:25px;margin:0;letter-spacing:-.5px}h3{margin:10px 0 5px}
+h1{font-size:clamp(38px,7vw,66px);line-height:1.08;margin:12px 0;letter-spacing:-1.5px}
+h2{font-size:27px;margin:0 0 10px}h3{margin:8px 0}
+p{margin:8px 0 14px}
 .muted{color:var(--muted)}
+.primary{background:var(--gold);color:#152033;border:0;border-radius:9px;padding:11px 15px;font-weight:bold}
+.secondary{padding:10px 14px}
+section{margin-top:35px;scroll-margin-top:90px}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;min-width:0}
-.card img{width:100%;height:165px;object-fit:cover;display:block;background:#20344c}
-.card-body{padding:17px}.card p{color:var(--muted);font-size:14px}
-.tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:bold}
-.card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
-.card-actions button{font-size:13px}
-.game{background:linear-gradient(135deg,#142a43,#0c1829)}
-.game-icon{font-size:32px}
-.choice-list{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:15px}
-.choice{background:var(--panel2);border:1px solid #334c68;border-radius:10px;color:white;padding:12px;text-align:left}
-.choice:hover:not(:disabled){border-color:var(--gold)}
-.choice:disabled{opacity:.75}
-.result{min-height:48px;margin-top:12px;color:var(--gold);font-weight:bold}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:22px}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
-.chip{border:1px solid #42566d;border-radius:99px;padding:9px 12px;background:#0a1727;color:var(--text)}
-.chip.active{background:var(--gold);color:#152033;border-color:var(--gold)}
-.empty{border:1px dashed #40536a;border-radius:13px;padding:22px;color:var(--muted)}
-footer{border-top:1px solid var(--line);padding:28px 20px;color:var(--muted);text-align:center}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--gold);color:#101b2b;padding:12px 18px;border-radius:10px;display:none;z-index:20;font-weight:bold;max-width:90%}
-@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){main{padding:14px 12px 45px}.nav{padding:12px}nav{width:100%}nav button{flex:1;padding:8px 5px;font-size:12px}.grid{grid-template-columns:1fr}h1{letter-spacing:-1px}.hero{padding:24px;min-height:350px}.choice-list{grid-template-columns:1fr 1fr}}
+.card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:19px;min-width:0}
+.card p{color:var(--muted);font-size:14px}
+.tag{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);font-weight:bold}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.stat{background:#0a1727;border:1px solid var(--line);padding:13px;border-radius:12px}
+.stat strong{display:block;color:var(--gold);font-size:24px}
+.progress{height:8px;background:#26384c;border-radius:9px;overflow:hidden;margin:14px 0}
+.progress div{height:100%;background:var(--gold);width:0;transition:width .2s}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.answer{background:var(--panel2);border:1px solid #344b65;color:var(--text);padding:13px;border-radius:10px;text-align:left;min-height:52px}
+.answer:hover:not(:disabled){border-color:var(--gold)}
+.answer:disabled{cursor:default}
+.answer.correct{border-color:#5ac78d;background:#163b35}
+.answer.wrong{border-color:#ef8888;background:#47252d}
+.feedback{padding:13px;border-radius:10px;background:#0a1727;margin:12px 0}
+.hidden{display:none!important}
+.article-image{width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:#0a1727;color:var(--text);border:1px solid var(--line);padding:8px 11px;border-radius:20px}
+.chip.active{background:var(--gold);color:#142033}
+footer{text-align:center;border-top:1px solid var(--line);padding:26px 15px;color:var(--muted)}
+#toast{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);background:var(--gold);color:#142033;padding:10px 16px;border-radius:9px;display:none;z-index:30;max-width:90%}
+@media(max-width:750px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.nav{padding:12px}nav{width:100%}nav button{flex:1;font-size:12px;padding:8px 4px}.hero{min-height:330px;padding:24px}.answers{grid-template-columns:1fr 1fr}.stats{gap:6px}.stat{padding:9px}.stat strong{font-size:20px}}
 </style>
 </head>
 <body>
 <header>
 <div class="nav">
-  <div class="brand">THE AVIATION <span>ATLAS</span></div>
-  <nav aria-label="Main navigation">
-    <button data-scroll="discover">Discover</button>
-    <button data-scroll="games">Games</button>
-    <button data-scroll="saved">Saved</button>
-    <button data-scroll="interests">My interests</button>
-  </nav>
+<div class="brand">THE AVIATION <span>ATLAS</span></div>
+<nav aria-label="Main navigation">
+<button data-go="home">Home</button>
+<button data-go="discover">Discover</button>
+<button data-go="quiz">Quiz</button>
+<button data-go="saved">Saved</button>
+</nav>
 </div>
 </header>
 
 <main>
+<section id="home" style="margin-top:0">
 <div class="hero">
-  <div>
-    <div class="eyebrow">Your world of aviation</div>
-    <h1>Look up.<br>Discover more.</h1>
-    <p>Discover remarkable aircraft, incredible airports, aviation history and challenges that put your knowledge to the test.</p>
-    <div class="actions">
-      <button class="primary" data-scroll="for-you">Explore my Atlas →</button>
-      <button class="secondary" data-scroll="games">Play a challenge</button>
-    </div>
-  </div>
+<div>
+<div class="eyebrow">Your world of aviation</div>
+<h1>Look up.<br>Discover more.</h1>
+<p>Explore the aircraft, airports, engineering and history that make aviation extraordinary.</p>
+<div class="actions">
+<button class="primary" data-go="discover">Explore aviation →</button>
+<button class="secondary" data-go="quiz">Take the quiz</button>
 </div>
-
-<section id="for-you">
-  <div class="section-head">
-    <div><div class="eyebrow">Picked for your interests</div><h2>Your next great read</h2></div>
-    <span class="muted" id="personal-label">Personalised reading</span>
-  </div>
-  <div class="grid" id="recommendations"></div>
+</div>
+</div>
+<div class="stats">
+<div class="stat"><strong id="bank-count">0</strong><span class="muted">Quiz questions</span></div>
+<div class="stat"><strong id="remaining">5</strong><span class="muted">Games left today</span></div>
+<div class="stat"><strong id="best">0/10</strong><span class="muted">Best score</span></div>
+</div>
 </section>
 
-<section id="games">
-  <div class="section-head">
-    <div><div class="eyebrow">Test your knowledge</div><h2>The Atlas Flight Club</h2></div>
-    <span class="muted">Play · Learn · Improve</span>
-  </div>
-  <div class="grid">
-    <article class="card game"><div class="card-body">
-      <div class="game-icon">✈️</div><div class="tag">Game 01 · Aircraft</div>
-      <h3>Guess the Aircraft</h3><p id="aircraft-question"></p>
-      <div class="choice-list" id="aircraft-choices"></div>
-      <div class="result" id="aircraft-result" aria-live="polite"></div>
-      <button class="secondary" id="aircraft-next">Next question ↗</button>
-    </div></article>
-    <article class="card game"><div class="card-body">
-      <div class="game-icon">🌍</div><div class="tag">Game 02 · Airports</div>
-      <h3>Airport Code Challenge</h3><p id="airport-question"></p>
-      <div class="choice-list" id="airport-choices"></div>
-      <div class="result" id="airport-result" aria-live="polite"></div>
-      <button class="secondary" id="airport-next">Next question ↗</button>
-    </div></article>
-    <article class="card game"><div class="card-body">
-      <div class="game-icon">🧠</div><div class="tag">Game 03 · Daily challenge</div>
-      <h3>One Question a Day</h3><p id="daily-question"></p>
-      <div class="choice-list" id="daily-choices"></div>
-      <div class="result" id="daily-result" aria-live="polite"></div>
-      <p class="muted" id="score">Your quiz score: 0 correct</p>
-    </div></article>
-  </div>
+<section id="quiz">
+<div class="eyebrow">The Atlas Flight Club</div>
+<h2>Aviation knowledge challenge</h2>
+<p class="muted">Ten randomly selected questions per game. Learn from every answer and try to beat your best score.</p>
+<div class="panel">
+<div id="quiz-start">
+<h3>Ready for take-off?</h3>
+<p>Each game contains 10 questions from our aviation question bank. You can play up to five games each day on this browser.</p>
+<p class="muted" id="limit-message"></p>
+<button class="primary" id="start-game">Start a new game →</button>
+</div>
+<div id="quiz-play" class="hidden">
+<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+<span class="tag" id="question-number">Question 1 of 10</span>
+<span class="muted" id="live-score">Score: 0</span>
+</div>
+<div class="progress"><div id="progress-fill"></div></div>
+<h3 id="question-text"></h3>
+<div class="answers" id="answer-options"></div>
+<div id="feedback" class="feedback hidden" aria-live="polite"></div>
+<div class="actions">
+<button class="primary hidden" id="next-question">Next question →</button>
+</div>
+</div>
+<div id="quiz-finished" class="hidden">
+<div class="eyebrow">Flight complete</div>
+<h2 id="final-score">Your score: 0/10</h2>
+<p id="final-message"></p>
+<div class="progress"><div id="final-progress"></div></div>
+<p id="new-best" class="gold"></p>
+<button class="primary" id="play-again">Play again →</button>
+<button class="secondary" data-go="discover">Explore aviation</button>
+</div>
+</div>
 </section>
 
 <section id="discover">
-  <div class="section-head"><div><div class="eyebrow">Explore the world</div><h2>Choose your next destination</h2></div></div>
-  <div class="grid" id="categories"></div>
+<div class="eyebrow">Explore the world</div>
+<h2>Aviation knowledge library</h2>
+<p class="muted">Choose a topic to learn key facts. Save topics to revisit them later.</p>
+<div class="grid" id="topics"></div>
+</section>
+
+<section id="reading" class="hidden">
+<button class="secondary" id="back-topics">← All topics</button>
+<div id="article-content" class="panel" style="margin-top:14px"></div>
 </section>
 
 <section id="saved">
-  <div class="section-head"><div><div class="eyebrow">Your personal collection</div><h2>Saved to your Atlas</h2></div><span class="muted">Saved on this device</span></div>
-  <div class="grid" id="saved-list"></div>
+<div class="eyebrow">Your collection</div>
+<h2>Saved topics</h2>
+<div id="saved-list" class="grid"></div>
 </section>
 
-<section id="interests">
-  <div class="section-head"><div><div class="eyebrow">Make it yours</div><h2>What fascinates you?</h2></div></div>
-  <div class="panel">
-    <p class="muted">Choose your favourite subjects and your recommended reading will update.</p>
-    <div class="chips" id="interest-options"></div>
-    <button class="primary" id="apply-interests">Update my recommendations</button>
-  </div>
-</section>
-
-<section>
-  <div class="panel">
-    <div class="eyebrow">More than a website</div>
-    <h2>Your next aviation obsession starts here.</h2>
-    <p class="muted">Discover a new aircraft, learn an airport code, test your knowledge and build your own collection of aviation stories.</p>
-    <button class="primary" data-scroll="for-you">Find something interesting →</button>
-  </div>
+<section id="about">
+<div class="panel">
+<div class="eyebrow">The Aviation Atlas</div>
+<h2>Curiosity takes flight.</h2>
+<p class="muted">An independent aviation learning project covering aircraft, airports, history, flight science and the people who make aviation possible.</p>
+<p class="muted">Quiz scores and daily game counts are stored in this browser. They do not automatically transfer to another device.</p>
+</div>
 </section>
 </main>
 
-<footer><strong>THE AVIATION ATLAS</strong> · Your World of Aviation<br><span class="muted">An independent aviation discovery project.</span></footer>
+<footer><strong>THE AVIATION ATLAS</strong><br>Your World of Aviation · Independent aviation learning project</footer>
 <div id="toast" role="status"></div>
 
 <script>
 "use strict";
 
-const articles = [
-{id:"a1",title:"Inside the Airbus A380",cat:"Commercial aviation",desc:"Explore the engineering and passenger experience behind the iconic double-deck airliner.",img:"https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=900&q=80",time:"7 min read"},
-{id:"a2",title:"How Airports Actually Work",cat:"Airports",desc:"From taxiways to terminals, discover how airports coordinate aircraft and people.",img:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80",time:"6 min read"},
-{id:"a3",title:"The Golden Age of Flight",cat:"Aviation history",desc:"Explore inventions and pioneering journeys that transformed air travel.",img:"https://images.unsplash.com/photo-1474302770737-173ee21bab63?auto=format&fit=crop&w=900&q=80",time:"8 min read"},
-{id:"a4",title:"A Beginner's Guide to Plane Spotting",cat:"Plane spotting",desc:"Learn about aircraft identification, flight tracking and responsible spotting.",img:"https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=900&q=80",time:"5 min read"},
-{id:"a5",title:"Military Aircraft Explained",cat:"Military aviation",desc:"Understand the roles of fighters, transports, trainers and surveillance aircraft.",img:"https://images.unsplash.com/photo-1559060017-445fb9722f2a?auto=format&fit=crop&w=900&q=80",time:"9 min read"},
-{id:"a6",title:"Why Aircraft Fly So High",cat:"How flight works",desc:"Discover the basics of lift, air density and why cruising altitude matters.",img:"https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=900&q=80",time:"4 min read"},
-{id:"a7",title:"The World's Most Remarkable Airports",cat:"Airports",desc:"Discover airports known for their approaches, locations and design.",img:"https://images.unsplash.com/photo-1518306721680-6e8a6e6e2d8b?auto=format&fit=crop&w=900&q=80",time:"7 min read"},
-{id:"a8",title:"Recognising Aircraft Families",cat:"Plane spotting",desc:"Use engines, winglets, windows and landing gear as clues to identify aircraft.",img:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80",time:"6 min read"},
-{id:"a9",title:"The Future of Sustainable Flight",cat:"How flight works",desc:"Explore ideas being developed to reduce aviation's environmental impact.",img:"https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=900&q=80",time:"6 min read"}
+const $=id=>document.getElementById(id);
+const store={
+ get(k,f){try{const v=localStorage.getItem("atlas2-"+k);return v===null?f:JSON.parse(v)}catch(e){return f}},
+ set(k,v){try{localStorage.setItem("atlas2-"+k,JSON.stringify(v))}catch(e){}}
+};
+function dayKey(){const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+function dailyCount(){const d=store.get("day","");return d===dayKey()?store.get("games",0):0}
+function notify(s){const t=$("toast");t.textContent=s;t.style.display="block";clearTimeout(notify.timer);notify.timer=setTimeout(()=>t.style.display="none",2400)}
+function go(id){const el=$(id);if(!el)return;el.scrollIntoView({behavior:"smooth",block:"start"})}
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
+
+const topics=[
+{id:"airliners",title:"Commercial aircraft",icon:"✈️",desc:"The machines that carry passengers around the world.",body:`<h2>Commercial aircraft</h2>
+<p>Commercial airliners are designed to transport passengers or cargo efficiently. They range from regional turboprops to large, long-range jet aircraft.</p>
+<h3>Two major manufacturers</h3>
+<p><strong>Airbus</strong> and <strong>Boeing</strong> produce many of the world's most widely used large passenger jets. Other manufacturers, including Embraer and ATR, build aircraft used on regional routes.</p>
+<h3>Aircraft families</h3>
+<p>The Airbus A320 family and Boeing 737 family are widely used for short- and medium-haul routes. The Boeing 787 and Airbus A350 are modern wide-body aircraft designed for long-haul operations.</p>
+<h3>Wide-body and narrow-body</h3>
+<p>Narrow-body aircraft generally have one passenger aisle. Wide-body aircraft have two aisles and a wider cabin, often making them suitable for high-capacity or long-distance services.</p>`},
+{id:"airports",title:"Airports and codes",icon:"🌍",desc:"Runways, terminals, navigation and airport identifiers.",body:`<h2>How airports work</h2>
+<p>An airport is a coordinated transport system. Aircraft use runways for take-off and landing, taxiways to move around the airfield, and aprons or stands for parking, boarding and servicing.</p>
+<h3>Airport codes</h3>
+<p>Many airports use three-letter IATA codes on tickets and baggage tags. ICAO codes are generally four letters and are commonly used in flight planning and operational communication.</p>
+<ul><li><strong>LHR</strong> — London Heathrow</li><li><strong>LGW</strong> — London Gatwick</li><li><strong>JFK</strong> — New York John F. Kennedy</li><li><strong>CDG</strong> — Paris Charles de Gaulle</li><li><strong>HND</strong> — Tokyo Haneda</li><li><strong>SIN</strong> — Singapore Changi</li></ul>
+<h3>Runway numbers</h3>
+<p>Runway numbers are based approximately on the magnetic direction of the runway, rounded to the nearest ten degrees with the final digit removed. Opposite runway directions differ by 18 numbers.</p>`},
+{id:"science",title:"How flight works",icon:"🔬",desc:"Lift, drag, thrust, weight and the atmosphere.",body:`<h2>The science of flight</h2>
+<p>Four forces are often used to explain flight: lift, weight, thrust and drag. Their balance changes during take-off, climb, cruise, descent and landing.</p>
+<h3>Lift</h3>
+<p>Lift is the aerodynamic force acting perpendicular to the airflow. Wing shape, angle of attack, airspeed and air density all influence how much lift is produced.</p>
+<h3>Thrust and drag</h3>
+<p>Engines or propellers provide thrust. Drag is aerodynamic resistance opposing movement through the air. Aircraft performance depends on how these forces interact.</p>
+<h3>Why cruise at altitude?</h3>
+<p>At typical airliner cruise altitudes, the air is thinner than at sea level. This can reduce aerodynamic drag, although aircraft must still maintain suitable speed, engine performance and safety margins.</p>
+<h3>Pressurised cabins</h3>
+<p>At high altitude, outside air pressure is too low for comfortable unprotected breathing. Pressurisation maintains a more suitable cabin pressure for passengers and crew.</p>`},
+{id:"history",title:"Aviation history",icon:"📜",desc:"Milestones that changed how people travel by air.",body:`<h2>Milestones in aviation</h2>
+<ul><li><strong>1903:</strong> The Wright brothers made their powered, controlled heavier-than-air flights at Kitty Hawk, North Carolina.</li><li><strong>1914:</strong> Scheduled passenger airline service began in Florida using a Benoist flying boat.</li><li><strong>1940s:</strong> The development of practical jet engines transformed military and later commercial aviation.</li><li><strong>1952:</strong> The de Havilland Comet entered scheduled jet passenger service.</li><li><strong>1969:</strong> The Boeing 747 made its first flight.</li><li><strong>1969:</strong> Concorde and the Boeing 747 both made their first flights in 1969.</li><li><strong>1976:</strong> Concorde began scheduled supersonic passenger services.</li><li><strong>2005:</strong> The Airbus A380 made its first flight.</li></ul>
+<p>Aviation history is shaped by engineering advances, navigation, safety improvements, regulation and the growth of global air transport.</p>`},
+{id:"spotting",title:"Plane spotting",icon:"📸",desc:"Identify aircraft and learn responsible spotting habits.",body:`<h2>A beginner's guide to plane spotting</h2>
+<p>Plane spotting is the hobby of observing and identifying aircraft. Spotters may record registrations, aircraft types, airline liveries and locations.</p>
+<h3>Identification clues</h3>
+<ul><li>Engine number, placement and shape.</li><li>Winglets or wingtip devices.</li><li>Landing gear arrangement.</li><li>Tail shape and fuselage proportions.</li><li>Airline colours and registration markings.</li></ul>
+<h3>Useful habits</h3>
+<p>Check local airport rules, use public viewing areas where permitted, obey signs and staff instructions, and never enter restricted areas. Keep a safe distance from roads and aircraft movement areas.</p>`},
+{id:"military",title:"Military aviation",icon:"🛩️",desc:"Understand the different roles of military aircraft.",body:`<h2>Military aircraft roles</h2>
+<p>Military aviation includes many types of aircraft, each designed for particular missions.</p>
+<h3>Common roles</h3>
+<ul><li><strong>Fighters:</strong> Designed primarily for air-to-air combat, often with additional roles.</li><li><strong>Transport aircraft:</strong> Move personnel, equipment and supplies.</li><li><strong>Trainers:</strong> Help pilots learn and maintain flying skills.</li><li><strong>Tankers:</strong> Transfer fuel to compatible aircraft in flight.</li><li><strong>Maritime patrol aircraft:</strong> Monitor large sea areas and support search operations.</li><li><strong>Helicopters:</strong> Can support transport, rescue, observation and other missions.</li></ul>
+<p>Aircraft design involves trade-offs among range, speed, payload, manoeuvrability, operating cost and maintenance requirements.</p>`},
+{id:"engines",title:"Aircraft engines",icon:"⚙️",desc:"Turbofans, turboprops, piston engines and propellers.",body:`<h2>Aircraft propulsion</h2>
+<h3>Turbofan engines</h3>
+<p>Turbofans are widely used on modern jet airliners. A large fan moves air, while the engine core supplies energy. Much of a high-bypass turbofan's thrust comes from air moved by the fan.</p>
+<h3>Turboprops</h3>
+<p>Turboprop engines use a gas turbine to drive a propeller. They are often effective on regional routes and at lower speeds than typical jet airliners.</p>
+<h3>Piston engines</h3>
+<p>Many small general-aviation aircraft use piston engines. These engines burn fuel in cylinders to produce mechanical power, which commonly turns a propeller.</p>
+<h3>Why propellers?</h3>
+<p>Propellers accelerate a large mass of air backwards, producing forward thrust. Their efficiency depends on factors including airspeed, blade design and operating conditions.</p>`},
+{id:"safety",title:"Aviation safety",icon:"🛡️",desc:"Training, procedures, maintenance and safety systems.",body:`<h2>How aviation safety works</h2>
+<p>Aviation safety depends on layers of protection rather than a single device or procedure.</p>
+<h3>Maintenance and inspections</h3>
+<p>Aircraft are maintained according to approved schedules and technical requirements. Inspections help identify wear, damage and faults before they become more serious problems.</p>
+<h3>Air traffic control</h3>
+<p>Air traffic services help maintain safe separation, manage traffic flows and provide information to pilots. Procedures vary according to airspace, weather and the type of operation.</p>
+<h3>Training and procedures</h3>
+<p>Pilots and crew train for routine operations and abnormal situations. Checklists, standard operating procedures, reporting systems and investigation of incidents support continual improvement.</p>`},
+{id:"environment",title:"The future of flight",icon:"🌱",desc:"Research into emissions, fuels and new aircraft concepts.",body:`<h2>The future of aviation</h2>
+<p>Reducing aviation's environmental impact involves aircraft design, engines, operations, infrastructure and energy supply.</p>
+<h3>Sustainable aviation fuel</h3>
+<p>Sustainable aviation fuels can be produced from eligible feedstocks and pathways. Their lifecycle emissions depend on how the fuel is produced, transported and used.</p>
+<h3>More efficient aircraft</h3>
+<p>Improved aerodynamics, lighter structures and more efficient engines can reduce fuel use. Operational improvements can also help reduce unnecessary fuel burn.</p>
+<h3>Electric and hydrogen concepts</h3>
+<p>Electric propulsion and hydrogen-powered aircraft are being explored for particular applications. Battery mass, storage, infrastructure, range and certification remain important challenges.</p>`}
 ];
 
-const categories = [
-{title:"Commercial Aviation",cat:"Commercial aviation",icon:"🛫",desc:"Airliners, airlines and passenger flight."},
-{title:"Military Aviation",cat:"Military aviation",icon:"🛩️",desc:"Aircraft roles, technology and history."},
-{title:"Airports Around the World",cat:"Airports",icon:"🌐",desc:"Terminals, runways and fascinating destinations."},
-{title:"Plane Spotting",cat:"Plane spotting",icon:"📸",desc:"Aircraft identification and spotting guides."},
-{title:"Aviation History",cat:"Aviation history",icon:"📜",desc:"People, machines and moments that changed flight."},
-{title:"How Flight Works",cat:"How flight works",icon:"🔬",desc:"The science and engineering behind aviation."}
+let savedTopics=store.get("savedTopics",[]);
+function renderTopics(){
+$("topics").innerHTML=topics.map(t=>`<article class="card"><div class="tag">Explore a topic</div><h3>${t.icon} ${t.title}</h3><p>${t.desc}</p><div class="actions"><button class="primary open-topic" data-id="${t.id}">Read guide →</button><button class="secondary save-topic" data-id="${t.id}">${savedTopics.includes(t.id)?"★ Saved":"☆ Save"}</button></div></article>`).join("");
+document.querySelectorAll(".open-topic").forEach(b=>b.addEventListener("click",()=>openTopic(b.dataset.id)));
+document.querySelectorAll(".save-topic").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.id;savedTopics=savedTopics.includes(id)?savedTopics.filter(x=>x!==id):[...savedTopics,id];store.set("savedTopics",savedTopics);renderTopics();renderSaved();notify("Saved collection updated.")}));
+}
+function openTopic(id){const t=topics.find(x=>x.id===id);if(!t)return;$("article-content").innerHTML=`<div class="tag">Aviation knowledge</div>${t.body}<hr style="border-color:var(--line);margin:22px 0"><button class="secondary save-topic" data-id="${t.id}">${savedTopics.includes(t.id)?"★ Saved":"☆ Save this guide"}</button>`;$("article-content").querySelector(".save-topic").addEventListener("click",()=>{savedTopics=savedTopics.includes(id)?savedTopics.filter(x=>x!==id):[...savedTopics,id];store.set("savedTopics",savedTopics);renderTopics();renderSaved();openTopic(id);notify("Saved collection updated.")});$("reading").classList.remove("hidden");go("reading")}
+function renderSaved(){$("saved-list").innerHTML=savedTopics.length?topics.filter(t=>savedTopics.includes(t.id)).map(t=>`<article class="card"><div class="tag">Saved guide</div><h3>${t.icon} ${t.title}</h3><p>${t.desc}</p><button class="primary" data-read="${t.id}">Open guide →</button></article>`).join(""):'<div class="panel"><p class="muted">You have no saved guides yet. Choose ☆ Save on a topic to keep it here.</p></div>';$("saved-list").querySelectorAll("[data-read]").forEach(b=>b.addEventListener("click",()=>openTopic(b.dataset.read)))}
+$("back-topics").addEventListener("click",()=>{ $("reading").classList.add("hidden");go("discover")});
+
+/* Question bank. Each fact generates differently worded questions.
+   Distractors are selected from the same verified category. */
+const aircraft=[
+["Airbus A380","Airbus","double-deck passenger jet"],
+["Airbus A350","Airbus","long-haul wide-body jet"],
+["Airbus A320","Airbus","narrow-body passenger jet"],
+["Airbus A220","Airbus","small mainline passenger jet"],
+["Boeing 737","Boeing","narrow-body passenger jet"],
+["Boeing 747","Boeing","large passenger jet with a distinctive upper-deck hump"],
+["Boeing 777","Boeing","wide-body long-haul jet"],
+["Boeing 787 Dreamliner","Boeing","long-haul wide-body jet"],
+["Boeing 767","Boeing","wide-body twin-engine jet"],
+["Boeing 757","Boeing","narrow-body jet"],
+["Embraer E190","Embraer","regional passenger jet"],
+["ATR 72","ATR","regional turboprop airliner"],
+["Concorde","Aérospatiale/BAC","supersonic passenger aircraft"],
+["de Havilland Comet","de Havilland","early commercial jet airliner"],
+["Cessna 172","Cessna","light general-aviation aircraft"],
+["Piper PA-28","Piper","light general-aviation aircraft"],
+["Lockheed C-130 Hercules","Lockheed","military transport aircraft"],
+["Boeing C-17 Globemaster III","Boeing","military transport aircraft"],
+["Boeing KC-46 Pegasus","Boeing","aerial refuelling tanker"],
+["Eurofighter Typhoon","Eurofighter","multirole combat aircraft"],
+["F-16 Fighting Falcon","General Dynamics/Lockheed Martin","multirole fighter"],
+["F-35 Lightning II","Lockheed Martin","stealth multirole combat aircraft"],
+["F/A-18 Super Hornet","Boeing","carrier-capable multirole fighter"],
+["A-10 Thunderbolt II","Fairchild Republic","close air support aircraft"],
+["P-8 Poseidon","Boeing","maritime patrol aircraft"],
+["Boeing 727","Boeing","three-engine passenger jet"],
+["McDonnell Douglas DC-10","McDonnell Douglas","three-engine wide-body jet"],
+["MD-11","McDonnell Douglas","three-engine wide-body jet"],
+["Airbus Beluga","Airbus","oversized cargo transport aircraft"],
+["Antonov An-124","Antonov","heavy cargo transport aircraft"],
+["Boeing 707","Boeing","early commercial jet airliner"],
+["de Havilland Canada DHC-6 Twin Otter","de Havilland Canada","utility twin-engine turboprop"],
+["Pilatus PC-12","Pilatus","single-engine turboprop utility aircraft"],
+["Beechcraft King Air","Beechcraft","twin-engine turboprop aircraft"],
+["Gulfstream G650","Gulfstream","long-range business jet"],
+["Cirrus SR22","Cirrus","single-engine piston aircraft"]
+];
+const airports=[
+["LHR","London Heathrow","United Kingdom"],
+["LGW","London Gatwick","United Kingdom"],
+["MAN","Manchester Airport","United Kingdom"],
+["EDI","Edinburgh Airport","United Kingdom"],
+["BHX","Birmingham Airport","United Kingdom"],
+["JFK","John F. Kennedy International Airport","United States"],
+["LAX","Los Angeles International Airport","United States"],
+["ORD","Chicago O'Hare International Airport","United States"],
+["ATL","Hartsfield-Jackson Atlanta International Airport","United States"],
+["SFO","San Francisco International Airport","United States"],
+["CDG","Paris Charles de Gaulle Airport","France"],
+["ORY","Paris Orly Airport","France"],
+["AMS","Amsterdam Airport Schiphol","Netherlands"],
+["FRA","Frankfurt Airport","Germany"],
+["MUC","Munich Airport","Germany"],
+["MAD","Adolfo Suárez Madrid–Barajas Airport","Spain"],
+["BCN","Barcelona–El Prat Airport","Spain"],
+["FCO","Rome Fiumicino Airport","Italy"],
+["DXB","Dubai International Airport","United Arab Emirates"],
+["DOH","Hamad International Airport","Qatar"],
+["SIN","Singapore Changi Airport","Singapore"],
+["HND","Tokyo Haneda Airport","Japan"],
+["NRT","Narita International Airport","Japan"],
+["ICN","Incheon International Airport","South Korea"],
+["SYD","Sydney Airport","Australia"],
+["MEL","Melbourne Airport","Australia"],
+["YYZ","Toronto Pearson International Airport","Canada"],
+["YVR","Vancouver International Airport","Canada"],
+["GRU","São Paulo/Guarulhos International Airport","Brazil"],
+["CPT","Cape Town International Airport","South Africa"],
+["IST","Istanbul Airport","Türkiye"],
+["ZRH","Zurich Airport","Switzerland"],
+["VIE","Vienna International Airport","Austria"],
+["CPH","Copenhagen Airport","Denmark"],
+["OSL","Oslo Airport","Norway"],
+["HEL","Helsinki Airport","Finland"],
+["DEL","Indira Gandhi International Airport","India"],
+["BOM","Chhatrapati Shivaji Maharaj International Airport","India"],
+["KUL","Kuala Lumpur International Airport","Malaysia"],
+["BKK","Suvarnabhumi Airport","Thailand"]
+];
+const facts=[
+["What does ATC stand for?","Air Traffic Control",["Aircraft Travel Cabin","Air Terminal Code","Aviation Training Course"],"Air traffic control services help manage aircraft movements and maintain safe separation."],
+["What is a runway mainly used for?","Aircraft take-off and landing",["Passenger security screening","Aircraft painting","Baggage sorting"],"Runways provide the surface used for take-off and landing."],
+["What is a taxiway?","A path for aircraft moving around an aerodrome",["A passenger boarding bridge","A type of aircraft engine","A runway lighting pattern"],"Taxiways connect runways with aprons, stands and other parts of an airport."],
+["What does IATA commonly assign to airports?","Three-letter location codes",["Four-digit aircraft serials","Two-word airline names","Five-digit runway codes"],"IATA airport codes are commonly three letters, such as LHR."],
+["How many letters are in a standard ICAO location indicator?","Four",["Two","Three","Five"],"ICAO location indicators for aerodromes commonly use four letters."],
+["What are the four commonly described forces of flight?","Lift, weight, thrust and drag",["Pressure, heat, sound and light","Speed, fuel, range and altitude","Pitch, yaw, roll and trim"],"Lift, weight, thrust and drag are the four forces used in a basic flight model."],
+["What does a pitot-static system help measure?","Air data such as airspeed and altitude",["Cabin entertainment volume","Fuel colour","Passenger weight only"],"Pitot and static pressure measurements support airspeed and altitude indications."],
+["What is an aircraft black box generally designed to do?","Record flight data and cockpit audio",["Control the autopilot by itself","Store passenger passports","Provide engine thrust"],"Flight data and cockpit voice recorders preserve information useful for investigations."],
+["What is a turbofan?","A gas-turbine engine with a large fan",["A piston engine with no moving parts","A type of landing gear","A runway guidance light"],"Turbofans use a fan and a gas-turbine core to produce thrust."],
+["What does a turboprop use to produce much of its thrust?","A propeller driven by a turbine engine",["A large cabin fan","A rocket nozzle only","An electric train motor"],"A gas turbine drives a propeller on a turboprop aircraft."],
+["What is a glider designed to do?","Fly without a conventional powered engine during the glide",["Carry hundreds of passengers","Refuel other aircraft","Land vertically in all conditions"],"Gliders use rising air and energy management to remain aloft without continuous engine thrust."],
+["What is a helicopter's main lifting rotor used for?","Producing lift and enabling controlled flight",["Pressurising the cabin","Cooling airport runways","Loading baggage"],"The rotor accelerates air to produce the forces needed for helicopter flight."],
+["What is a flight plan?","Information about an intended flight provided to relevant services",["A passenger meal list","An aircraft paint design","A list of airport shops"],"Flight plans communicate information such as route, timing and aircraft details."],
+["What is a NOTAM used to communicate?","Important information about facilities, services or hazards affecting flight",["An aircraft's retail price","A passenger's seat preference","A plane's paint colour"],"NOTAMs alert aviation users to relevant temporary or time-critical information."],
+["What is an apron at an airport?","An area where aircraft park and are serviced",["A section of the passenger cabin","An engine component","A weather satellite"],"Aprons provide aircraft stands and space for loading, servicing and boarding."],
+["What is a wide-body airliner typically characterised by?","A wider fuselage, usually with two passenger aisles",["Having no wings","Using only piston engines","Always having three engines"],"Wide-body passenger aircraft typically have twin aisles."],
+["What does a flight recorder help investigators do?","Reconstruct aspects of a flight",["Issue airline tickets","Direct airport parking","Replace air traffic control"],"Recorded flight data and cockpit audio can support safety investigations."],
+["What is a crosswind?","Wind blowing across an aircraft's direction of travel or runway",["Wind that always comes from behind","Air inside a pressurised cabin","A type of engine fuel"],"Crosswind is wind with a component perpendicular to the direction of travel or runway."],
+["What does autopilot do?","Controls selected aspects of aircraft flight automatically",["Guarantees that no accident can happen","Replaces every pilot duty","Makes weather forecasts"],"Autopilot systems can control selected flight functions but require appropriate monitoring and operation."],
+["What is a flight simulator used for?","Training and practising flight procedures",["Manufacturing jet fuel","Building airport runways","Measuring baggage weight"],"Simulators allow crews to practise normal and abnormal procedures in a controlled environment."],
+["What is a transponder used for?","Responding to surveillance interrogations with aircraft information",["Moving landing gear manually","Pressurising tyres only","Starting passenger entertainment"],"Transponders provide responses that help surveillance systems identify or track aircraft."],
+["What does altitude describe in aviation?","Height relative to a specified reference, commonly mean sea level",["The number of seats in an aircraft","An engine's paint code","The length of a runway only"],"Altitude is a vertical distance referenced to a specified datum."],
+["What does heading describe?","The direction an aircraft's nose points",["The aircraft's passenger capacity","The temperature of the cabin","The number of engines"],"Heading is the direction in which the aircraft is pointed."],
+["What does aileron primarily control?","Roll",["Cabin pressure","Engine fuel type","Landing light brightness"],"Ailerons create a rolling moment by changing lift on opposite wings."],
+["What does a rudder primarily control?","Yaw",["Pitch","Cabin temperature","Wheel braking only"],"The rudder acts on the vertical tail to control yaw."],
+["What does an elevator primarily control on a conventional aircraft?","Pitch",["Roll","Cabin lighting","Engine bypass ratio"],"The elevator changes the aircraft's pitching moment."],
+["What does a spoiler do on many aircraft?","Disrupts lift and increases drag when deployed",["Adds passenger seats","Produces all engine thrust","Changes the airport code"],"Spoilers reduce lift and can increase drag."],
+["What are flaps commonly used for?","Increasing lift and drag for take-off or landing configurations",["Changing the aircraft registration","Pressurising the cabin","Measuring runway length"],"Flaps alter wing characteristics to support lower-speed operations."],
+["Why are aircraft cabins pressurised at high altitude?","To maintain a suitable cabin pressure for people",["To increase runway length","To make wings invisible","To remove the need for oxygen systems"],"Outside air pressure at high altitude is too low for comfortable unprotected breathing."],
+["What is a go-around?","An aborted landing approach followed by a climb away",["A baggage carousel rotation","An engine maintenance inspection","A taxiway crossing"],"Pilots may go around when a landing is not suitable or safe to continue."],
+["What is a NOTAM's primary audience?","Aviation personnel who need relevant operational information",["Only aircraft manufacturers' shareholders","Only airline passengers buying meals","Only aircraft photographers"],"NOTAMs disseminate operational information to aviation users."],
+["What is an aircraft's registration used for?","Identifying the individual aircraft under its registration system",["Naming every airport it visits","Indicating the pilot's age","Showing the number of passengers on board"],"Aircraft registration marks identify an aircraft within the relevant national system."],
+["What is a hangar?","A building used to house or maintain aircraft",["A runway centreline marking","An air traffic radio frequency","A passenger boarding pass"],"Hangars protect aircraft and provide space for maintenance and storage."],
+["What is a flight deck?","The area where pilots operate the aircraft",["The airport car park","The aircraft's cargo pallet","The baggage reclaim hall"],"The flight deck contains the controls and displays used by the flight crew."],
+["What is a black box usually coloured?","Bright orange",["Black","Transparent","Dark blue"],"Flight recorders are commonly bright orange to make recovery easier; 'black box' is the familiar nickname."],
+["What is the purpose of de-icing an aircraft?","Removing ice or frost that can affect safe operation",["Making the aircraft fly supersonically","Increasing passenger cabin space","Changing its registration"],"Ice can alter aerodynamic performance, so approved procedures are used to remove or prevent it."],
+["What does supersonic mean?","Faster than the local speed of sound",["Slower than walking speed","Flying only at night","Using a propeller"],"Supersonic flight occurs above Mach 1 under the relevant atmospheric conditions."],
+["What is a flight's cruising phase?","The relatively steady part of flight between climb and descent",["The aircraft's maintenance period","The boarding process","The baggage loading stage"],"Cruise typically follows climb and precedes descent."],
+["What is an airline hub?","An airport used as a major connection point in an airline's network",["A type of engine turbine","A runway light colour","A passenger safety card"],"Hub airports help airlines connect passengers between multiple routes."],
+["What is a cargo aircraft primarily designed to carry?","Freight and goods",["Only airport staff","Only runway lights","Only weather balloons"],"Cargo aircraft are configured to transport freight."],
+["What is a seaplane designed to do?","Operate from water in suitable conditions",["Operate only underground","Fly without wings","Travel only on railway tracks"],"Seaplanes can take off from and land on water."],
+["What is an aircraft's fuselage?","The main body of the aircraft",["The wingtip light","The runway surface","The engine exhaust only"],"The fuselage houses occupants or payload and connects major aircraft structures."],
+["What is the empennage?","The tail assembly of an aircraft",["The passenger boarding stairs","The landing runway","The fuel truck"],"The empennage includes tail surfaces that contribute to stability and control."],
+["What is a winglet designed to help reduce?","Wingtip-related aerodynamic drag",["Cabin seat count","Airport noise from announcements","Landing gear tyre pressure"],"Winglets can reduce induced drag associated with wingtip vortices."],
+["What is an aircraft's payload?","The passengers, baggage or cargo it carries",["The runway's compass direction","The outside air temperature only","The number of airport terminals"],"Payload is the load carried, such as passengers, baggage or freight."],
+["What is a jet bridge?","A movable enclosed walkway between terminal and aircraft",["An aircraft engine type","A runway lighting system","A weather radar display"],"Jet bridges allow passengers to board or leave an aircraft from a terminal."],
+["What is a runway threshold?","The beginning of the runway portion available for landing",["The end of an airport's car park","The cabin's rear bulkhead","A type of aircraft engine"],"The threshold marks the start of the runway area designated for landing."],
+["What is an air traffic control tower used for?","Providing visual oversight and control services at an airport",["Building aircraft wings","Storing passenger luggage","Manufacturing fuel"],"Tower controllers manage relevant airport traffic, including runway operations."],
+["What is an aircraft checklist for?","Helping crews complete required actions in the correct sequence",["Replacing all training","Predicting every weather event","Calculating passenger ticket prices"],"Checklists support consistent completion of important procedures."],
+["What is a turbine?","A rotating machine driven by flowing fluid or gas",["A passenger boarding pass","A runway number","An airport security lane"],"Turbines extract energy from moving fluid or gas to produce rotation."],
+["What does Mach number compare?","An object's speed with the local speed of sound",["Fuel weight with passenger weight","Runway width with runway length","Altitude with cabin temperature"],"Mach number is the ratio of true airspeed to the local speed of sound."],
+["What is the purpose of an altimeter?","Indicating altitude based on pressure settings",["Measuring the number of passengers","Displaying the aircraft registration","Starting an engine"],"A pressure altimeter uses atmospheric pressure to indicate altitude."],
+["What does a weather radar help flight crews detect?","Precipitation and areas of potentially hazardous weather",["Airport shop opening hours","Passenger passport numbers","Aircraft seat colours"],"Weather radar helps crews identify precipitation and assess weather avoidance."],
+["What is a black box flight recorder's usual bright colour?","Orange",["Black","White","Green"],"The bright orange colour helps search teams locate the recorder."],
+["What is a landing gear system for?","Supporting the aircraft on the ground and during landing",["Producing wing lift in cruise","Communicating airport codes","Pressurising the cabin"],"Landing gear supports ground operations and absorbs loads during landing."],
+["What is a propeller blade designed to do?","Accelerate air to generate thrust",["Generate cabin oxygen directly","Mark runway numbers","Measure cloud height"],"A propeller produces thrust by accelerating air backwards."],
+["What does the term 'airworthy' generally mean?","The aircraft meets applicable requirements for safe operation",["The aircraft is always profitable","The aircraft can fly in every kind of weather","The aircraft never needs maintenance"],"Airworthiness depends on compliance with applicable technical and regulatory requirements."],
+["What is an aviation accident investigation primarily intended to improve?","Safety by identifying causes and contributing factors",["Airline advertising","Passenger meal choices","Aircraft paint trends"],"Safety investigations seek lessons that can help prevent future accidents."],
+["What does 'sterile cockpit' refer to in aviation operations?","Restricting nonessential activities during critical flight phases",["A cabin with no passengers","A cockpit without instruments","A flight with no radio calls"],"Sterile-cockpit procedures reduce distractions during specified critical phases."],
+["What is an aircraft's angle of attack?","The angle between a reference line on the wing and the relative airflow",["The angle between two airport terminals","The slope of the cabin floor","The angle of a passenger seat"],"Angle of attack relates the wing's reference chord to the oncoming airflow."],
+["What can cause an aerodynamic stall?","The wing exceeding its critical angle of attack",["The aircraft reaching any altitude","The cabin lights being switched off","The landing gear being painted"],"A stall occurs when airflow separates sufficiently after the critical angle of attack is exceeded."],
+["What is a holding pattern?","A defined flight path used to keep aircraft in an area while awaiting clearance",["A baggage storage room","An engine manufacturing process","A runway paint pattern"],"Holding patterns organise aircraft waiting for further clearance or suitable conditions."],
+["What is a flight dispatcher or operations controller often responsible for?","Supporting flight planning and operational monitoring",["Painting aircraft tails","Serving every passenger meal","Repairing every runway light"],"Flight operations personnel support planning, monitoring and coordination according to their role."],
+["What is a wind sock used to indicate?","Approximate wind direction and a visual indication of wind strength",["Aircraft engine temperature","Cabin pressure","Airport baggage weight"],"A windsock provides a visual indication of wind direction and approximate strength."],
+["What is a NOTAM not primarily intended to be?","A general aviation history article",["An operational notice about relevant conditions","A notice about a temporary facility change","A notice about a hazard affecting flight"],"NOTAMs communicate operationally relevant information, not general history articles."],
+["What does a transatlantic flight cross?","The Atlantic Ocean",["The Pacific Ocean in every case","The Sahara Desert in every case","The Arctic in every case"],"A transatlantic flight is a flight across the Atlantic Ocean."],
+["What is a flight's destination?","The place where the flight is intended to end",["The aircraft's manufacturer","The runway number only","The aircraft's engine model"],"The destination is the intended endpoint of the flight."],
+["What is a regional airliner commonly used for?","Shorter routes linking smaller cities and larger hubs",["Only spaceflight","Only aircraft carrier operations","Only aerial refuelling"],"Regional aircraft serve shorter routes and connect smaller markets to wider networks."],
+["What is a business jet?","An aircraft commonly used for private or corporate transport",["A runway maintenance vehicle","An airport baggage belt","A passenger boarding bridge"],"Business jets provide private or corporate air transportation."],
+["What is a flight attendant's key safety role?","Supporting cabin safety and passenger procedures",["Controlling the aircraft's flight path","Issuing air traffic clearances","Maintaining airport runways"],"Cabin crew have safety responsibilities as well as passenger-service duties."],
+["What is a mayday call used to declare?","A distress situation involving grave and imminent danger",["A routine meal order","A request for a window seat","A routine aircraft cleaning"],"Mayday is the international radiotelephony distress call."],
+["What is a pan-pan call generally used to indicate?","An urgency situation that is not a distress situation",["A completed landing","A passenger boarding request","A routine baggage issue"],"Pan-pan communicates urgency without the grave and imminent danger associated with distress."],
+["What is a wake turbulence?","Disturbed air left behind an aircraft, including wingtip vortices",["A type of airport alarm","A cabin entertainment system","A runway numbering system"],"Aircraft generate wake turbulence that can affect following aircraft."],
+["What is a flight level?","A surface of constant pressure referenced to a standard pressure setting",["A passenger loyalty tier","A runway's physical length","A type of aircraft seat"],"Flight levels are pressure surfaces referenced to a standard altimeter setting."],
+["What is a cross-check in a cockpit procedure?","Comparing information or actions to confirm consistency",["A type of passenger ticket","A runway paint colour","An airline's meal menu"],"Cross-checking helps crews verify readings and actions."],
+["What is a hangar used for?","Sheltering, storing or maintaining aircraft",["Directing all air traffic","Providing satellite navigation signals","Replacing the flight deck"],"Hangars provide enclosed space for aircraft storage and maintenance."],
+["What is a jet engine's core?","The part where air compression, combustion and turbine work occur",["The passenger cabin","The wingtip light","The runway surface"],"The gas-turbine core compresses air, burns fuel and extracts energy through turbines."],
+["What is a turbofan bypass ratio?","The ratio of fan air that bypasses the core to air passing through the core",["The ratio of passengers to cabin crew","The ratio of runway length to width","The ratio of fuel price to ticket price"],"Bypass ratio compares bypass airflow with core airflow."],
+["What is a cargo pallet used for?","Unitising and securing freight for handling",["Producing thrust","Controlling yaw","Measuring altitude"],"Cargo pallets help organise and secure freight during loading and transport."],
+["What does a NOTAM usually concern?","Information important to flight operations",["A list of the world's aircraft manufacturers","A general passenger travel review","A list of airline logos"],"NOTAMs contain operational information relevant to aviation users."],
+["What is the main role of a flight management system?","Supporting navigation and flight-plan management",["Cleaning the passenger cabin","Handling airport parking payments","Replacing aircraft structure"],"Flight management systems support navigation and management of planned flight paths."],
+["What does an aircraft's nose gear form part of?","The landing gear",["The empennage","The engine compressor","The winglet"],"Nose gear is the forward landing-gear assembly on aircraft with tricycle gear."],
+["What is a runway centreline marking for?","Helping pilots align with the runway",["Identifying the airline's country","Showing passenger seat rows","Measuring fuel density"],"Centreline markings provide visual alignment guidance along the runway."],
+["What is an aircraft's black box nickname referring to?","Flight recorders",["The cockpit sun visor","The engine cowling","The cabin carpet"],"The nickname usually refers to flight data and cockpit voice recorders."]
 ];
 
-const interestNames = categories.map(c => c.cat);
-function readStorage(key,fallback){try{const v=localStorage.getItem(key);return v===null?fallback:JSON.parse(v)}catch(e){return fallback}}
-function writeStorage(key,value){try{localStorage.setItem(key,JSON.stringify(value))}catch(e){notify("Storage unavailable or full in this browser.")}}
-
-let interests = readStorage("atlas-interests",["Commercial aviation","Plane spotting"]);
-let saved = readStorage("atlas-saved",[]);
-let score = readStorage("atlas-score",0);
-let quizIndex = {aircraft:0,airport:0};
-let dailyAnswered = readStorage("atlas-daily-date","") === new Date().toDateString();
-
-function notify(message){
-  const toast=document.getElementById("toast");
-  toast.textContent=message;toast.style.display="block";
-  clearTimeout(notify.timer);
-  notify.timer=setTimeout(()=>toast.style.display="none",2300);
+const bank=[];
+function add(q,a,wrong,why,topic="General aviation"){
+const opts=[a,...wrong].slice(0,4);
+if(opts.length!==4||new Set(opts).size!==4)return;
+bank.push({q,a,opts,why,topic});
 }
-
-document.querySelectorAll("[data-scroll]").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const el=document.getElementById(btn.dataset.scroll);
-    if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
-  });
+facts.forEach(f=>add(f[0],f[1],f[2],f[3],"Flight knowledge"));
+airports.forEach((a,i)=>{
+const distract=airports.filter((x,j)=>j!==i).sort((x,y)=>x[1].localeCompare(y[1])).slice(0,3).map(x=>x[1]);
+add(`Which airport uses the IATA code ${a[0]}?`,a[1],distract,`${a[0]} is the IATA code for ${a[1]}.`,"Airports");
+add(`In which country is ${a[1]} located?`,a[2],["Canada","Japan","Germany","Australia"].filter(x=>x!==a[2]).slice(0,3),`${a[1]} is located in ${a[2]}.`,"Airports");
 });
-
-function articleCard(a){
-  return `<article class="card">
-    <img src="${a.img}" alt="" loading="lazy" onerror="this.style.display='none'">
-    <div class="card-body"><div class="tag">${a.cat}</div>
-    <h3>${a.title}</h3><p>${a.desc}</p><p class="muted">${a.time}</p>
-    <div class="card-actions">
-      <button class="primary read-btn" data-id="${a.id}">Read preview</button>
-      <button class="secondary save-btn" data-id="${a.id}">${saved.includes(a.id)?"★ Saved":"☆ Save"}</button>
-    </div></div></article>`;
-}
-
-function bindArticleButtons(container){
-  container.querySelectorAll(".save-btn").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const id=btn.dataset.id;
-      saved=saved.includes(id)?saved.filter(x=>x!==id):[...saved,id];
-      writeStorage("atlas-saved",saved);
-      renderRecommendations();renderSaved();
-      notify(saved.includes(id)?"Added to your Atlas.":"Removed from saved articles.");
-    });
-  });
-  container.querySelectorAll(".read-btn").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const a=articles.find(x=>x.id===btn.dataset.id);
-      if(a)alert(a.title+"\n\n"+a.desc+"\n\nThis is a preview in the prototype. Full articles can be added as separate pages.");
-    });
-  });
-}
-
-function renderRecommendations(){
-  const sorted=[...articles].sort((a,b)=>Number(interests.includes(b.cat))-Number(interests.includes(a.cat)));
-  const el=document.getElementById("recommendations");
-  el.innerHTML=sorted.slice(0,3).map(articleCard).join("");
-  bindArticleButtons(el);
-  document.getElementById("personal-label").textContent=interests.length?`Based on ${interests.length} interests`:"Popular aviation reads";
-}
-
-function renderCategories(){
-  const el=document.getElementById("categories");
-  el.innerHTML=categories.map(c=>`<article class="card"><div class="card-body">
-    <div class="game-icon">${c.icon}</div><div class="tag">Explore a topic</div>
-    <h3>${c.title}</h3><p>${c.desc}</p>
-    <button class="secondary topic-btn" data-cat="${c.cat}">Explore this topic →</button>
-  </div></article>`).join("");
-  el.querySelectorAll(".topic-btn").forEach(btn=>btn.addEventListener("click",()=>{
-    const list=articles.filter(a=>a.cat===btn.dataset.cat);
-    const rec=document.getElementById("recommendations");
-    rec.innerHTML=list.length?list.map(articleCard).join():'<div class="empty">More stories in this topic are coming soon.</div>';
-    bindArticleButtons(rec);
-    document.getElementById("for-you").scrollIntoView({behavior:"smooth"});
-  }));
-}
-
-function renderSaved(){
-  const el=document.getElementById("saved-list");
-  const list=articles.filter(a=>saved.includes(a.id));
-  el.innerHTML=list.length?list.map(articleCard).join(""):'<div class="empty">No saved reads yet. Tap ☆ Save on an article to build your collection.</div>';
-  bindArticleButtons(el);
-}
-
-function renderInterests(){
-  const el=document.getElementById("interest-options");
-  el.innerHTML=interestNames.map(name=>`<button class="chip ${interests.includes(name)?"active":""}" data-interest="${name}" aria-pressed="${interests.includes(name)}">${name}</button>`).join("");
-  el.querySelectorAll(".chip").forEach(btn=>btn.addEventListener("click",()=>{
-    const name=btn.dataset.interest;
-    interests=interests.includes(name)?interests.filter(x=>x!==name):[...interests,name];
-    btn.classList.toggle("active",interests.includes(name));
-    btn.setAttribute("aria-pressed",String(interests.includes(name)));
-  }));
-}
-
-document.getElementById("apply-interests").addEventListener("click",()=>{
-  writeStorage("atlas-interests",interests);
-  renderRecommendations();
-  notify("Your recommendations have been updated.");
-  document.getElementById("for-you").scrollIntoView({behavior:"smooth"});
+aircraft.forEach((a,i)=>{
+const same=aircraft.filter((x,j)=>j!==i).sort((x,y)=>x[0].localeCompare(y[0])).slice(0,3).map(x=>x[0]);
+add(`Which aircraft is described as a ${a[2]}?`,a[0],same,`${a[0]} is a ${a[2]}.`,"Aircraft");
+add(`Which manufacturer or design organisation is associated with the ${a[0]}?`,a[1],["Airbus","Boeing","Embraer","Cessna","Lockheed Martin","ATR","Pilatus","Gulfstream"].filter(x=>x!==a[1]).slice(0,3),`${a[0]} is associated with ${a[1]}.`,"Aircraft");
 });
+[
+["Which aircraft is famous for a full-length upper passenger deck?","Airbus A380",["Boeing 737","Cessna 172","F-16 Fighting Falcon"],"The A380 has two full-length passenger decks."],
+["Which passenger aircraft was designed for supersonic commercial travel?","Concorde",["Airbus A320","ATR 72","Boeing 767"],"Concorde was a supersonic passenger aircraft."],
+["Which aircraft family is commonly used on short- and medium-haul routes?","Airbus A320 family",["Airbus Beluga","Lockheed C-130","Boeing KC-46"],"The A320 family is widely used on short- and medium-haul services."],
+["Which aircraft is a large four-engine passenger jet with a distinctive upper-deck hump near the front?","Boeing 747",["Boeing 737","Airbus A220","Embraer E190"],"The 747's distinctive hump is one of its most recognisable features."],
+["Which aircraft family is known as the Dreamliner?","Boeing 787",["Boeing 727","Airbus A380","ATR 72"],"Dreamliner is the name used for the Boeing 787."],
+["Which of these is a regional turboprop airliner?","ATR 72",["Boeing 777","Airbus A350","Concorde"],"The ATR 72 is a twin-engine regional turboprop."],
+["Which aircraft is designed primarily as a heavy military transport?","Boeing C-17 Globemaster III",["Airbus A320","Cessna 172","Gulfstream G650"],"The C-17 is a military transport aircraft."],
+["Which aircraft is a maritime patrol platform?","Boeing P-8 Poseidon",["Airbus A380","Boeing 737 MAX in ordinary passenger service","Cessna 172"],"The P-8 is a maritime patrol aircraft."],
+["Which aircraft is a light general-aviation model?","Cessna 172",["Airbus A380","Boeing 747","Airbus Beluga"],"The Cessna 172 is a widely used light aircraft."],
+["Which aircraft is an aerial refuelling tanker?","Boeing KC-46 Pegasus",["Airbus A220","ATR 72","Cessna 172"],"The KC-46 is designed for aerial refuelling and transport roles."]
+].forEach(x=>add(x[0],x[1],x[2],x[3],"Aircraft"));
 
-const games = {
-aircraft:[
-{q:"Which aircraft is famous for its distinctive double-deck design?",choices:["Airbus A380","Boeing 737","Concorde","Cessna 172"],answer:"Airbus A380",why:"The Airbus A380 has a full-length upper deck."},
-{q:"Which supersonic passenger aircraft retired in 2003?",choices:["Concorde","Airbus A320","Boeing 747","DC-10"],answer:"Concorde",why:"Concorde operated commercial supersonic flights for decades."},
-{q:"Which aircraft family is widely used for short- and medium-haul flights?",choices:["Airbus A320 family","Airbus Beluga","Antonov An-225","Lockheed U-2"],answer:"Airbus A320 family",why:"The A320 family is common on short- and medium-haul routes."}
-],
-airport:[
-{q:"Which city uses the airport code LHR?",choices:["London","Lisbon","Los Angeles","Lahore"],answer:"London",why:"LHR is London Heathrow Airport."},
-{q:"Which city uses the code JFK?",choices:["New York","Tokyo","Paris","Singapore"],answer:"New York",why:"JFK serves New York City."},
-{q:"Which city uses the code CDG?",choices:["Copenhagen","Cairo","Paris","Chicago"],answer:"Paris",why:"CDG is Paris Charles de Gaulle Airport."}
-],
-daily:[
-{q:"What primarily generates lift on a conventional aircraft wing?",choices:["Aerodynamic forces from airflow","The aircraft's headlights","Cabin pressure alone","The landing gear"],answer:"Aerodynamic forces from airflow",why:"Wing shape and airflow create aerodynamic lift."},
-{q:"What does ATC stand for?",choices:["Air Traffic Control","Aircraft Travel Cabin","Air Terminal Code","Aviation Training Course"],answer:"Air Traffic Control",why:"ATC coordinates aircraft movements for safety and efficiency."},
-{q:"What is a runway used for?",choices:["Take-off and landing","Refuelling only","Passenger security checks","Aircraft painting"],answer:"Take-off and landing",why:"Runways provide the surface for aircraft take-offs and landings."}
-]};
-
-function renderGame(type){
-  const item=games[type][quizIndex[type]%games[type].length];
-  document.getElementById(type+"-question").textContent=item.q;
-  document.getElementById(type+"-result").textContent="";
-  const choices=document.getElementById(type+"-choices");
-  choices.innerHTML=item.choices.map(c=>`<button class="choice" data-answer="${c}">${c}</button>`).join("");
-  choices.querySelectorAll("button").forEach(btn=>btn.addEventListener("click",()=>{
-    if(btn.disabled)return;
-    choices.querySelectorAll("button").forEach(b=>b.disabled=true);
-    const correct=btn.dataset.answer===item.answer;
-    document.getElementById(type+"-result").textContent=(correct?"Correct! ":"Not quite. ")+item.why;
-    if(correct){
-      score++;writeStorage("atlas-score",score);
-      document.getElementById("score").textContent=`Your quiz score: ${score} correct`;
-    }
-  }));
+/* Build further question forms from the same fact bank. */
+facts.forEach((f,i)=>{
+if(i%3===0)add("Which statement best describes this aviation term: "+f[1]+"?",f[1],f[2],f[3],"Flight knowledge");
+});
+$("bank-count").textContent=bank.length;
+let session=null,questionPos=0,score=0,answered=false;
+function refreshStats(){
+const left=Math.max(0,5-dailyCount());
+$("remaining").textContent=left;
+$("best").textContent=store.get("best",0)+"/10";
+$("limit-message").textContent=left===0?"You've used all five games today. Come back tomorrow for five more.":`You have ${left} ${left===1?"game":"games"} available today.`;
+$("start-game").disabled=left===0;
+$("start-game").style.opacity=left===0?".5":"1";
+$("play-again").disabled=left===0;
 }
-
-document.getElementById("aircraft-next").addEventListener("click",()=>{quizIndex.aircraft++;renderGame("aircraft")});
-document.getElementById("airport-next").addEventListener("click",()=>{quizIndex.airport++;renderGame("airport")});
-
-function renderDaily(){
-  const item=games.daily[new Date().getDate()%games.daily.length];
-  document.getElementById("daily-question").textContent=item.q;
-  const choices=document.getElementById("daily-choices");
-  const result=document.getElementById("daily-result");
-  choices.innerHTML=item.choices.map(c=>`<button class="choice" data-answer="${c}">${c}</button>`).join("");
-  if(dailyAnswered){
-    result.textContent="Today's challenge is complete. Come back tomorrow!";
-    choices.querySelectorAll("button").forEach(b=>b.disabled=true);
-    return;
-  }
-  choices.querySelectorAll("button").forEach(btn=>btn.addEventListener("click",()=>{
-    if(dailyAnswered)return;
-    dailyAnswered=true;
-    const correct=btn.dataset.answer===item.answer;
-    if(correct){score++;writeStorage("atlas-score",score)}
-    writeStorage("atlas-daily-date",new Date().toDateString());
-    document.getElementById("score").textContent=`Your quiz score: ${score} correct`;
-    result.textContent=(correct?"Correct! ":"Not quite. ")+item.why;
-    choices.querySelectorAll("button").forEach(b=>b.disabled=true);
-  }));
+function shuffle(arr){const x=arr.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
+function startGame(){
+if(dailyCount()>=5){notify("Daily limit reached. Come back tomorrow.");refreshStats();return}
+store.set("day",dayKey());store.set("games",dailyCount()+1);
+session=shuffle(bank).slice(0,10);
+questionPos=0;score=0;
+$("quiz-start").classList.add("hidden");$("quiz-finished").classList.add("hidden");$("quiz-play").classList.remove("hidden");
+refreshStats();showQuestion();
 }
+function showQuestion(){
+answered=false;
+const item=session[questionPos];
+$("question-number").textContent=`Question ${questionPos+1} of 10`;
+$("live-score").textContent=`Score: ${score}`;
+$("question-text").textContent=item.q;
+$("progress-fill").style.width=(questionPos/10*100)+"%";
+$("feedback").classList.add("hidden");$("next-question").classList.add("hidden");
+const options=shuffle(item.opts);
+$("answer-options").innerHTML=options.map((o,i)=>`<button class="answer" data-option="${encodeURIComponent(o)}">${String.fromCharCode(65+i)}. ${o}</button>`).join("");
+$("answer-options").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>chooseAnswer(b,item)));
+}
+function chooseAnswer(btn,item){
+if(answered)return;answered=true;
+const selected=decodeURIComponent(btn.dataset.option);
+const correct=selected===item.a;
+if(correct)score++;
+$("answer-options").querySelectorAll("button").forEach(b=>{
+b.disabled=true;const v=decodeURIComponent(b.dataset.option);
+if(v===item.a)b.classList.add("correct");
+else if(v===selected)b.classList.add("wrong");
+});
+$("live-score").textContent=`Score: ${score}`;
+$("feedback").innerHTML=`<strong>${correct?"Correct!":"Not quite."}</strong> ${item.why}`;
+$("feedback").classList.remove("hidden");
+$("next-question").textContent=questionPos===9?"See my results →":"Next question →";
+$("next-question").classList.remove("hidden");
+}
+$("next-question").addEventListener("click",()=>{
+if(!answered)return;
+if(questionPos<9){questionPos++;showQuestion()}else finishGame();
+});
+function finishGame(){
+$("quiz-play").classList.add("hidden");$("quiz-finished").classList.remove("hidden");
+$("final-score").textContent=`Your score: ${score}/10`;
+$("final-message").textContent=score===10?"Perfect flight! You answered every question correctly.":score>=8?"Excellent result. Your aviation knowledge is in great shape.":score>=5?"Good work. Review the explanations and try another round.":"Keep learning. Every question is a chance to improve.";
+$("final-progress").style.width=(score*10)+"%";
+const best=store.get("best",0);
+if(score>best){store.set("best",score);$("new-best").textContent="New personal best!";}else $("new-best").textContent="";
+refreshStats();
+}
+$("start-game").addEventListener("click",startGame);
+$("play-again").addEventListener("click",startGame);
 
-renderRecommendations();
-renderCategories();
-renderSaved();
-renderInterests();
-renderGame("aircraft");
-renderGame("airport");
-renderDaily();
-document.getElementById("score").textContent=`Your quiz score: ${score} correct`;
+renderTopics();renderSaved();refreshStats();
 </script>
 </body>
 </html>
