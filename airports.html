@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Global Airport Hubs | The Aviation Atlas</title>
-  <meta name="description" content="Explore major international airports, IATA/ICAO codes, runway details, and airport spotter guides across the globe.">
+  <meta name="description" content="Explore an expanded directory of international airport hubs, runway configurations, and spotter guides.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
@@ -17,33 +17,28 @@
       border-bottom: 1px solid var(--border-subtle);
       text-align: center;
     }
-
     .page-header h1 {
       font-family: var(--font-heading);
       font-size: clamp(2.2rem, 4vw, 3rem);
       margin-bottom: 0.75rem;
     }
-
     .page-header p {
       color: var(--text-muted);
       max-width: 600px;
       margin: 0 auto;
       font-size: 1.05rem;
     }
-
     .container {
       max-width: var(--max-width);
       margin: 0 auto;
       padding: 3rem 1.5rem;
     }
-
     .search-filter-bar {
       display: flex;
       gap: 1rem;
       margin-bottom: 2.5rem;
       flex-wrap: wrap;
     }
-
     .search-input {
       flex: 1;
       min-width: 260px;
@@ -55,12 +50,7 @@
       font-family: var(--font-body);
       font-size: 0.95rem;
     }
-
-    .search-input:focus {
-      outline: none;
-      border-color: var(--accent-gold);
-    }
-
+    .search-input:focus { outline: none; border-color: var(--accent-gold); }
     .filter-select {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
@@ -71,18 +61,12 @@
       font-size: 0.95rem;
       cursor: pointer;
     }
-
-    .filter-select:focus {
-      outline: none;
-      border-color: var(--accent-gold);
-    }
-
+    .filter-select:focus { outline: none; border-color: var(--accent-gold); }
     .airport-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 1.75rem;
     }
-
     .airport-card {
       background-color: var(--bg-card);
       border: 1px solid var(--border-subtle);
@@ -92,25 +76,21 @@
       display: flex;
       flex-direction: column;
     }
-
     .airport-card:hover {
       background-color: var(--bg-card-hover);
       border-color: var(--accent-gold);
       transform: translateY(-4px);
     }
-
     .airport-img-wrap {
       position: relative;
       height: 190px;
       overflow: hidden;
     }
-
     .airport-img-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-
     .airport-codes {
       position: absolute;
       bottom: 0.75rem;
@@ -125,34 +105,29 @@
       font-size: 0.85rem;
       color: var(--accent-gold);
     }
-
     .airport-card-body {
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
     }
-
     .airport-card-body h3 {
       font-family: var(--font-heading);
       font-size: 1.3rem;
       margin-bottom: 0.35rem;
     }
-
     .airport-location {
       color: var(--text-muted);
       font-size: 0.85rem;
       margin-bottom: 1rem;
       font-weight: 600;
     }
-
     .airport-desc {
       color: var(--text-muted);
       font-size: 0.9rem;
       margin-bottom: 1.5rem;
       flex-grow: 1;
     }
-
     .airport-specs-list {
       display: flex;
       justify-content: space-between;
@@ -161,19 +136,15 @@
       font-size: 0.8rem;
       color: var(--text-muted);
     }
-
-    .airport-specs-list strong {
-      color: var(--text-main);
-    }
+    .airport-specs-list strong { color: var(--text-main); }
   </style>
 </head>
 <body>
 
-  <!-- Navigation Header -->
   <header>
     <div class="nav-container">
       <a href="index.html" class="logo">The Aviation <span>Atlas</span></a>
-      <button class="mobile-menu-btn" id="menuBtn" onclick="toggleMenu()">☰</button>
+      <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="aircraft.html">Aircraft</a></li>
@@ -185,13 +156,11 @@
     </div>
   </header>
 
-  <!-- Page Header -->
   <section class="page-header">
     <h1>Global Airport Hubs</h1>
-    <p>Discover major international gateways, airport runway configurations, location codes, and spotter information.</p>
+    <p>Comprehensive directory of international gateways, runway configurations, and aviation facility specs.</p>
   </section>
 
-  <!-- Main Content -->
   <main class="container">
     <div class="search-filter-bar">
       <input type="text" class="search-input" id="airportSearch" placeholder="Search by name, city, IATA, or ICAO code..." onkeyup="filterAirports()">
@@ -209,13 +178,13 @@
       <!-- Heathrow -->
       <article class="airport-card" data-region="europe" data-search="london heathrow airport egll lhr united kingdom uk europe">
         <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?auto=format&fit=crop&w=800&q=80" alt="London Heathrow Airport" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?auto=format&fit=crop&w=800&q=80" alt="Heathrow">
           <div class="airport-codes">LHR / EGLL</div>
         </div>
         <div class="airport-card-body">
           <h3>London Heathrow Airport</h3>
           <div class="airport-location">📍 London, United Kingdom</div>
-          <p class="airport-desc">One of Europe's busiest international air hubs, serving as a primary transatlantic gateway with two parallel runways.</p>
+          <p class="airport-desc">Europe's busiest international air hub, serving as a primary transatlantic gateway with parallel runways.</p>
           <div class="airport-specs-list">
             <span>Runways: <strong>2 Parallel</strong></span>
             <span>Terminals: <strong>4 Operational</strong></span>
@@ -223,16 +192,16 @@
         </div>
       </article>
 
-      <!-- JFK International -->
+      <!-- JFK -->
       <article class="airport-card" data-region="north-america" data-search="john f kennedy international airport jfk kjfk new york usa north america">
         <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=800&q=80" alt="JFK International Airport" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=800&q=80" alt="JFK">
           <div class="airport-codes">JFK / KJFK</div>
         </div>
         <div class="airport-card-body">
           <h3>John F. Kennedy International</h3>
           <div class="airport-location">📍 New York City, USA</div>
-          <p class="airport-desc">The primary international airport serving New York City, featuring four active runways and extensive long-haul international service.</p>
+          <p class="airport-desc">Primary international airport serving New York City, featuring active intersecting runways and global routing.</p>
           <div class="airport-specs-list">
             <span>Runways: <strong>4 Active</strong></span>
             <span>Terminals: <strong>5 Active</strong></span>
@@ -243,13 +212,13 @@
       <!-- Tokyo Haneda -->
       <article class="airport-card" data-region="asia-pacific" data-search="tokyo haneda airport hnd rjtt japan asia pacific">
         <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=800&q=80" alt="Tokyo Haneda Airport" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=800&q=80" alt="Haneda">
           <div class="airport-codes">HND / RJTT</div>
         </div>
         <div class="airport-card-body">
           <h3>Tokyo Haneda Airport</h3>
           <div class="airport-location">📍 Tokyo, Japan</div>
-          <p class="airport-desc">One of Asia's primary aviation hubs, known for its high punctuality rate and convenient proximity to central Tokyo.</p>
+          <p class="airport-desc">Renowned for exceptional punctuality and close proximity to central Tokyo, handling massive domestic and international volume.</p>
           <div class="airport-specs-list">
             <span>Runways: <strong>4 Runways</strong></span>
             <span>Terminals: <strong>3 Terminals</strong></span>
@@ -257,16 +226,16 @@
         </div>
       </article>
 
-      <!-- Dubai International -->
+      <!-- Dubai -->
       <article class="airport-card" data-region="middle-east" data-search="dubai international airport dxb omdb united arab emirates uae middle east">
         <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Dubai International Airport" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Dubai">
           <div class="airport-codes">DXB / OMDB</div>
         </div>
         <div class="airport-card-body">
           <h3>Dubai International Airport</h3>
           <div class="airport-location">📍 Dubai, UAE</div>
-          <p class="airport-desc">A massive global transit hub connecting East and West, serving as the main operational base for Emirates long-haul operations.</p>
+          <p class="airport-desc">A colossal global superhub connecting East and West, serving as the main operational base for Emirates widebody fleet.</p>
           <div class="airport-specs-list">
             <span>Runways: <strong>2 Parallel</strong></span>
             <span>Terminals: <strong>3 Terminals</strong></span>
@@ -274,37 +243,56 @@
         </div>
       </article>
 
+      <!-- Charles de Gaulle -->
+      <article class="airport-card" data-region="europe" data-search="paris charles de gaulle airport cdg lfpg france europe">
+        <div class="airport-img-wrap">
+          <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80" alt="CDG">
+          <div class="airport-codes">CDG / LFPG</div>
+        </div>
+        <div class="airport-card-body">
+          <h3>Paris Charles de Gaulle</h3>
+          <div class="airport-location">📍 Paris, France</div>
+          <p class="airport-desc">France's largest international airport and a major European hub for Air France operations.</p>
+          <div class="airport-specs-list">
+            <span>Runways: <strong>4 Runways</strong></span>
+            <span>Terminals: <strong>3 Terminals</strong></span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Los Angeles International -->
+      <article class="airport-card" data-region="north-america" data-search="los angeles international airport lax klax california usa north america">
+        <div class="airport-img-wrap">
+          <img src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=800&q=80" alt="LAX">
+          <div class="airport-codes">LAX / KLAX</div>
+        </div>
+        <div class="airport-card-body">
+          <h3>Los Angeles International</h3>
+          <div class="airport-location">📍 Los Angeles, USA</div>
+          <p class="airport-desc">The primary gateway to the US West Coast and a legendary spotter location featuring parallel southern and northern complexes.</p>
+          <div class="airport-specs-list">
+            <span>Runways: <strong>4 Parallel</strong></span>
+            <span>Terminals: <strong>9 Terminals</strong></span>
+          </div>
+        </div>
+      </article>
+
     </div>
   </main>
 
-  <!-- Footer -->
   <footer>
-    <p>&copy; 2026 The Aviation Atlas. Built for aviation enthusiasts, spotters, and students worldwide.</p>
+    <p>&copy; 2026 The Aviation Atlas. All rights reserved.</p>
   </footer>
 
   <script>
-    function toggleMenu() {
-      const links = document.getElementById('navLinks');
-      links.classList.toggle('open');
-    }
-
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
     function filterAirports() {
       const query = document.getElementById('airportSearch').value.toLowerCase();
-      const selectedRegion = document.getElementById('regionFilter').value;
-      const cards = document.querySelectorAll('.airport-card');
-
-      cards.forEach(card => {
-        const searchData = card.getAttribute('data-search').toLowerCase();
-        const region = card.getAttribute('data-region');
-
-        const matchesQuery = searchData.includes(query);
-        const matchesRegion = selectedRegion === 'all' || region === selectedRegion;
-
-        if (matchesQuery && matchesRegion) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
+      const region = document.getElementById('regionFilter').value;
+      document.querySelectorAll('.airport-card').forEach(card => {
+        const matchQ = card.getAttribute('data-search').toLowerCase().includes(query);
+        const matchR = region === 'all' || card.getAttribute('data-region') === region;
+        card.style.display = (matchQ && matchR) ? 'flex' : 'none';
       });
     }
   </script>
