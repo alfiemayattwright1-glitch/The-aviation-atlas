@@ -1,649 +1,212 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Explore the history of aviation, from pioneering flight to the modern jet age, with The Aviation Atlas.">
-  <title>Aviation History | The Aviation Atlas</title>
+  <title>Aviation History Timeline | The Aviation Atlas</title>
+  <meta name="description" content="Explore the historical evolution of flight from the Wright Brothers to supersonic travel and modern aviation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  
   <style>
-    :root {
-      --navy: #071426;
-      --navy-light: #10243e;
-      --gold: #e8b84a;
-      --white: #f4f7fb;
-      --muted: #aebbd0;
-      --panel: #102039;
-      --border: #263b57;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: var(--navy);
-      color: var(--white);
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.65;
-    }
-
-    header {
-      padding: 30px 18px;
-      text-align: center;
-      background: linear-gradient(135deg, #102b4a, #071426);
-      border-bottom: 2px solid var(--gold);
-    }
-
-    .brand {
-      margin: 0;
-      color: var(--gold);
-      font-size: clamp(27px, 5vw, 42px);
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .tagline { color: var(--muted); margin: 4px 0 0; }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 13px;
-      background: #0b1b30;
-      border-bottom: 1px solid var(--border);
-    }
-
-    nav a {
-      color: var(--white);
-      text-decoration: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    nav a:hover, nav a.active {
-      color: var(--gold);
-      background: var(--navy-light);
-    }
-
-    main {
-      max-width: 1100px;
-      margin: auto;
-      padding: 28px 18px 50px;
-    }
-
-    .intro {
-      max-width: 760px;
-      margin: 5px auto 28px;
+    .page-header {
+      padding: 5rem 1.5rem 3rem;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
       text-align: center;
     }
 
-    .intro h2 {
-      color: var(--gold);
-      font-size: clamp(26px, 4vw, 36px);
-      margin-bottom: 8px;
+    .page-header h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      margin-bottom: 0.75rem;
     }
 
-    .intro p { color: var(--muted); }
-
-    .search-wrap { max-width: 650px; margin: 22px auto 14px; }
-
-    input {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: #0b1b30;
-      color: var(--white);
-      font-size: 16px;
+    .page-header p {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.05rem;
     }
 
-    input:focus {
-      outline: 2px solid var(--gold);
-      outline-offset: 2px;
-    }
-
-    .filters {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 18px 0 25px;
-    }
-
-    .filter {
-      padding: 9px 13px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: var(--navy-light);
-      color: var(--white);
-      cursor: pointer;
-    }
-
-    .filter:hover, .filter.selected {
-      background: var(--gold);
-      border-color: var(--gold);
-      color: var(--navy);
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
     }
 
     .timeline {
       position: relative;
-      max-width: 850px;
+      max-width: 800px;
       margin: 0 auto;
-      padding-left: 34px;
     }
 
     .timeline::before {
-      content: "";
+      content: '';
       position: absolute;
-      left: 10px;
-      top: 8px;
-      bottom: 8px;
+      left: 140px;
+      top: 0;
+      bottom: 0;
       width: 2px;
-      background: var(--border);
+      background-color: var(--border-subtle);
     }
 
-    .event {
+    .timeline-item {
+      display: flex;
+      margin-bottom: 3.5rem;
       position: relative;
-      margin: 0 0 20px;
-      padding: 20px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      transition: border-color 0.2s, transform 0.2s;
     }
 
-    .event::before {
-      content: "";
+    .timeline-year {
+      width: 110px;
+      flex-shrink: 0;
+      text-align: right;
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      padding-right: 2rem;
+    }
+
+    .timeline-dot {
       position: absolute;
-      left: -31px;
-      top: 26px;
+      left: 135px;
+      top: 6px;
       width: 12px;
       height: 12px;
-      border: 3px solid var(--navy);
       border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 0 1px var(--gold);
+      background-color: var(--accent-gold);
+      border: 3px solid var(--bg-dark);
     }
 
-    .event:hover {
-      border-color: var(--gold);
-      transform: translateY(-2px);
+    .timeline-content {
+      padding-left: 2.5rem;
+      flex-grow: 1;
     }
 
-    .year {
-      color: var(--gold);
-      font-size: 23px;
-      font-weight: 800;
+    .timeline-content h3 {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      margin-bottom: 0.5rem;
     }
 
-    .event h3 { margin: 4px 0 8px; font-size: 19px; }
-
-    .event p { color: var(--muted); margin: 0 0 12px; }
-
-    .tag {
-      display: inline-block;
-      color: var(--gold);
-      background: #172b43;
-      padding: 4px 9px;
-      border-radius: 5px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    .timeline-content p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
     }
 
-    .details-btn {
-      display: block;
-      margin-top: 13px;
-      padding: 9px 13px;
-      border: 1px solid var(--gold);
-      border-radius: 6px;
-      background: transparent;
-      color: var(--gold);
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .details-btn:hover {
-      background: var(--gold);
-      color: var(--navy);
-    }
-
-    .count {
-      color: var(--muted);
-      font-size: 14px;
-      margin: 0 auto 15px;
-      max-width: 850px;
-    }
-
-    .empty {
-      display: none;
-      text-align: center;
-      padding: 30px;
-      color: var(--muted);
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 10;
-      padding: 20px;
-      overflow-y: auto;
-      background: rgba(0, 0, 0, 0.82);
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal.open { display: flex; }
-
-    .modal-content {
-      position: relative;
-      width: 100%;
-      max-width: 700px;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 28px;
-      background: var(--panel);
-      border: 1px solid var(--gold);
-      border-radius: 12px;
-    }
-
-    .modal-content h2 { color: var(--gold); }
-
-    .modal-content p { color: var(--muted); }
-
-    .close {
-      position: absolute;
-      right: 15px;
-      top: 8px;
-      border: none;
-      background: transparent;
-      color: var(--white);
-      font-size: 29px;
-      cursor: pointer;
-    }
-
-    .fact {
-      margin-top: 20px;
-      padding: 14px;
-      background: #09172a;
-      border-left: 3px solid var(--gold);
-      border-radius: 5px;
-    }
-
-    footer {
-      padding: 25px 15px;
-      text-align: center;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-      font-size: 13px;
-    }
-
-    footer strong { color: var(--gold); }
-
-    @media (max-width: 500px) {
-      nav { gap: 2px; }
-      nav a { padding: 8px; font-size: 12px; }
-      .timeline { padding-left: 28px; }
-      .timeline::before { left: 8px; }
-      .event::before { left: -27px; }
-      .event { padding: 16px; }
-      .modal-content { padding: 24px 18px; }
+    @media (max-width: 640px) {
+      .timeline::before {
+        left: 20px;
+      }
+      .timeline-item {
+        flex-direction: column;
+        padding-left: 40px;
+      }
+      .timeline-year {
+        width: auto;
+        text-align: left;
+        padding-right: 0;
+        margin-bottom: 0.25rem;
+      }
+      .timeline-dot {
+        left: 15px;
+      }
+      .timeline-content {
+        padding-left: 0;
+      }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1 class="brand">THE AVIATION ATLAS</h1>
-  <p class="tagline">Your World of Aviation</p>
-</header>
-
-<nav aria-label="Main navigation">
-  <a href="index.html">Home</a>
-  <a href="aircraft.html">Aircraft</a>
-  <a href="airports.html">Airports</a>
-  <a href="knowledge.html">Knowledge</a>
-  <a href="history.html" class="active">History</a>
-  <a href="games.html">Games</a>
-</nav>
-
-<main>
-  <section class="intro">
-    <h2>The History of Aviation</h2>
-    <p>
-      Discover the people, aircraft and breakthroughs that transformed
-      humanity's relationship with the sky. Follow aviation's journey from
-      early experiments to global air travel and modern aerospace technology.
-    </p>
-
-    <div class="search-wrap">
-      <input id="search" type="search"
-        placeholder="Search years, aircraft or events..."
-        aria-label="Search aviation history">
+  <!-- Navigation Header -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">The Aviation <span>Atlas</span></a>
+      <button class="mobile-menu-btn" id="menuBtn" onclick="toggleMenu()">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aircraft.html">Aircraft</a></li>
+        <li><a href="airports.html">Airports</a></li>
+        <li><a href="knowledge.html">Knowledge</a></li>
+        <li><a href="history.html" class="active">History</a></li>
+        <li><a href="games.html">Games & Quizzes</a></li>
+      </ul>
     </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <h1>Aviation History Archive</h1>
+    <p>A chronological journey through the engineering breakthroughs that redefined global human mobility.</p>
   </section>
 
-  <div class="filters" aria-label="Filter historical events">
-    <button class="filter selected" data-category="all">All Eras</button>
-    <button class="filter" data-category="pioneers">Pioneers</button>
-    <button class="filter" data-category="military">Military Aviation</button>
-    <button class="filter" data-category="commercial">Commercial Flight</button>
-    <button class="filter" data-category="technology">Technology</button>
-  </div>
+  <!-- Timeline Section -->
+  <main class="container">
+    <div class="timeline">
+      
+      <div class="timeline-item">
+        <div class="timeline-year">1903</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3>The Wright Flyer at Kitty Hawk</h3>
+          <p>Orville and Wilbur Wright accomplish the first successful controlled, sustained, powered heavier-than-air flight in North Carolina.</p>
+        </div>
+      </div>
 
-  <p class="count" id="count" aria-live="polite"></p>
-  <section class="timeline" id="timeline" aria-label="Aviation timeline"></section>
-  <p class="empty" id="empty">No events found. Try another search.</p>
-</main>
+      <div class="timeline-item">
+        <div class="timeline-year">1927</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3>Solo Transatlantic Crossing</h3>
+          <p>Charles Lindbergh flies the Spirit of St. Louis non-stop from New York to Paris in 33.5 hours, captivating global public imagination.</p>
+        </div>
+      </div>
 
-<div class="modal" id="modal" role="dialog" aria-modal="true"
-  aria-labelledby="modal-title">
-  <div class="modal-content">
-    <button class="close" id="close" aria-label="Close event">&times;</button>
-    <div class="year" id="modal-year"></div>
-    <h2 id="modal-title"></h2>
-    <div id="modal-body"></div>
-    <button class="details-btn" id="close-bottom">Back to timeline</button>
-  </div>
-</div>
+      <div class="timeline-item">
+        <div class="timeline-year">1952</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3>Inauguration of Commercial Jet Travel</h3>
+          <p>The de Havilland Comet enters revenue passenger service with BOAC, introducing smooth, high-altitude commercial jet travel.</p>
+        </div>
+      </div>
 
-<footer>
-  <strong>The Aviation Atlas</strong> — Your World of Aviation
-  <br>Historical overview for education and exploration.
-</footer>
+      <div class="timeline-item">
+        <div class="timeline-year">1969</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3>Maiden Flights: 747 & Concorde</h3>
+          <p>A landmark year featuring both the first flight of the Boeing 747 "Queen of the Skies" widebody airliner and the supersonic Concorde.</p>
+        </div>
+      </div>
 
-<script>
-const events = [
-  {
-    year: "1799",
-    title: "The Principles of Modern Aerodynamics",
-    category: "pioneers",
-    label: "Pioneers",
-    summary: "Sir George Cayley sets out key principles behind fixed-wing flight.",
-    details: "English engineer Sir George Cayley helped establish the scientific foundations of heavier-than-air flight. His work distinguished the roles of lift, propulsion and control, helping later inventors approach flight as an engineering problem.",
-    significance: "Cayley's ideas influenced generations of aviation experimenters and designers."
-  },
-  {
-    year: "Late 1800s",
-    title: "The Age of Glider Experiments",
-    category: "pioneers",
-    label: "Pioneers",
-    summary: "Experimenters investigate wing shapes, stability and control.",
-    details: "Aviation pioneers including Otto Lilienthal conducted gliding experiments and collected information about aerodynamic forces. Their work demonstrated the value of testing flying machines and learning from repeated trials.",
-    significance: "Glider experiments helped establish practical knowledge needed for powered flight."
-  },
-  {
-    year: "1903",
-    title: "The Wright Brothers' First Powered Flights",
-    category: "pioneers",
-    label: "Pioneers",
-    summary: "The Wright Flyer completes four powered flights at Kitty Hawk.",
-    details: "On 17 December 1903, Orville and Wilbur Wright achieved the first widely recognised successful powered, controlled flights of a heavier-than-air aircraft. Orville's first flight lasted 12 seconds and covered about 120 feet. The longest flight that day covered about 852 feet in 59 seconds.",
-    significance: "The Wrights combined aerodynamic research, a lightweight engine and effective flight controls in a working aircraft."
-  },
-  {
-    year: "1909",
-    title: "Louis Blériot Crosses the English Channel",
-    category: "pioneers",
-    label: "Pioneers",
-    summary: "A powered aeroplane flies from France to England across the Channel.",
-    details: "On 25 July 1909, French aviator Louis Blériot flew from the French coast to near Dover in England. The flight demonstrated the growing capability of aeroplanes to undertake journeys across open water.",
-    significance: "The crossing captured public attention and showed the potential of aviation for travel between countries."
-  },
-  {
-    year: "1914–1918",
-    title: "The First World War",
-    category: "military",
-    label: "Military Aviation",
-    summary: "Aircraft develop rapidly in performance and military roles.",
-    details: "During the First World War, aircraft evolved from relatively fragile early machines into specialised reconnaissance aircraft and fighters, among other roles. Improvements in engines, structures, tactics and production accelerated rapidly.",
-    significance: "The war greatly accelerated aircraft development, while also demonstrating the destructive uses of aviation."
-  },
-  {
-    year: "1919",
-    title: "The First Non-stop Transatlantic Flight",
-    category: "pioneers",
-    label: "Pioneers",
-    summary: "John Alcock and Arthur Brown fly non-stop across the Atlantic.",
-    details: "In June 1919, British aviators John Alcock and Arthur Brown completed the first non-stop transatlantic flight by aeroplane, travelling from Newfoundland to Ireland in a modified Vickers Vimy.",
-    significance: "The achievement proved that long-distance flights across the Atlantic were possible, although regular passenger services would require further advances."
-  },
-  {
-    year: "1927",
-    title: "Charles Lindbergh's Solo Atlantic Crossing",
-    category: "pioneers",
-    label: "Pioneers",
-    summary: "The Spirit of St. Louis completes a solo non-stop Atlantic flight.",
-    details: "On 20–21 May 1927, Charles Lindbergh flew from New York to Paris in the Spirit of St. Louis. His flight brought international attention to long-distance aviation and the possibilities of air travel.",
-    significance: "The flight became a major milestone in public interest in aviation and transatlantic journeys."
-  },
-  {
-    year: "1930s",
-    title: "Airliners Become More Capable",
-    category: "commercial",
-    label: "Commercial Flight",
-    summary: "Improved aircraft and infrastructure expand passenger air travel.",
-    details: "During the 1930s, all-metal aircraft, more powerful engines, improved navigation and better airport infrastructure helped make commercial flying more practical. Aircraft designs such as the Douglas DC-3 became important to airline development.",
-    significance: "Air travel became more reliable and accessible, although it remained expensive compared with later decades."
-  },
-  {
-    year: "1939–1945",
-    title: "The Second World War",
-    category: "military",
-    label: "Military Aviation",
-    summary: "Aircraft technology advances dramatically during global conflict.",
-    details: "The Second World War saw major developments in fighters, bombers, transports, radar and aircraft production. Near the end of the conflict, jet-powered aircraft entered military service, opening a new era in propulsion.",
-    significance: "Wartime advances influenced post-war aviation, including engines, electronics and aircraft design."
-  },
-  {
-    year: "1947",
-    title: "The Sound Barrier",
-    category: "technology",
-    label: "Technology",
-    summary: "The Bell X-1 research aircraft flies faster than sound.",
-    details: "On 14 October 1947, US test pilot Chuck Yeager piloted the Bell X-1 on a flight that exceeded the speed of sound in level flight. The rocket-powered research aircraft was designed to investigate high-speed flight.",
-    significance: "The flight marked a major milestone in supersonic aeronautics and high-speed aircraft research."
-  },
-  {
-    year: "1952",
-    title: "The De Havilland Comet Enters Airline Service",
-    category: "commercial",
-    label: "Commercial Flight",
-    summary: "The Comet becomes the first commercial jet airliner to enter service.",
-    details: "The British-built de Havilland Comet began scheduled passenger service in 1952. Its speed and cabin design offered a glimpse of the future of airline travel. Early structural accidents later led to important investigations and design lessons.",
-    significance: "The Comet helped usher in the jet-airliner era and contributed to the understanding of metal fatigue in pressurised aircraft."
-  },
-  {
-    year: "1958",
-    title: "The Boeing 707 Era",
-    category: "commercial",
-    label: "Commercial Flight",
-    summary: "The Boeing 707 helps establish long-range jet travel.",
-    details: "The Boeing 707 entered scheduled passenger service in 1958. Its success helped airlines expand faster, longer-range jet operations and contributed to the transformation of international air travel.",
-    significance: "Jet airliners reduced journey times and helped make long-distance commercial aviation a central part of global transport."
-  },
-  {
-    year: "1969",
-    title: "Concorde Makes Its First Flight",
-    category: "technology",
-    label: "Technology",
-    summary: "The Anglo-French supersonic passenger aircraft takes to the sky.",
-    details: "Concorde made its first test flight on 2 March 1969. Developed jointly by Britain and France, it was designed for sustained supersonic passenger travel and featured a distinctive slender delta wing.",
-    significance: "Concorde demonstrated the technical possibility of commercial supersonic flight, though operating costs and other constraints limited its use."
-  },
-  {
-    year: "1969",
-    title: "The Boeing 747 Takes Flight",
-    category: "commercial",
-    label: "Commercial Flight",
-    summary: "A new wide-body aircraft helps change the scale of air travel.",
-    details: "The Boeing 747 made its first flight in February 1969 and entered airline service in 1970. Its wide-body design could carry many more passengers than most earlier jet airliners.",
-    significance: "The 747 helped airlines increase capacity and contributed to the growth of mass international travel."
-  },
-  {
-    year: "1976",
-    title: "Concorde Begins Commercial Service",
-    category: "commercial",
-    label: "Commercial Flight",
-    summary: "Supersonic passenger flights begin with British Airways and Air France.",
-    details: "Concorde entered commercial service in January 1976. It could cruise at around Mach 2, approximately twice the speed of sound, on suitable routes. Its operations were restricted by economics, noise considerations and route requirements.",
-    significance: "Concorde remained one of the most recognisable examples of supersonic passenger transport."
-  },
-  {
-    year: "1980s–1990s",
-    title: "Digital Flight Systems Expand",
-    category: "technology",
-    label: "Technology",
-    summary: "Electronic displays and computerised controls become more common.",
-    details: "Advances in electronics and computing supported glass cockpits, digital flight management and fly-by-wire controls in many aircraft. These systems changed how flight information was displayed and how pilot inputs could be translated into control-surface movement.",
-    significance: "Digital systems became a major feature of modern aircraft design, training and maintenance."
-  },
-  {
-    year: "2005",
-    title: "The Airbus A380 Flies for the First Time",
-    category: "commercial",
-    label: "Commercial Flight",
-    summary: "The world's largest passenger airliner by passenger capacity completes its first flight.",
-    details: "The Airbus A380 made its first flight on 27 April 2005. Its full-length double-deck layout was developed for high-capacity airline operations, especially at major hub airports.",
-    significance: "The A380 represented a major engineering effort in large-aircraft design and high-capacity passenger transport."
-  },
-  {
-    year: "2010s–Today",
-    title: "Efficiency and Lower-Impact Aviation Research",
-    category: "technology",
-    label: "Technology",
-    summary: "Industry explores efficient engines, new fuels and alternative aircraft designs.",
-    details: "Modern aviation development includes more efficient engines, improved aerodynamics, lightweight structures, sustainable aviation fuels and research into electric or hybrid-electric aircraft. The practicality of each technology depends on aircraft size, route, infrastructure and other factors.",
-    significance: "Reducing aviation's environmental impact is a major engineering and policy challenge for the industry."
-  }
-];
+      <div class="timeline-item">
+        <div class="timeline-year">1988</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3>Digital Fly-by-Wire Era</h3>
+          <p>The Airbus A320 enters service pioneering full digital fly-by-wire flight control systems in commercial airliners.</p>
+        </div>
+      </div>
 
-const timeline = document.getElementById("timeline");
-const search = document.getElementById("search");
-const count = document.getElementById("count");
-const empty = document.getElementById("empty");
-const modal = document.getElementById("modal");
-let activeCategory = "all";
+    </div>
+  </main>
 
-function renderEvents() {
-  const query = search.value.trim().toLowerCase();
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 The Aviation Atlas. Built for aviation enthusiasts, spotters, and students worldwide.</p>
+  </footer>
 
-  const filtered = events.filter(event => {
-    const matchesCategory =
-      activeCategory === "all" || event.category === activeCategory;
-
-    const searchable = [
-      event.year,
-      event.title,
-      event.label,
-      event.summary,
-      event.details,
-      event.significance
-    ].join(" ").toLowerCase();
-
-    return matchesCategory && searchable.includes(query);
-  });
-
-  timeline.innerHTML = filtered.map(event => {
-    const index = events.indexOf(event);
-
-    return `
-      <article class="event">
-        <div class="year">${event.year}</div>
-        <span class="tag">${event.label}</span>
-        <h3>${event.title}</h3>
-        <p>${event.summary}</p>
-        <button class="details-btn" data-event="${index}">
-          Discover more →
-        </button>
-      </article>
-    `;
-  }).join("");
-
-  count.textContent =
-    `${filtered.length} historical milestone${filtered.length === 1 ? "" : "s"}`;
-
-  empty.style.display = filtered.length ? "none" : "block";
-}
-
-function openEvent(index) {
-  const event = events[index];
-  if (!event) return;
-
-  document.getElementById("modal-year").textContent = event.year;
-  document.getElementById("modal-title").textContent = event.title;
-
-  const body = document.getElementById("modal-body");
-  body.replaceChildren();
-
-  const description = document.createElement("p");
-  description.textContent = event.details;
-
-  const heading = document.createElement("h3");
-  heading.textContent = "Why it matters";
-
-  const significance = document.createElement("p");
-  significance.textContent = event.significance;
-
-  const fact = document.createElement("div");
-  fact.className = "fact";
-
-  const strong = document.createElement("strong");
-  strong.textContent = "Atlas milestone: ";
-
-  fact.append(strong, document.createTextNode(event.summary));
-  body.append(description, heading, significance, fact);
-
-  modal.classList.add("open");
-  document.getElementById("close").focus();
-}
-
-function closeModal() {
-  modal.classList.remove("open");
-}
-
-timeline.addEventListener("click", event => {
-  const button = event.target.closest("[data-event]");
-  if (button) openEvent(Number(button.dataset.event));
-});
-
-search.addEventListener("input", renderEvents);
-
-document.querySelectorAll(".filter").forEach(button => {
-  button.addEventListener("click", () => {
-    activeCategory = button.dataset.category;
-
-    document.querySelectorAll(".filter").forEach(item => {
-      const selected = item === button;
-      item.classList.toggle("selected", selected);
-      item.setAttribute("aria-pressed", String(selected));
-    });
-
-    renderEvents();
-  });
-
-  button.setAttribute(
-    "aria-pressed",
-    String(button.classList.contains("selected"))
-  );
-});
-
-document.getElementById("close").addEventListener("click", closeModal);
-document.getElementById("close-bottom").addEventListener("click", closeModal);
-
-modal.addEventListener("click", event => {
-  if (event.target === modal) closeModal();
-});
-
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") closeModal();
-});
-
-renderEvents();
-</script>
-
+  <script>
+    function toggleMenu() {
+      const links = document.getElementById('navLinks');
+      links.classList.toggle('open');
+    }
+  </script>
 </body>
 </html>
