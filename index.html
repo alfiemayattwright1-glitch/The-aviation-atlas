@@ -3,98 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aircraft Catalogue | The Aviation Atlas</title>
+  <title>The Aviation Atlas | Digital Publication & Flight Archive</title>
+  <meta name="description" content="A modern aviation publication and interactive platform dedicated to aircraft discovery, global hubs, flight mechanics, and aviation history.">
   <link rel="stylesheet" href="styles.css">
-  <style>
-    .page-header {
-      padding: 100px 2rem 3rem;
-      text-align: center;
-      background: var(--bg-secondary);
-      border-bottom: 1px solid var(--border-color);
-    }
-    .page-header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
-    .page-header h1 span {
-      color: var(--accent-gold);
-    }
-    .page-header p {
-      color: var(--text-muted);
-    }
-    .container {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 2rem;
-    }
-    .search-filter {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-    .search-filter input, .search-filter select {
-      flex: 1;
-      min-width: 250px;
-      padding: 0.75rem 1rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      color: var(--text-main);
-      font-size: 1rem;
-    }
-    .aircraft-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 2rem;
-    }
-    .aircraft-card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      overflow: hidden;
-      transition: var(--transition-smooth);
-    }
-    .aircraft-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    }
-    .aircraft-img {
-      height: 200px;
-      width: 100%;
-      object-fit: cover;
-    }
-    .aircraft-info {
-      padding: 1.5rem;
-    }
-    .aircraft-info h3 {
-      margin-bottom: 0.5rem;
-      font-size: 1.25rem;
-    }
-    .aircraft-info p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-    .specs {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.85rem;
-      color: var(--accent-gold);
-      border-top: 1px solid var(--border-color);
-      padding-top: 0.75rem;
-    }
-  </style>
 </head>
 <body>
 
   <!-- Navigation Bar -->
   <header>
     <div class="nav-container">
-      <a href="index.html" class="logo">Aviation<span>Atlas</span></a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="aircraft.html" class="active">Aircraft</a></li>
+      <a href="index.html" class="logo">The Aviation <span>Atlas</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="aircraft.html">Aircraft</a></li>
         <li><a href="airports.html">Airports</a></li>
         <li><a href="knowledge.html">Knowledge</a></li>
         <li><a href="history.html">History</a></li>
@@ -103,90 +25,200 @@
     </div>
   </header>
 
-  <!-- Page Header -->
-  <section class="page-header">
-    <h1>Aircraft <span>Catalogue</span></h1>
-    <p>Explore commercial airliners, military jets, and legendary historic aircraft.</p>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text-block">
+        <span class="section-label">Aviation Discovery &amp; Encyclopedia</span>
+        <h1>The Art, Engineering &amp; <em>Legacy</em> of Flight</h1>
+        <p>Explore an authoritative archive covering commercial airliners, legendary military aircraft, world-class airport hubs, and the technological milestones of human aviation.</p>
+        <div class="hero-actions">
+          <a href="aircraft.html" class="btn-primary">Explore Aircraft</a>
+          <a href="knowledge.html" class="btn-secondary">Flight Knowledge</a>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- Main Content -->
-  <main class="container">
-    <div class="search-filter">
-      <input type="text" id="searchInput" placeholder="Search by name or manufacturer..." onkeyup="filterAircraft()">
-      <select id="categoryFilter" onchange="filterAircraft()">
-        <option value="all">All Categories</option>
-        <option value="commercial">Commercial Airliner</option>
-        <option value="military">Military</option>
-        <option value="historic">Historic</option>
-      </select>
+  <!-- Featured Aircraft Section -->
+  <section class="section">
+    <div class="section-container">
+      <div class="section-header">
+        <div>
+          <span class="section-label">Fleet Spotlight</span>
+          <h2 class="section-title">Iconic Flying Machines</h2>
+        </div>
+        <a href="aircraft.html" class="btn-secondary">View Full Fleet</a>
+      </div>
+
+      <div class="grid-3">
+        <!-- Aircraft Card 1 -->
+        <article class="card">
+          <div class="card-image-wrap">
+            <span class="card-tag">Commercial</span>
+            <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80" alt="Boeing 747-400 flying above clouds" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>Boeing 747-400</h3>
+            <p>The iconic "Queen of the Skies" defined international long-haul travel across five decades with its distinct hump layout.</p>
+            <div class="card-specs">
+              <span>Origin: <strong>United States</strong></span>
+              <span>Range: <strong>13,450 km</strong></span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Aircraft Card 2 -->
+        <article class="card">
+          <div class="card-image-wrap">
+            <span class="card-tag">Commercial</span>
+            <img src="https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=800&q=80" alt="Airbus A380 double decker passenger jet" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>Airbus A380-800</h3>
+            <p>The world's largest passenger airliner, engineered with a full-length double deck to serve peak high-density routes.</p>
+            <div class="card-specs">
+              <span>Origin: <strong>Multi-National</strong></span>
+              <span>Capacity: <strong>Up to 853</strong></span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Aircraft Card 3 -->
+        <article class="card">
+          <div class="card-image-wrap">
+            <span class="card-tag">Supersonic</span>
+            <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=800&q=80" alt="Concorde supersonic airliner" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>Aérospatiale/BAC Concorde</h3>
+            <p>A triumph of supersonic passenger flight, crossing the Atlantic at Mach 2.04 with a distinctive delta wing design.</p>
+            <div class="card-specs">
+              <span>Origin: <strong>UK / France</strong></span>
+              <span>Speed: <strong>Mach 2.04</strong></span>
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
+  </section>
 
-    <div class="aircraft-grid" id="aircraftGrid">
-      <!-- Aircraft Card 1 -->
-      <div class="aircraft-card" data-category="commercial" data-name="boeing 747">
-        <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=600&q=80" alt="Boeing 747" class="aircraft-img">
-        <div class="aircraft-info">
-          <h3>Boeing 747</h3>
-          <p>The iconic "Queen of the Skies" revolutionized long-haul commercial air travel with its double-deck configuration.</p>
-          <div class="specs">
-            <span>Manufacturer: Boeing</span>
-            <span>First Flight: 1969</span>
+  <!-- Aviation History Timeline Preview -->
+  <section class="section" style="background-color: var(--bg-surface);">
+    <div class="section-container">
+      <div class="section-header" style="text-align: center; display: block; margin-bottom: 4rem;">
+        <span class="section-label">Chronology</span>
+        <h2 class="section-title">Milestones in Flight</h2>
+        <p class="section-desc" style="margin: 0 auto;">Key moments that shaped modern aviation technology and global air mobility.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">1903</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h3>First Powered, Controlled Flight</h3>
+            <p>Orville and Wilbur Wright achieve the first controlled, sustained powered flight in Kitty Hawk, North Carolina.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-year">1952</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h3>The Commercial Jet Age Begins</h3>
+            <p>The de Havilland Comet enters scheduled service with BOAC, pioneering commercial jetliner transportation.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-year">1969</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h3>Maiden Flights of 747 &amp; Concorde</h3>
+            <p>A landmark year in aviation history featuring the maiden flights of both the Boeing 747 and the supersonic Concorde.</p>
           </div>
         </div>
       </div>
 
-      <!-- Aircraft Card 2 -->
-      <div class="aircraft-card" data-category="commercial" data-name="airbus a380">
-        <img src="https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=600&q=80" alt="Airbus A380" class="aircraft-img">
-        <div class="aircraft-info">
-          <h3>Airbus A380</h3>
-          <p>The world's largest passenger airliner, offering unprecedented passenger capacity and quiet twin-deck comfort.</p>
-          <div class="specs">
-            <span>Manufacturer: Airbus</span>
-            <span>First Flight: 2005</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Aircraft Card 3 -->
-      <div class="aircraft-card" data-category="historic" data-name="concorde">
-        <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=600&q=80" alt="Concorde" class="aircraft-img">
-        <div class="aircraft-info">
-          <h3>Concorde</h3>
-          <p>A supersonic passenger jet that cruised at Mach 2.0, cutting transatlantic travel times in half.</p>
-          <div class="specs">
-            <span>Manufacturer: BAC / Sud Aviation</span>
-            <span>First Flight: 1969</span>
-          </div>
-        </div>
+      <div style="text-align: center; margin-top: 3rem;">
+        <a href="history.html" class="btn-secondary">Explore Historical Archive</a>
       </div>
     </div>
-  </main>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="section">
+    <div class="section-container">
+      <div class="newsletter-card">
+        <span class="section-label">Editorial Dispatch</span>
+        <h2 class="section-title">Stay Informed on Aviation Engineering</h2>
+        <p class="section-desc" style="margin: 0 auto;">Receive periodic technical breakdowns, aircraft spotlights, and updates to our digital aviation database.</p>
+        <form class="newsletter-form" id="newsletterForm" onsubmit="handleNewsletterSubmit(event)">
+          <input type="email" id="emailInput" placeholder="Enter your business email" required aria-label="Email address">
+          <button type="submit" class="btn-primary">Subscribe</button>
+        </form>
+        <p id="newsletterMessage" style="margin-top: 1rem; font-size: 0.85rem; color: var(--accent-gold); display: none;"></p>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2026 The Aviation Atlas. All rights reserved.</p>
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">The Aviation <span>Atlas</span></a>
+        <p>A digital aviation publication and comprehensive knowledge base for spotters, historians, and flight enthusiasts.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Archive</h4>
+        <ul>
+          <li><a href="aircraft.html">Aircraft Fleet</a></li>
+          <li><a href="airports.html">Global Hubs</a></li>
+          <li><a href="history.html">Timeline Archive</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Learning</h4>
+        <ul>
+          <li><a href="knowledge.html">Aerodynamics</a></li>
+          <li><a href="knowledge.html">Flight Systems</a></li>
+          <li><a href="games.html">Interactive Quizzes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Publication</h4>
+        <ul>
+          <li><a href="#newsletterForm">Newsletter</a></li>
+          <li><a href="https://github.com/alfiemayattwright1-glitch/the-aviation-atlas/" target="_blank" rel="noopener">GitHub Repository</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 The Aviation Atlas. Built with precision.</p>
+      <p>All photos credited to their respective authors via Unsplash.</p>
+    </div>
   </footer>
 
   <script>
-    function filterAircraft() {
-      const searchInput = document.getElementById('searchInput').value.toLowerCase();
-      const categoryFilter = document.getElementById('categoryFilter').value;
-      const cards = document.querySelectorAll('.aircraft-card');
+    // Mobile navigation menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
 
-      cards.forEach(card => {
-        const name = card.getAttribute('data-name');
-        const category = card.getAttribute('data-category');
-        
-        const matchesSearch = name.includes(searchInput);
-        const matchesCategory = categoryFilter === 'all' || category === categoryFilter;
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('nav-open');
+    });
 
-        if (matchesSearch && matchesCategory) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+    // Handle newsletter preview action
+    function handleNewsletterSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('emailInput').value;
+      const msg = document.getElementById('newsletterMessage');
+      if (email) {
+        msg.textContent = 'Thank you. Subscription preferences saved for ' + email + '.';
+        msg.style.display = 'block';
+        document.getElementById('emailInput').value = '';
+      }
     }
   </script>
 </body>
