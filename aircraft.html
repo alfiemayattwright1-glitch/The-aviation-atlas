@@ -1,0 +1,763 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore aircraft from around the world with The Aviation Atlas. Discover airliners, military aircraft, helicopters and historic aircraft.">
+  <title>Aircraft Directory | The Aviation Atlas</title>
+  <style>
+    :root {
+      --navy: #071a30;
+      --blue: #12395c;
+      --gold: #d7ad60;
+      --paper: #f4f6f9;
+      --white: #fff;
+      --ink: #17283a;
+      --muted: #627185;
+      --line: #dce3eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      background: #041120;
+      color: #d8e1ec;
+      padding: 9px 6%;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 1.3px;
+    }
+
+    .brand span { color: var(--gold); }
+
+    .navlinks {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .navlinks a:hover { color: var(--gold); }
+
+    .hero {
+      background:
+        linear-gradient(100deg, rgba(4,17,32,.97), rgba(8,36,63,.85)),
+        linear-gradient(135deg, #143d60, #071a30);
+      color: white;
+      padding: 68px 24px 60px;
+    }
+
+    .hero-inner, main, footer .footer-inner {
+      max-width: 1120px;
+      margin: auto;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(35px, 6vw, 58px);
+      line-height: 1.1;
+      margin: 12px 0 18px;
+      letter-spacing: -1.5px;
+    }
+
+    .hero p {
+      color: #d1dce8;
+      max-width: 660px;
+      font-size: 17px;
+      margin: 0;
+    }
+
+    .stats {
+      display: flex;
+      gap: 42px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--gold);
+      font-size: 25px;
+    }
+
+    .stat span {
+      font-size: 12px;
+      color: #c7d2df;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    main { padding: 40px 24px 70px; }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      color: var(--navy);
+      font-size: 27px;
+      line-height: 1.25;
+      margin: 0 0 8px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .search-panel {
+      background: white;
+      border: 1px solid var(--line);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 26px;
+    }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 210px;
+      gap: 12px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cbd5e1;
+      background: white;
+      border-radius: 5px;
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    input:focus, select:focus {
+      outline: 2px solid #7da6cc;
+      outline-offset: 1px;
+    }
+
+    .result-count {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .18s, box-shadow .18s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(7,26,48,.09);
+    }
+
+    .card-top {
+      background: var(--navy);
+      color: white;
+      min-height: 100px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-top::after {
+      content: "✈";
+      position: absolute;
+      right: 12px;
+      bottom: -27px;
+      font-size: 95px;
+      color: rgba(255,255,255,.09);
+      transform: rotate(-10deg);
+    }
+
+    .category {
+      display: inline-block;
+      background: rgba(215,173,96,.16);
+      color: var(--gold);
+      border: 1px solid rgba(215,173,96,.4);
+      border-radius: 3px;
+      padding: 3px 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: bold;
+    }
+
+    .card-body {
+      padding: 19px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card h3 {
+      color: var(--navy);
+      margin: 0 0 5px;
+      font-size: 20px;
+      line-height: 1.3;
+    }
+
+    .manufacturer {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      font-size: 14px;
+      margin: 0 0 18px;
+      color: #425267;
+    }
+
+    .details {
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      margin-top: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .detail span {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+
+    .detail strong { font-size: 13px; }
+
+    .read-more {
+      margin-top: 18px;
+      border: 0;
+      background: var(--navy);
+      color: white;
+      padding: 12px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .read-more:hover { background: var(--blue); }
+
+    .empty {
+      display: none;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+    }
+
+    .notice {
+      margin-top: 35px;
+      padding: 22px;
+      border-left: 4px solid var(--gold);
+      background: white;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer {
+      background: #041120;
+      color: #c5d0dd;
+      padding: 32px 24px;
+      font-size: 13px;
+    }
+
+    footer .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    footer strong { color: white; }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(1,10,20,.78);
+      z-index: 10;
+      padding: 20px;
+      overflow-y: auto;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-box {
+      width: 100%;
+      max-width: 680px;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .modal-head {
+      background: var(--navy);
+      color: white;
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 15px;
+    }
+
+    .modal-head h2 { color: white; margin-top: 10px; }
+
+    .close {
+      background: transparent;
+      border: 1px solid #8090a3;
+      color: white;
+      border-radius: 4px;
+      padding: 7px 11px;
+      cursor: pointer;
+    }
+
+    .modal-content { padding: 25px; }
+
+    .modal-content h3 {
+      color: var(--navy);
+      margin-top: 24px;
+    }
+
+    .modal-content p { color: #425267; }
+
+    .fact-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .fact-table td {
+      border-bottom: 1px solid var(--line);
+      padding: 11px 8px;
+      vertical-align: top;
+    }
+
+    .fact-table td:first-child {
+      color: var(--muted);
+      width: 40%;
+    }
+
+    @media (max-width: 800px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+      .search-row { grid-template-columns: 1fr; }
+      .stats { gap: 22px; }
+      .nav { align-items: flex-start; }
+      .navlinks { gap: 13px; }
+      .hero { padding-top: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">Independent aviation reference · Aircraft directory</div>
+
+  <header>
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="index.html">THE AVIATION <span>ATLAS</span></a>
+      <div class="navlinks">
+        <a href="index.html">Home</a>
+        <a href="aircraft.html">Aircraft</a>
+        <a href="airports.html">Airports</a>
+        <a href="knowledge.html">Knowledge</a>
+        <a href="history.html">History</a>
+        <a href="games.html">Games</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">The aircraft collection</div>
+      <h1>Discover the world's aircraft.</h1>
+      <p>
+        From commercial airliners and pioneering designs to military aircraft
+        and helicopters, explore the engineering, history and performance
+        behind aviation's most important machines.
+      </p>
+      <div class="stats">
+        <div class="stat"><strong id="total-count">18</strong><span>Profiles in this edition</span></div>
+        <div class="stat"><strong>4</strong><span>Main categories</span></div>
+        <div class="stat"><strong>01</strong><span>Growing catalogue</span></div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section>
+      <div class="section-heading">
+        <div>
+          <h2>Aircraft directory</h2>
+          <p>Search the collection by aircraft name, manufacturer or type.</p>
+        </div>
+      </div>
+
+      <div class="search-panel">
+        <div class="search-row">
+          <input id="search" type="search" placeholder="Search aircraft, e.g. Boeing 747..." aria-label="Search aircraft">
+          <select id="category" aria-label="Filter by category">
+            <option value="all">All categories</option>
+            <option value="Airliner">Commercial airliners</option>
+            <option value="Military">Military aircraft</option>
+            <option value="Helicopter">Helicopters</option>
+            <option value="Historic">Historic aircraft</option>
+          </select>
+        </div>
+        <div class="result-count" id="result-count" aria-live="polite"></div>
+      </div>
+
+      <div class="grid" id="aircraft-grid"></div>
+      <div class="empty" id="empty">No aircraft match your search. Try another name or category.</div>
+    </section>
+
+    <div class="notice">
+      <strong>About this directory</strong><br>
+      This is the first edition of the catalogue, containing a starter collection
+      of aircraft profiles. Performance figures can vary by variant, engine,
+      operator and configuration. This page will need additional researched
+      records before it can represent thousands of aircraft.
+    </div>
+  </main>
+
+  <div class="modal" id="aircraft-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div>
+          <span class="category" id="modal-category"></span>
+          <h2 id="modal-title"></h2>
+          <div id="modal-maker"></div>
+        </div>
+        <button class="close" id="close-modal" aria-label="Close aircraft details">Close ✕</button>
+      </div>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>The Aviation Atlas</strong><br>Your World of Aviation</div>
+      <div>Aircraft · Airports · Knowledge · History</div>
+      <div>Independent aviation reference project</div>
+    </div>
+  </footer>
+
+  <script>
+    const aircraft = [
+      {
+        name:"A320", full:"Airbus A320", maker:"Airbus", category:"Airliner",
+        role:"Short- to medium-haul passenger airliner",
+        first:"1987", propulsion:"Twin-engine turbofan",
+        description:"The A320 introduced digital fly-by-wire flight controls to a widely used commercial airliner family. It became a major competitor in the single-aisle market.",
+        history:"The A320 entered airline service in 1988. Its family later expanded to include the shorter A318 and A319 and the longer A321. The updated A320neo family introduced newer engines and aerodynamic improvements.",
+        significance:"Its flight-control technology and large worldwide operator base made the A320 family a defining design in modern short- and medium-haul aviation."
+      },
+      {
+        name:"A350", full:"Airbus A350", maker:"Airbus", category:"Airliner",
+        role:"Long-haul wide-body passenger airliner",
+        first:"2013", propulsion:"Twin-engine turbofan",
+        description:"The A350 is a long-range wide-body aircraft using extensive composite materials in its airframe.",
+        history:"Developed for long-distance airline operations, the A350 entered commercial service in 2015. The A350-900 and A350-1000 are its principal passenger variants.",
+        significance:"The aircraft combines a modern composite structure, advanced aerodynamics and systems designed for long-haul efficiency."
+      },
+      {
+        name:"A380", full:"Airbus A380", maker:"Airbus", category:"Airliner",
+        role:"Very large, double-deck passenger airliner",
+        first:"2005", propulsion:"Four turbofan engines",
+        description:"The A380 is the world's largest passenger airliner to enter series production, with two full-length passenger decks.",
+        history:"The A380 first flew in 2005 and entered airline service in 2007. Production ended in 2021, although aircraft continue to fly with several airlines.",
+        significance:"Its scale made it an unmistakable part of modern aviation and a landmark in high-capacity passenger transport."
+      },
+      {
+        name:"A400M", full:"Airbus A400M Atlas", maker:"Airbus", category:"Military",
+        role:"Military transport aircraft",
+        first:"2009", propulsion:"Four turboprop engines",
+        description:"The A400M is designed to transport troops, vehicles and cargo while operating from a range of prepared and less-developed airfields.",
+        history:"The aircraft was developed to meet European and partner-nation military airlift requirements. It entered service in 2013.",
+        significance:"Its combination of turboprop efficiency, substantial payload and tactical airlift capability fills a role between smaller tactical transports and large strategic transports."
+      },
+      {
+        name:"747", full:"Boeing 747", maker:"Boeing", category:"Airliner",
+        role:"Long-haul wide-body passenger and cargo aircraft",
+        first:"1969", propulsion:"Four turbofan engines",
+        description:"Recognisable by its distinctive upper-deck hump, the 747 helped make large-capacity long-distance air travel more accessible.",
+        history:"The 747 entered commercial service in 1970. Passenger and freighter variants served airlines and cargo operators for decades. Production concluded in 2023.",
+        significance:"The 747 became one of the most recognisable airliners in history and played a major role in international passenger and freight transport."
+      },
+      {
+        name:"777", full:"Boeing 777", maker:"Boeing", category:"Airliner",
+        role:"Long-haul wide-body passenger airliner",
+        first:"1994", propulsion:"Twin-engine turbofan",
+        description:"The 777 is a large twin-engine aircraft developed for long-range airline operations.",
+        history:"Entering airline service in 1995, the 777 became an important long-haul platform. The family includes several passenger variants and dedicated freighters.",
+        significance:"Its large engines, long-range capability and extensive airline adoption helped establish the modern large twin-engine long-haul airliner."
+      },
+      {
+        name:"787", full:"Boeing 787 Dreamliner", maker:"Boeing", category:"Airliner",
+        role:"Long-haul wide-body passenger airliner",
+        first:"2009", propulsion:"Twin-engine turbofan",
+        description:"The 787 uses a composite-heavy structure and modern onboard systems designed for efficient long-distance travel.",
+        history:"The Dreamliner entered commercial service in 2011. The family includes the 787-8, 787-9 and 787-10.",
+        significance:"It helped popularise composite-intensive construction in large commercial aircraft and enabled airlines to operate many long-range routes with twin-engine aircraft."
+      },
+      {
+        name:"737", full:"Boeing 737", maker:"Boeing", category:"Airliner",
+        role:"Short- to medium-haul passenger airliner",
+        first:"1967", propulsion:"Twin-engine turbofan",
+        description:"The 737 family is one of the most widely used commercial jet airliner families in the world.",
+        history:"The original 737 entered airline service in 1968. Multiple generations followed, including the Classic, Next Generation and MAX series.",
+        significance:"Its large production run and broad operator base have made the 737 central to short- and medium-haul airline networks."
+      },
+      {
+        name:"Concorde", full:"Aérospatiale-BAC Concorde", maker:"Aérospatiale and BAC", category:"Historic",
+        role:"Supersonic passenger airliner",
+        first:"1969", propulsion:"Four afterburning turbojet engines",
+        description:"Concorde was a supersonic passenger aircraft with a slender delta wing and a distinctive drooping nose for improved pilot visibility during ground operations.",
+        history:"Concorde entered commercial service in 1976 and retired in 2003. British Airways and Air France operated the aircraft.",
+        significance:"It remains a landmark in civil aviation engineering because it carried passengers at supersonic speeds on scheduled services."
+      },
+      {
+        name:"SR-71", full:"Lockheed SR-71 Blackbird", maker:"Lockheed", category:"Military",
+        role:"High-speed strategic reconnaissance aircraft",
+        first:"1964", propulsion:"Two turbojet engines with afterburners",
+        description:"The SR-71 was designed for reconnaissance missions at very high speed and altitude.",
+        history:"It entered operational service with the United States Air Force in the 1960s and was retired from regular USAF service in 1998.",
+        significance:"Its specialised design and demanding operating environment made it one of the most notable high-speed aircraft programmes."
+      },
+      {
+        name:"Spitfire", full:"Supermarine Spitfire", maker:"Supermarine", category:"Historic",
+        role:"Single-seat fighter aircraft",
+        first:"1936", propulsion:"Piston engine",
+        description:"The Spitfire is a British fighter known for its elliptical wing and major role during the Second World War.",
+        history:"The aircraft entered RAF service in 1938. Many variants were produced, and later versions received increasingly powerful engines.",
+        significance:"It became one of Britain's best-known military aircraft and played an important role in the Battle of Britain."
+      },
+      {
+        name:"P-51", full:"North American P-51 Mustang", maker:"North American Aviation", category:"Historic",
+        role:"Fighter and fighter-bomber",
+        first:"1940", propulsion:"Piston engine",
+        description:"The P-51 Mustang was a long-range fighter that became particularly important in Allied operations during the Second World War.",
+        history:"The aircraft first flew in 1940. Later versions, including the P-51D, were powered by the Rolls-Royce Merlin engine built under licence in the United States.",
+        significance:"Its range and performance made it an important escort fighter for Allied bomber formations."
+      },
+      {
+        name:"F-22", full:"Lockheed Martin F-22 Raptor", maker:"Lockheed Martin", category:"Military",
+        role:"Stealth air-superiority fighter",
+        first:"1997", propulsion:"Two turbofan engines",
+        description:"The F-22 is a United States fighter combining low-observable design, advanced sensors and high-performance flight characteristics.",
+        history:"The F-22 entered operational service with the US Air Force in 2005. It was developed primarily for air-superiority missions.",
+        significance:"It became one of the first operational fifth-generation fighters, integrating stealth and advanced avionics into a single platform."
+      },
+      {
+        name:"F-35", full:"Lockheed Martin F-35 Lightning II", maker:"Lockheed Martin", category:"Military",
+        role:"Stealth multirole combat aircraft",
+        first:"2006", propulsion:"Single turbofan engine",
+        description:"The F-35 family includes conventional take-off, short take-off and vertical-landing, and carrier-based variants.",
+        history:"The programme developed a family of aircraft for the United States and partner nations. Operational service began in the 2010s.",
+        significance:"Its design places strong emphasis on sensor integration, data sharing and multirole operations."
+      },
+      {
+        name:"C-130", full:"Lockheed C-130 Hercules", maker:"Lockheed", category:"Military",
+        role:"Military transport aircraft",
+        first:"1954", propulsion:"Four turboprop engines",
+        description:"The C-130 is a versatile transport aircraft used for cargo, personnel, humanitarian support and numerous specialised missions.",
+        history:"It entered service in the 1950s and has remained in production through successive upgrades and variants.",
+        significance:"Its adaptability and ability to operate from relatively short airfields have supported decades of military and civilian use."
+      },
+      {
+        name:"CH-47", full:"Boeing CH-47 Chinook", maker:"Boeing", category:"Helicopter",
+        role:"Heavy-lift transport helicopter",
+        first:"1961", propulsion:"Twin turboshaft engines",
+        description:"The Chinook uses tandem rotors rather than a conventional tail rotor and is designed to move heavy cargo and personnel.",
+        history:"The CH-47 entered US Army service in the 1960s. Multiple upgraded variants have followed and remain in service.",
+        significance:"Its heavy-lift capability has made it a long-serving platform for military logistics, disaster relief and other transport tasks."
+      },
+      {
+        name:"UH-60", full:"Sikorsky UH-60 Black Hawk", maker:"Sikorsky", category:"Helicopter",
+        role:"Utility transport helicopter",
+        first:"1974", propulsion:"Twin turboshaft engines",
+        description:"The Black Hawk is a military utility helicopter designed to transport personnel and equipment and support a variety of missions.",
+        history:"It entered US Army service in 1979. Many variants have been developed for different military and government operators.",
+        significance:"Its broad mission range and extensive international use have made it a major modern military helicopter family."
+      },
+      {
+        name:"R22", full:"Robinson R22", maker:"Robinson Helicopter Company", category:"Helicopter",
+        role:"Light two-seat helicopter",
+        first:"1975", propulsion:"Piston engine",
+        description:"The R22 is a compact, two-seat helicopter widely used for flight training and private flying.",
+        history:"The R22 was developed as a relatively small and economical helicopter. It received certification in the early 1980s.",
+        significance:"It has played a notable role in helicopter training because of its compact design and widespread availability."
+      }
+    ];
+
+    const grid = document.getElementById("aircraft-grid");
+    const search = document.getElementById("search");
+    const category = document.getElementById("category");
+    const resultCount = document.getElementById("result-count");
+    const empty = document.getElementById("empty");
+    const modal = document.getElementById("aircraft-modal");
+
+    document.getElementById("total-count").textContent = aircraft.length;
+
+    function renderAircraft() {
+      const term = search.value.trim().toLowerCase();
+      const selectedCategory = category.value;
+
+      const results = aircraft.filter(a => {
+        const searchable = [
+          a.name, a.full, a.maker, a.category, a.role, a.description
+        ].join(" ").toLowerCase();
+
+        return searchable.includes(term) &&
+          (selectedCategory === "all" || a.category === selectedCategory);
+      });
+
+      grid.innerHTML = results.map(a => {
+        const index = aircraft.indexOf(a);
+        return `
+          <article class="card">
+            <div class="card-top">
+              <span class="category">${a.category}</span>
+            </div>
+            <div class="card-body">
+              <h3>${a.full}</h3>
+              <div class="manufacturer">${a.maker}</div>
+              <p>${a.description}</p>
+              <div class="details">
+                <div class="detail"><span>First flight</span><strong>${a.first}</strong></div>
+                <div class="detail"><span>Propulsion</span><strong>${a.propulsion}</strong></div>
+              </div>
+              <button class="read-more" data-index="${index}">Explore aircraft →</button>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      resultCount.textContent =
+        `Showing ${results.length} of ${aircraft.length} aircraft profiles`;
+      empty.style.display = results.length ? "none" : "block";
+      grid.style.display = results.length ? "grid" : "none";
+    }
+
+    function openAircraft(index) {
+      const a = aircraft[index];
+      if (!a) return;
+
+      document.getElementById("modal-category").textContent = a.category;
+      document.getElementById("modal-title").textContent = a.full;
+      document.getElementById("modal-maker").textContent = a.maker;
+
+      const content = document.getElementById("modal-content");
+      content.innerHTML = `
+        <h3>Aircraft overview</h3>
+        <p>${a.description}</p>
+        <h3>Technical overview</h3>
+        <table class="fact-table">
+          <tr><td>Manufacturer</td><td>${a.maker}</td></tr>
+          <tr><td>Aircraft type</td><td>${a.role}</td></tr>
+          <tr><td>First flight</td><td>${a.first}</td></tr>
+          <tr><td>Propulsion</td><td>${a.propulsion}</td></tr>
+          <tr><td>Classification</td><td>${a.category}</td></tr>
+        </table>
+        <h3>History and development</h3>
+        <p>${a.history}</p>
+        <h3>Aviation significance</h3>
+        <p>${a.significance}</p>
+        <p><small>Historical summaries are introductory. Verify detailed technical data against manufacturer, operator or aviation-authority publications.</small></p>
+      `;
+
+      modal.classList.add("open");
+      document.getElementById("close-modal").focus();
+    }
+
+    grid.addEventListener("click", event => {
+      const button = event.target.closest("button[data-index]");
+      if (button) openAircraft(Number(button.dataset.index));
+    });
+
+    search.addEventListener("input", renderAircraft);
+    category.addEventListener("change", renderAircraft);
+
+    document.getElementById("close-modal").addEventListener("click", () => {
+      modal.classList.remove("open");
+    });
+
+    modal.addEventListener("click", event => {
+      if (event.target === modal) modal.classList.remove("open");
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") modal.classList.remove("open");
+    });
+
+    renderAircraft();
+  </script>
+</body>
+</html>
