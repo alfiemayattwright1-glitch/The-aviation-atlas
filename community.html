@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotter Community Hub | The Aviation Atlas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-header { padding: 4rem 1.5rem 2.5rem; background: var(--bg-card); border-bottom: 1px solid var(--border-subtle); text-align: center; }
+    .page-header h1 { font-family: var(--font-heading); font-size: clamp(2.2rem, 4vw, 3rem); margin-bottom: 0.75rem; }
+    .page-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1.05rem; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 3rem 1.5rem; }
+    
+    .community-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+    @media (max-width: 900px) { .community-grid { grid-template-columns: 1fr; } }
+    
+    .upload-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 2rem; margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.9rem; }
+    .form-input { width: 100%; background: var(--bg-dark); border: 1px solid var(--border-subtle); color: #fff; padding: 0.75rem 1rem; border-radius: 6px; font-family: var(--font-body); }
+    
+    .feed-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; margin-bottom: 1.5rem; }
+    .feed-img { width: 100%; height: 350px; object-fit: cover; }
+    .feed-body { padding: 1.5rem; }
+    .feed-meta { font-size: 0.8rem; color: var(--accent-gold); font-weight: 700; text-transform: uppercase; margin-bottom: 0.35rem; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">The Aviation <span>Atlas</span></a>
+      <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aircraft.html">Aircraft</a></li>
+        <li><a href="airports.html">Airports</a></li>
+        <li><a href="knowledge.html">Academy</a></li>
+        <li><a href="community.html" class="active">Community</a></li>
+        <li><a href="assistant.html">AI Assistant</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="games.html">Quizzes</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="page-header">
+    <h1>Spotter Community Hub</h1>
+    <p>Connect with spotters worldwide, share high-resolution sightings, and swap location guides.</p>
+  </section>
+
+  <main class="container">
+    <div class="community-grid">
+      <div>
+        <div class="upload-card">
+          <h2 style="font-family: var(--font-heading); margin-bottom: 1rem; font-size: 1.4rem;">Submit Spotter Photo</h2>
+          <form id="spotterForm" onsubmit="submitPhoto(event)">
+            <div class="form-group">
+              <label>Aircraft / Subject</label>
+              <input type="text" id="pTitle" class="form-input" placeholder="e.g. British Airways A380 Landing at LHR" required>
+            </div>
+            <div class="form-group">
+              <label>Location / Airport Code</label>
+              <input type="text" id="pLocation" class="form-input" placeholder="e.g. London Heathrow (LHR/EGLL)" required>
+            </div>
+            <div class="form-group">
+              <label>Image Direct Web URL</label>
+              <input type="url" id="pUrl" class="form-input" placeholder="https://images.unsplash.com/..." required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="border:none; cursor:pointer;">Publish Sighting</button>
+          </form>
+        </div>
+
+        <div id="communityFeed"></div>
+      </div>
+
+      <aside>
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.5rem; position: sticky; top: 90px;">
+          <h3 style="font-family: var(--font-heading); color: var(--accent-gold); margin-bottom: 0.75rem;">Top Spotter Locations</h3>
+          <ul style="list-style: none; color: var(--text-muted); font-size: 0.9rem; line-height: 2;">
+            <li>📍 LHR - Myrtle Avenue (27L Departures)</li>
+            <li>📍 SXM - Maho Beach Approach</li>
+            <li>📍 FRA - Runway 18 Spotter Deck</li>
+            <li>📍 LAX - In-N-Out Park (24R Arrival)</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+
+    let defaultPosts = [
+      { title: "Boeing 747-400 Final Approach", location: "London Heathrow (LHR)", img: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1000&q=80", user: "Spotter_Alpha" },
+      { title: "Airbus A380 Golden Hour Landing", location: "Dubai International (DXB)", img: "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=1000&q=80", user: "Emirates_Aviation" }
+    ];
+
+    function renderFeed() {
+      const feed = document.getElementById('communityFeed');
+      let posts = JSON.parse(localStorage.getItem('atlas_community_posts')) || defaultPosts;
+      feed.innerHTML = '';
+
+      posts.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'feed-card';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.title}" class="feed-img">
+          <div class="feed-body">
+            <div class="feed-meta">Submitted by @${p.user || 'Spotter'} • ${p.location}</div>
+            <h3 style="font-family: var(--font-heading);">${p.title}</h3>
+          </div>
+        `;
+        feed.appendChild(card);
+      });
+    }
+
+    function submitPhoto(e) {
+      e.preventDefault();
+      const title = document.getElementById('pTitle').value;
+      const location = document.getElementById('pLocation').value;
+      const img = document.getElementById('pUrl').value;
+
+      let posts = JSON.parse(localStorage.getItem('atlas_community_posts')) || defaultPosts;
+      posts.unshift({ title, location, img, user: "You" });
+      localStorage.setItem('atlas_community_posts', JSON.stringify(posts));
+
+      document.getElementById('spotterForm').reset();
+      renderFeed();
+    }
+
+    renderFeed();
+  </script>
+</body>
+</html>
