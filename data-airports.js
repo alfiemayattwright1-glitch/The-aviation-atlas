@@ -1,28 +1,50 @@
 const AIRPORT_DATA = [
-  // Europe
-  { id: "lhr", name: "London Heathrow Airport", codes: "LHR / EGLL", region: "europe", location: "London, United Kingdom", runways: "2 Parallel (09L/27R, 09R/27L)", terminals: "4 Operational (T2, T3, T4, T5)", elevation: "83 ft / 25 m", summary: "Europe's primary international hub and main operational base for British Airways.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/London_-_Heathrow_%28LHR_-_EGLL%29_AN2009298.jpg/1280px-London_-_Heathrow_%28LHR_-_EGLL%29_AN2009298.jpg" },
-  { id: "lgw", name: "London Gatwick Airport", codes: "LGW / EGKK", region: "europe", location: "London, United Kingdom", runways: "1 Active Runway (08R/26L)", terminals: "2 Terminals (North & South)", elevation: "202 ft / 62 m", summary: "The UK's second busiest airport operating a high-density single-runway system.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Gatwick_Airport_aerial.jpg/1280px-Gatwick_Airport_aerial.jpg" },
-  { id: "cdg", name: "Paris Charles de Gaulle", codes: "CDG / LFPG", region: "europe", location: "Paris, France", runways: "4 Parallel", terminals: "3 Terminals", elevation: "392 ft / 119 m", summary: "France's largest hub airport and primary hub for Air France.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/JFK_Airport_aerial.jpg/1280px-JFK_Airport_aerial.jpg" },
-  { id: "ams", name: "Amsterdam Airport Schiphol", codes: "AMS / EHAM", region: "europe", location: "Amsterdam, Netherlands", runways: "6 Intersecting", terminals: "1 Single Terminal Concept", elevation: "-11 ft / -3 m", summary: "Below sea level mega-hub featuring six active runways.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Schiphol_Aerial.jpg/1280px-Schiphol_Aerial.jpg" },
-  { id: "fra", name: "Frankfurt Airport", codes: "FRA / EDDF", region: "europe", location: "Frankfurt, Germany", runways: "4 Runways", terminals: "2 Terminals", elevation: "364 ft / 111 m", summary: "Primary hub for Lufthansa and a core European cargo node.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Frankfurt_Airport_Aerial.jpg/1280px-Frankfurt_Airport_Aerial.jpg" },
-  { id: "mad", name: "Madrid–Barajas Airport", codes: "MAD / LEMD", region: "europe", location: "Madrid, Spain", runways: "4 Runways", terminals: "4 Terminals", elevation: "2,001 ft / 610 m", summary: "Main gateway connecting Europe with Latin America.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Madrid-Barajas_T4.jpg/1280px-Madrid-Barajas_T4.jpg" },
-  { id: "muc", name: "Munich Airport", codes: "MUC / EDDM", region: "europe", location: "Munich, Germany", runways: "2 Parallel", terminals: "2 Terminals", elevation: "1,487 ft / 453 m", summary: "Secondary hub for Lufthansa in southern Germany.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Munich_Airport_Aerial.jpg/1280px-Munich_Airport_Aerial.jpg" },
-  { id: "zrh", name: "Zurich Airport", codes: "ZRH / LSZH", region: "europe", location: "Zurich, Switzerland", runways: "3 Intersecting", terminals: "3 Terminals", elevation: "1,416 ft / 432 m", summary: "Primary hub for Swiss International Air Lines.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Zurich_Airport_Aerial.jpg/1280px-Zurich_Airport_Aerial.jpg" },
-
-  // North America
-  { id: "jfk", name: "John F. Kennedy International", codes: "JFK / KJFK", region: "north-america", location: "New York City, USA", runways: "4 Active Intersecting", terminals: "5 Active Terminals", elevation: "13 ft / 4 m", summary: "Primary international gateway into North America.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/JFK_Airport_aerial.jpg/1280px-JFK_Airport_aerial.jpg" },
-  { id: "lax", name: "Los Angeles International", codes: "LAX / KLAX", region: "north-america", location: "Los Angeles, USA", runways: "4 Parallel", terminals: "9 Terminals", elevation: "128 ft / 39 m", summary: "West Coast mega-hub connecting North America to Asia-Pacific.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/LAX_Aerial.jpg/1280px-LAX_Aerial.jpg" },
-  { id: "ord", name: "Chicago O'Hare International", codes: "ORD / KORD", region: "north-america", location: "Chicago, USA", runways: "8 Parallel/Crosswind", terminals: "4 Terminals", elevation: "680 ft / 207 m", summary: "Primary Midwest hub for United Airlines and American Airlines.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/OHare_Aerial.jpg/1280px-OHare_Aerial.jpg" },
-  { id: "atl", name: "Hartsfield–Jackson Atlanta", codes: "ATL / KATL", region: "north-america", location: "Atlanta, USA", runways: "5 Parallel", terminals: "2 Terminals / 7 Concourses", elevation: "1,026 ft / 313 m", summary: "World's busiest airport by passenger count, primary Delta hub.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Atlanta_Airport_Aerial.jpg/1280px-Atlanta_Airport_Aerial.jpg" },
-  { id: "dfw", name: "Dallas/Fort Worth International", codes: "DFW / KDFW", region: "north-america", location: "Dallas, USA", runways: "7 Runways", terminals: "5 Terminals", elevation: "607 ft / 185 m", summary: "Massive inland hub and headquarters for American Airlines.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/DFW_Aerial.jpg/1280px-DFW_Aerial.jpg" },
-  { id: "sfo", name: "San Francisco International", codes: "SFO / KSFO", region: "north-america", location: "San Francisco, USA", runways: "4 Intersecting", terminals: "4 Terminals", elevation: "13 ft / 4 m", summary: "Key transpacific hub for United Airlines.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/SFO_Aerial.jpg/1280px-SFO_Aerial.jpg" },
-  { id: "yyz", name: "Toronto Pearson International", codes: "YYZ / CYYZ", region: "north-america", location: "Toronto, Canada", runways: "5 Runways", terminals: "2 Terminals", elevation: "569 ft / 173 m", summary: "Canada's busiest international hub airport.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Toronto_Pearson_Aerial.jpg/1280px-Toronto_Pearson_Aerial.jpg" },
-
-  // Asia-Pacific & Middle East
-  { id: "hnd", name: "Tokyo Haneda Airport", codes: "HND / RJTT", region: "asia-pacific", location: "Tokyo, Japan", runways: "4 Runways", terminals: "3 Terminals", elevation: "21 ft / 6 m", summary: "Primary hub serving Tokyo Bay with high punctuality.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Tokyo_Haneda_Airport_Aerial_Photograph.jpg/1280px-Tokyo_Haneda_Airport_Aerial_Photograph.jpg" },
-  { id: "nrt", name: "Narita International Airport", codes: "NRT / RJAA", region: "asia-pacific", location: "Tokyo, Japan", runways: "2 Runways", terminals: "3 Terminals", elevation: "141 ft / 43 m", summary: "Major long-haul international hub serving Tokyo.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Narita_Airport_Aerial.jpg/1280px-Narita_Airport_Aerial.jpg" },
-  { id: "sin", name: "Singapore Changi Airport", codes: "SIN / WSSS", region: "asia-pacific", location: "Singapore", runways: "3 Parallel", terminals: "4 Terminals", elevation: "22 ft / 7 m", summary: "World-renowned hub featuring Jewel Changi complex.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Changi_Airport_Aerial.jpg/1280px-Changi_Airport_Aerial.jpg" },
-  { id: "hkg", name: "Hong Kong International", codes: "HKG / VHHH", region: "asia-pacific", location: "Hong Kong", runways: "3 Parallel", terminals: "2 Terminals", elevation: "30 ft / 9 m", summary: "Chek Lap Kok island hub and major cargo center.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/HKG_Aerial.jpg/1280px-HKG_Aerial.jpg" },
-  { id: "dxb", name: "Dubai International Airport", codes: "DXB / OMDB", region: "middle-east", location: "Dubai, UAE", runways: "2 Parallel", terminals: "3 Terminals", elevation: "62 ft / 19 m", summary: "Colossal international hub and main base for Emirates.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Dubai_International_Airport_Aerial_View.jpg/1280px-Dubai_International_Airport_Aerial_View.jpg" },
-  { id: "doh", name: "Hamad International Airport", codes: "DOH / OTHH", region: "middle-east", location: "Doha, Qatar", runways: "2 Parallel", terminals: "1 Central Terminal", elevation: "13 ft / 4 m", summary: "Hub for Qatar Airways with high-end passenger lounges.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Hamad_Airport_Aerial.jpg/1280px-Hamad_Airport_Aerial.jpg" }
+  {
+    id: "lhr",
+    name: "London Heathrow Airport",
+    codes: "LHR / EGLL",
+    region: "europe",
+    location: "London, United Kingdom",
+    runways: "2 Parallel (09L/27R, 09R/27L)",
+    terminals: "4 Operational (T2, T3, T4, T5)",
+    elevation: "83 ft / 25 m",
+    summary: "Europe's primary international hub and main base for British Airways.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Heathrow_Airport_from_the_air_-_geograph.org.uk_-_2613145.jpg/1280px-Heathrow_Airport_from_the_air_-_geograph.org.uk_-_2613145.jpg"
+  },
+  {
+    id: "jfk",
+    name: "John F. Kennedy International",
+    codes: "JFK / KJFK",
+    region: "north-america",
+    location: "New York City, USA",
+    runways: "4 Active Intersecting",
+    terminals: "5 Active Terminals",
+    elevation: "13 ft / 4 m",
+    summary: "Primary international passenger gateway into North America.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/JFK_Airport_aerial.jpg/1280px-JFK_Airport_aerial.jpg"
+  },
+  {
+    id: "hnd",
+    name: "Tokyo Haneda Airport",
+    codes: "HND / RJTT",
+    region: "asia-pacific",
+    location: "Tokyo, Japan",
+    runways: "4 Runways (16L/34R, 16R/34L, 04/22, 05/23)",
+    terminals: "3 Terminals",
+    elevation: "21 ft / 6 m",
+    summary: "Primary airport serving Tokyo Bay, renowned for exceptional operational punctuality.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Tokyo_Haneda_Airport_Aerial_Photograph.jpg/1280px-Tokyo_Haneda_Airport_Aerial_Photograph.jpg"
+  },
+  {
+    id: "dxb",
+    name: "Dubai International Airport",
+    codes: "DXB / OMDB",
+    region: "middle-east",
+    location: "Dubai, UAE",
+    runways: "2 Parallel (12L/30R, 12R/30L)",
+    terminals: "3 Terminals",
+    elevation: "62 ft / 19 m",
+    summary: "Global superhub connecting East and West, primary operational base for Emirates.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Dubai_International_Airport_Aerial_View.jpg/1280px-Dubai_International_Airport_Aerial_View.jpg"
+  }
 ];
