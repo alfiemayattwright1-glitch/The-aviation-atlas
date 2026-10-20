@@ -55,6 +55,7 @@
         <li><a href="aircraft.html">Aircraft</a></li>
         <li><a href="airports.html">Airports</a></li>
         <li><a href="knowledge.html" class="active">Academy</a></li>
+        <li><a href="community.html">Community Hub</a></li>
         <li><a href="assistant.html">AI Assistant</a></li>
         <li><a href="history.html">History</a></li>
         <li><a href="games.html">Quizzes</a></li>
@@ -121,7 +122,7 @@
               <p>Every aircraft in powered, unaccelerated level flight is acted upon by four vector forces: <strong>Lift</strong>, <strong>Gravity (Weight)</strong>, <strong>Thrust</strong>, and <strong>Drag</strong>.</p>
               
               <h3>1. Lift Generation</h3>
-              <p>Lift is generated primarily by the wing (airfoil) as it moves through the air mass. According to <strong>Bernoulli's Principle</strong>, as air velocity increases over the curved upper surface (camber) of an airfoil, static pressure decreases relative to the flatter underside, producing upward pressure differential.</p>
+              <p>Lift is generated primarily by the wing (airfoil) as it moves through the air mass. According to <strong>Bernoulli's Principle</strong>, as air velocity increases over the curved upper surface (camber) of an airfoil, static pressure decreases relative to the flatter underside, producing an upward pressure differential.</p>
 
               <div class="tech-spec-box">
                 <p><strong>Lift Equation:</strong> L = ½ · ρ · V² · S · CL</p>
@@ -173,6 +174,39 @@
               options: ["More air bypasses the core than enters it", "All air passes through the combustion chamber", "Fuel is ignited in the bypass duct", "Exhaust gases operate at Mach 3+"],
               correct: 0,
               explanation: "Correct! High-bypass engines channel the majority of incoming air around the engine core through the outer bypass duct."
+            }
+          }
+        ]
+      },
+      {
+        title: "Navigation & Flight Rules",
+        lessons: [
+          {
+            title: "VFR vs. IFR Flight Rules",
+            content: `
+              <h2>Visual vs. Instrument Flight Operations</h2>
+              <p>Pilots navigate using either <strong>Visual Flight Rules (VFR)</strong> or <strong>Instrument Flight Rules (IFR)</strong> depending on weather conditions and airspace classifications.</p>
+            `
+          }
+        ]
+      },
+      {
+        title: "Air Traffic Control Operations",
+        lessons: [
+          {
+            title: "Airspace Classification & Control Structures",
+            content: `
+              <h2>Airspace Classification & Control Structures</h2>
+              <p>Airspace is categorized globally into distinct classes (Class A through G) to govern aircraft separation, flight rules, and pilot-controller communication requirements.</p>
+              
+              <h3>Class A Airspace</h3>
+              <p>Class A typically extends from <strong>FL180 (Flight Level 180 / 18,000 feet MSL) up to FL600</strong> in the United States and similar high-altitude blocks globally. All operations within Class A must be conducted under Instrument Flight Rules (IFR), and mandatory air traffic clearance and continuous two-way radio communication are required.</p>
+            `,
+            quiz: {
+              question: "What flight rules are strictly required for all aircraft operating within Class A airspace?",
+              options: ["Visual Flight Rules (VFR) only", "Instrument Flight Rules (IFR) only", "Any flight rules without a transponder", "Military flight rules only"],
+              correct: 1,
+              explanation: "Correct! Class A airspace is exclusively reserved for IFR traffic operating under positive radar control."
             }
           }
         ]
