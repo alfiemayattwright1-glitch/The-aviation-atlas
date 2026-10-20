@@ -1,0 +1,13 @@
+const AIRPORT_DATA = [
+  // Europe
+  { id: "lhr", name: "London Heathrow Airport", codes: "LHR / EGLL", region: "europe", location: "London, United Kingdom", runways: "2 Parallel (09L/27R, 09R/27L)", terminals: "4 Operational (T2, T3, T4, T5)", elevation: "83 ft / 25 m", summary: "Europe's primary international hub and main base for British Airways.", image: "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=800&q=80" },
+  { id: "cdg", name: "Paris Charles de Gaulle Airport", codes: "CDG / LFPG", region: "europe", location: "Paris, France", runways: "4 Parallel (08L/26R, 08R/26L, 09L/27R, 09R/27L)", terminals: "3 Terminals (Sub-divided T2)", elevation: "392 ft / 119 m", summary: "France's largest international gateway and major hub for Air France.", image: "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=800&q=80" },
+
+  // North America
+  { id: "jfk", name: "John F. Kennedy International", codes: "JFK / KJFK", region: "north-america", location: "New York City, USA", runways: "4 Active Intersecting", terminals: "5 Active Terminals", elevation: "13 ft / 4 m", summary: "The busiest international passenger air gateway into North America.", image: "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=800&q=80" },
+  { id: "lax", name: "Los Angeles International", codes: "LAX / KLAX", region: "north-america", location: "Los Angeles, USA", runways: "4 Parallel (6L/24R, 6R/24L, 7L/25R, 7R/25L)", terminals: "9 Terminals (incl. Tom Bradley)", elevation: "128 ft / 39 m", summary: "Major West Coast mega-hub connecting North America to Asia-Pacific.", image: "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=800&q=80" },
+
+  // Asia-Pacific & Middle East
+  { id: "hnd", name: "Tokyo Haneda Airport", codes: "HND / RJTT", region: "asia-pacific", location: "Tokyo, Japan", runways: "4 Runways (16L/34R, 16R/34L, 04/22, 05/23)", terminals: "3 Terminals", elevation: "21 ft / 6 m", summary: "Primary hub serving Tokyo Bay, renowned for exceptional punctuality.", image: "https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=800&q=80" },
+  { id: "dxb", name: "Dubai International Airport", codes: "DXB / OMDB", region: "middle-east", location: "Dubai, UAE", runways: "2 Parallel (12L/30R, 12R/30L)", terminals: "3 Terminals", elevation: "62 ft / 19 m", summary: "Global superhub connecting East and West, primary home of Emirates.", image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" }
+];
