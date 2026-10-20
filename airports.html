@@ -83,6 +83,7 @@
     .modal-specs-table td:first-child {
       color: var(--text-muted);
       font-weight: 600;
+      width: 35%;
     }
   </style>
 </head>
@@ -96,22 +97,23 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="aircraft.html">Aircraft</a></li>
         <li><a href="airports.html" class="active">Airports</a></li>
-        <li><a href="knowledge.html">Knowledge</a></li>
+        <li><a href="knowledge.html">Academy</a></li>
+        <li><a href="assistant.html">AI Assistant</a></li>
         <li><a href="history.html">History</a></li>
-        <li><a href="games.html">Games & Quizzes</a></li>
+        <li><a href="games.html">Quizzes</a></li>
       </ul>
     </div>
   </header>
 
   <section class="page-header">
-    <h1>Global Airport Hubs</h1>
-    <p>Click on any airport card below to view detailed airfield statistics, runway details, and terminal info.</p>
+    <h1>Global Airport Directory</h1>
+    <p>Search and explore major global airport hubs, runway systems, IATA/ICAO codes, and terminal specs.</p>
   </section>
 
   <main class="container">
     <div class="search-filter-bar">
-      <input type="text" class="search-input" id="airportSearch" placeholder="Search by name, city, IATA, or ICAO code..." onkeyup="filterAirports()">
-      <select class="filter-select" id="regionFilter" onchange="filterAirports()">
+      <input type="text" class="search-input" id="airportSearch" placeholder="Search by name, city, IATA, or ICAO code..." oninput="renderAirports()">
+      <select class="filter-select" id="regionFilter" onchange="renderAirports()">
         <option value="all">All Regions</option>
         <option value="europe">Europe</option>
         <option value="north-america">North America</option>
@@ -120,81 +122,7 @@
       </select>
     </div>
 
-    <div class="airport-grid" id="airportGrid">
-      
-      <!-- Heathrow -->
-      <article class="airport-card" data-region="europe" data-search="london heathrow airport egll lhr united kingdom uk europe" onclick="openDetails('London Heathrow Airport', 'LHR / EGLL', 'London, United Kingdom', '2 Parallel (09L/27R, 09R/27L)', '4 Operational (T2, T3, T4, T5)', '83 ft / 25 m', 'London Heathrow is Europe\'s busiest airport by passenger traffic and acts as the primary international hub for British Airways.', 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=800&q=80')">
-        <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=800&q=80" alt="Heathrow Airfield" loading="lazy">
-          <div class="airport-codes">LHR / EGLL</div>
-        </div>
-        <div class="airport-card-body">
-          <h3>London Heathrow Airport</h3>
-          <div class="airport-location">📍 London, United Kingdom</div>
-          <p class="airport-desc">Europe's busiest international air hub, serving as a primary transatlantic gateway with parallel runways.</p>
-          <div class="airport-specs-list">
-            <span>Runways: <strong>2 Parallel</strong></span>
-            <span>Terminals: <strong>4 Operational</strong></span>
-          </div>
-          <span class="click-hint">Click for full airfield info &rarr;</span>
-        </div>
-      </article>
-
-      <!-- JFK -->
-      <article class="airport-card" data-region="north-america" data-search="john f kennedy international airport jfk kjfk new york usa north america" onclick="openDetails('John F. Kennedy International Airport', 'JFK / KJFK', 'New York City, USA', '4 Active (04L/22R, 04R/22L, 13L/31R, 13R/31L)', '5 Active Terminals', '13 ft / 4 m', 'JFK International is the busiest international passenger gateway into North America, handling over 90 international air carriers.', 'https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=800&q=80')">
-        <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=800&q=80" alt="JFK Runway System" loading="lazy">
-          <div class="airport-codes">JFK / KJFK</div>
-        </div>
-        <div class="airport-card-body">
-          <h3>John F. Kennedy International</h3>
-          <div class="airport-location">📍 New York City, USA</div>
-          <p class="airport-desc">Primary international airport serving New York City, featuring active intersecting runways and global routing.</p>
-          <div class="airport-specs-list">
-            <span>Runways: <strong>4 Active</strong></span>
-            <span>Terminals: <strong>5 Active</strong></span>
-          </div>
-          <span class="click-hint">Click for full airfield info &rarr;</span>
-        </div>
-      </article>
-
-      <!-- Tokyo Haneda -->
-      <article class="airport-card" data-region="asia-pacific" data-search="tokyo haneda airport hnd rjtt japan asia pacific" onclick="openDetails('Tokyo Haneda Airport', 'HND / RJTT', 'Tokyo, Japan', '4 Runways (16L/34R, 16R/34L, 04/22, 05/23)', '3 Terminals (T1, T2, T3)', '21 ft / 6 m', 'Tokyo Haneda is one of Asia\'s busiest airports, primary hub for Japan Airlines and All Nippon Airways, located directly on Tokyo Bay.', 'https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=800&q=80')">
-        <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=800&q=80" alt="Tokyo Haneda Coastal Runway" loading="lazy">
-          <div class="airport-codes">HND / RJTT</div>
-        </div>
-        <div class="airport-card-body">
-          <h3>Tokyo Haneda Airport</h3>
-          <div class="airport-location">📍 Tokyo, Japan</div>
-          <p class="airport-desc">Renowned for exceptional punctuality and close proximity to central Tokyo, handling massive domestic and international volume.</p>
-          <div class="airport-specs-list">
-            <span>Runways: <strong>4 Runways</strong></span>
-            <span>Terminals: <strong>3 Terminals</strong></span>
-          </div>
-          <span class="click-hint">Click for full airfield info &rarr;</span>
-        </div>
-      </article>
-
-      <!-- Dubai -->
-      <article class="airport-card" data-region="middle-east" data-search="dubai international airport dxb omdb united arab emirates uae middle east" onclick="openDetails('Dubai International Airport', 'DXB / OMDB', 'Dubai, UAE', '2 Parallel (12L/30R, 12R/30L)', '3 Terminals (including Concourse A A380 facility)', '62 ft / 19 m', 'Dubai International is the primary airport serving Dubai and the world\'s busiest airport by international passenger traffic.', 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80')">
-        <div class="airport-img-wrap">
-          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Dubai Tarmac" loading="lazy">
-          <div class="airport-codes">DXB / OMDB</div>
-        </div>
-        <div class="airport-card-body">
-          <h3>Dubai International Airport</h3>
-          <div class="airport-location">📍 Dubai, UAE</div>
-          <p class="airport-desc">A colossal global superhub connecting East and West, serving as the main operational base for Emirates widebody fleet.</p>
-          <div class="airport-specs-list">
-            <span>Runways: <strong>2 Parallel</strong></span>
-            <span>Terminals: <strong>3 Terminals</strong></span>
-          </div>
-          <span class="click-hint">Click for full airfield info &rarr;</span>
-        </div>
-      </article>
-
-    </div>
+    <div class="airport-grid" id="airportGrid"></div>
   </main>
 
   <!-- Detail Modal -->
@@ -219,28 +147,68 @@
     <p>&copy; 2026 The Aviation Atlas. All rights reserved.</p>
   </footer>
 
+  <!-- External Dataset -->
+  <script src="data-airports.js"></script>
+
   <script>
     function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
 
-    function filterAirports() {
-      const query = document.getElementById('airportSearch').value.toLowerCase();
+    function renderAirports() {
+      const grid = document.getElementById('airportGrid');
+      const search = document.getElementById('airportSearch').value.toLowerCase();
       const region = document.getElementById('regionFilter').value;
-      document.querySelectorAll('.airport-card').forEach(card => {
-        const matchQ = card.getAttribute('data-search').toLowerCase().includes(query);
-        const matchR = region === 'all' || card.getAttribute('data-region') === region;
-        card.style.display = (matchQ && matchR) ? 'flex' : 'none';
+
+      grid.innerHTML = '';
+
+      if (typeof AIRPORT_DATA === 'undefined') {
+        grid.innerHTML = '<p style="color:var(--text-muted);">Error: data-airports.js file not loaded properly.</p>';
+        return;
+      }
+
+      const filtered = AIRPORT_DATA.filter(item => {
+        const matchesSearch = item.name.toLowerCase().includes(search) || 
+                              item.codes.toLowerCase().includes(search) ||
+                              item.location.toLowerCase().includes(search);
+        const matchesRegion = region === 'all' || item.region === region;
+        return matchesSearch && matchesRegion;
+      });
+
+      filtered.forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'airport-card';
+        card.onclick = () => openDetails(item.id);
+        card.innerHTML = `
+          <div class="airport-img-wrap">
+            <img src="${item.image}" alt="${item.name}" loading="lazy">
+            <div class="airport-codes">${item.codes}</div>
+          </div>
+          <div class="airport-card-body">
+            <h3>${item.name}</h3>
+            <div class="airport-location">📍 ${item.location}</div>
+            <p class="airport-desc">${item.summary}</p>
+            <div class="airport-specs-list">
+              <span>Runways: <strong>${item.runways.split(' ')[0]}</strong></span>
+              <span>Terminals: <strong>${item.terminals.split(' ')[0]}</strong></span>
+            </div>
+            <span class="click-hint">Click for full airfield info &rarr;</span>
+          </div>
+        `;
+        grid.appendChild(card);
       });
     }
 
-    function openDetails(title, codes, location, runways, terminals, elevation, desc, imgUrl) {
-      document.getElementById('mTitle').textContent = title;
-      document.getElementById('mCodes').textContent = codes;
-      document.getElementById('mLocation').textContent = '📍 ' + location;
-      document.getElementById('mRunways').textContent = runways;
-      document.getElementById('mTerminals').textContent = terminals;
-      document.getElementById('mElevation').textContent = elevation;
-      document.getElementById('mDesc').textContent = desc;
-      document.getElementById('mImg').src = imgUrl;
+    function openDetails(id) {
+      const item = AIRPORT_DATA.find(a => a.id === id);
+      if (!item) return;
+
+      document.getElementById('mTitle').textContent = item.name;
+      document.getElementById('mCodes').textContent = item.codes;
+      document.getElementById('mLocation').textContent = '📍 ' + item.location;
+      document.getElementById('mRunways').textContent = item.runways;
+      document.getElementById('mTerminals').textContent = item.terminals;
+      document.getElementById('mElevation').textContent = item.elevation;
+      document.getElementById('mDesc').textContent = item.summary;
+      document.getElementById('mImg').src = item.image;
 
       document.getElementById('detailModal').style.display = 'flex';
     }
@@ -248,6 +216,9 @@
     function closeDetails() {
       document.getElementById('detailModal').style.display = 'none';
     }
+
+    // Initial render call
+    renderAirports();
   </script>
 </body>
 </html>
