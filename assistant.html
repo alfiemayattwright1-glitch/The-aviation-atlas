@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Flight Assistant | The Aviation Atlas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .assistant-container { max-width: 850px; margin: 3rem auto; padding: 0 1.5rem; }
+    .chat-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; height: 650px; }
+    .chat-header { background: rgba(10, 14, 23, 0.9); padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 0.75rem; }
+    .chat-header h2 { font-family: var(--font-heading); font-size: 1.2rem; }
+    .status-dot { width: 10px; height: 10px; background: #10b981; border-radius: 50%; display: inline-block; }
+    
+    .chat-body { flex: 1; padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; }
+    .msg { max-width: 80%; padding: 1rem 1.25rem; border-radius: 8px; font-size: 0.95rem; line-height: 1.6; }
+    .msg-system { background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-subtle); align-self: flex-start; color: var(--text-main); }
+    .msg-user { background: var(--accent-gold); color: var(--bg-dark); font-weight: 600; align-self: flex-end; }
+    
+    .chat-input-row { display: flex; border-top: 1px solid var(--border-subtle); padding: 1rem; background: var(--bg-card); gap: 0.75rem; }
+    .chat-input { flex: 1; background: var(--bg-dark); border: 1px solid var(--border-subtle); color: #fff; padding: 0.85rem 1rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.95rem; }
+    .chat-input:focus { outline: none; border-color: var(--accent-gold); }
+    .send-btn { background: var(--accent-gold); color: var(--bg-dark); border: none; padding: 0.85rem 1.5rem; font-weight: 700; border-radius: 6px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">The Aviation <span>Atlas</span></a>
+      <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aircraft.html">Aircraft</a></li>
+        <li><a href="airports.html">Airports</a></li>
+        <li><a href="knowledge.html">Academy</a></li>
+        <li><a href="assistant.html" class="active">AI Assistant</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="games.html">Quizzes</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="assistant-container">
+    <div class="chat-card">
+      <div class="chat-header">
+        <span class="status-dot"></span>
+        <h2>Atlas AI Flight Intelligence Query Engine</h2>
+      </div>
+
+      <div class="chat-body" id="chatBody">
+        <div class="msg msg-system">
+          Welcome to the Flight Intelligence Portal. Ask me questions regarding commercial fleet specs, aerodynamic principles, airport runway layouts, or aviation history.
+        </div>
+      </div>
+
+      <div class="chat-input-row">
+        <input type="text" class="chat-input" id="userInput" placeholder="Ask e.g. What is the wingspan of an A380? or How does an ILS work?" onkeypress="if(event.key==='Enter') sendQuery()">
+        <button class="send-btn" onclick="sendQuery()">Ask AI</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+
+    const KNOWLEDGE_BASE = [
+      { keywords: ["a380", "wingspan", "dimensions"], response: "The Airbus A380-800 features a total wingspan of 79.75 meters (261 ft 8 in), a length of 72.72 meters, and a maximum takeoff weight (MTOW) of 575 tonnes." },
+      { keywords: ["747", "boeing 747", "speed", "range"], response: "The Boeing 747-400 has a maximum range of 13,450 km (7,260 nmi) and cruises at Mach 0.855 (approx. 907 km/h)." },
+      { keywords: ["ils", "instrument landing", "approach"], response: "An Instrument Landing System (ILS) utilizes two ground radio transmitters: the Localizer (providing horizontal runway centerline guidance) and the Glide Path (providing vertical descent path guidance, typically 3 degrees)." },
+      { keywords: ["concorde", "supersonic", "mach"], response: "Concorde cruised at Mach 2.04 (2,179 km/h) at altitudes up to 60,000 feet, powered by four Rolls-Royce/Snecma Olympus 593 turbojets with afterburners." }
+    ];
+
+    function sendQuery() {
+      const input = document.getElementById('userInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      appendMessage(text, 'msg-user');
+      input.value = '';
+
+      setTimeout(() => {
+        const lower = text.toLowerCase();
+        let match = KNOWLEDGE_BASE.find(k => k.keywords.some(kw => lower.includes(kw)));
+        
+        let reply = match ? match.response : "I have searched the Atlas dataset. For optimal technical query responses, try asking about specific aircraft specs (A380, 747, Concorde) or systems (ILS, Aerodynamics, Jet Engines).";
+        
+        appendMessage(reply, 'msg-system');
+      }, 500);
+    }
+
+    function appendMessage(text, className) {
+      const body = document.getElementById('chatBody');
+      const div = document.createElement('div');
+      div.className = `msg ${className}`;
+      div.textContent = text;
+      body.appendChild(div);
+      body.scrollTop = body.scrollHeight;
+    }
+  </script>
+</body>
+</html>
