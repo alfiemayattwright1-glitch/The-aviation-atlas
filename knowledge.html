@@ -3,222 +3,250 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flight Knowledge & Aerodynamics | The Aviation Atlas</title>
-  <meta name="description" content="Master principles of flight, aerodynamics, engine mechanics, air traffic control, and pilot fundamentals.">
+  <title>Aviation Academy | The Aviation Atlas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  
   <style>
-    .page-header {
-      padding: 5rem 1.5rem 3rem;
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--border-subtle);
-      text-align: center;
-    }
+    .page-header { padding: 4rem 1.5rem 2.5rem; background: var(--bg-card); border-bottom: 1px solid var(--border-subtle); text-align: center; }
+    .page-header h1 { font-family: var(--font-heading); font-size: clamp(2.2rem, 4vw, 3rem); margin-bottom: 0.75rem; }
+    .page-header p { color: var(--text-muted); max-width: 650px; margin: 0 auto; font-size: 1.05rem; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 3rem 1.5rem; }
 
-    .page-header h1 {
-      font-family: var(--font-heading);
-      font-size: clamp(2.2rem, 4vw, 3rem);
-      margin-bottom: 0.75rem;
-    }
+    .module-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .module-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.75rem; cursor: pointer; transition: all 0.25s ease; }
+    .module-card:hover, .module-card.active { border-color: var(--accent-gold); background: var(--bg-card-hover); transform: translateY(-3px); }
+    .module-badge { color: var(--accent-gold); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+    .module-card h3 { font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .module-card p { color: var(--text-muted); font-size: 0.9rem; }
 
-    .page-header p {
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-      font-size: 1.05rem;
-    }
+    .academy-layout { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; }
+    @media (max-width: 900px) { .academy-layout { grid-template-columns: 1fr; } }
 
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 3rem 1.5rem;
-    }
+    .lesson-sidebar { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.5rem; height: fit-content; }
+    .lesson-sidebar h4 { font-family: var(--font-heading); margin-bottom: 1rem; color: var(--accent-gold); }
+    .lesson-nav-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .lesson-nav-btn { width: 100%; text-align: left; background: none; border: 1px solid transparent; color: var(--text-muted); padding: 0.75rem 1rem; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .lesson-nav-btn:hover, .lesson-nav-btn.active { background: rgba(212, 175, 55, 0.1); color: var(--accent-gold); border-color: rgba(212, 175, 55, 0.3); }
 
-    .search-filter-bar {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2.5rem;
-      flex-wrap: wrap;
-    }
+    .lesson-content-box { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 2.5rem; }
+    .lesson-content-box h2 { font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 1rem; color: #fff; }
+    .lesson-content-box p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1.25rem; font-size: 1rem; }
+    .lesson-content-box h3 { font-family: var(--font-heading); color: var(--accent-gold); margin: 1.75rem 0 0.75rem; font-size: 1.3rem; }
+    
+    .tech-spec-box { background: rgba(10, 14, 23, 0.8); border-left: 3px solid var(--accent-gold); padding: 1.25rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+    .tech-spec-box p { margin: 0; font-size: 0.95rem; }
 
-    .search-input {
-      flex: 1;
-      min-width: 260px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      color: #fff;
-      padding: 0.85rem 1.25rem;
-      border-radius: 6px;
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-    }
-
-    .search-input:focus {
-      outline: none;
-      border-color: var(--accent-gold);
-    }
-
-    .topic-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.75rem;
-    }
-
-    .topic-card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 2rem;
-      transition: all 0.25s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .topic-card:hover {
-      background-color: var(--bg-card-hover);
-      border-color: var(--accent-gold);
-      transform: translateY(-4px);
-    }
-
-    .topic-category {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--accent-gold);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.75rem;
-    }
-
-    .topic-card h3 {
-      font-family: var(--font-heading);
-      font-size: 1.35rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .topic-card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-      flex-grow: 1;
-    }
-
-    .topic-meta {
-      padding-top: 1rem;
-      border-top: 1px solid var(--border-subtle);
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      display: flex;
-      justify-content: space-between;
-    }
+    .quiz-box { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-subtle); }
+    .quiz-option { display: block; width: 100%; padding: 0.85rem 1.25rem; margin: 0.5rem 0; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: 6px; color: #fff; text-align: left; cursor: pointer; transition: all 0.2s; }
+    .quiz-option:hover { border-color: var(--accent-gold); background: rgba(212, 175, 55, 0.05); }
+    .quiz-feedback { margin-top: 1rem; font-weight: 700; display: none; }
   </style>
 </head>
 <body>
 
-  <!-- Navigation Header -->
   <header>
     <div class="nav-container">
       <a href="index.html" class="logo">The Aviation <span>Atlas</span></a>
-      <button class="mobile-menu-btn" id="menuBtn" onclick="toggleMenu()">☰</button>
+      <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="aircraft.html">Aircraft</a></li>
         <li><a href="airports.html">Airports</a></li>
-        <li><a href="knowledge.html" class="active">Knowledge</a></li>
+        <li><a href="knowledge.html" class="active">Academy</a></li>
+        <li><a href="assistant.html">AI Assistant</a></li>
         <li><a href="history.html">History</a></li>
-        <li><a href="games.html">Games & Quizzes</a></li>
+        <li><a href="games.html">Quizzes</a></li>
       </ul>
     </div>
   </header>
 
-  <!-- Page Header -->
   <section class="page-header">
-    <h1>Aviation Knowledge Center</h1>
-    <p>Explore fundamental principles of aerodynamics, jet propulsion, navigation systems, and flight operations.</p>
+    <h1>Aviation Knowledge Academy</h1>
+    <p>Comprehensive, structured training modules detailing aerodynamic principles, jet propulsion, navigation systems, and air traffic control operational dynamics.</p>
   </section>
 
-  <!-- Main Content -->
   <main class="container">
-    <div class="search-filter-bar">
-      <input type="text" class="search-input" id="topicSearch" placeholder="Search topics (e.g. lift, turbofan, ATC, navigation)..." onkeyup="filterTopics()">
+    <div class="module-grid">
+      <div class="module-card active" onclick="loadModule(0)">
+        <span class="module-badge">Module 1</span>
+        <h3>Principles of Aerodynamics</h3>
+        <p>Lift, Drag, Thrust, Gravity, Bernoulli's Principle, and boundary layer physics.</p>
+      </div>
+      <div class="module-card" onclick="loadModule(1)">
+        <span class="module-badge">Module 2</span>
+        <h3>Jet Engine Mechanics</h3>
+        <p>Turbofan bypass ratios, axial compressors, combustion chambers, and thrust vectoring.</p>
+      </div>
+      <div class="module-card" onclick="loadModule(2)">
+        <span class="module-badge">Module 3</span>
+        <h3>Navigation & Flight Rules</h3>
+        <p>VFR vs. IFR operations, VOR navigation, RNAV, waypoint routing, and ILS approaches.</p>
+      </div>
+      <div class="module-card" onclick="loadModule(3)">
+        <span class="module-badge">Module 4</span>
+        <h3>Air Traffic Control Operations</h3>
+        <p>Classified airspace structures, transponder squawk codes, radar vectoring, and readbacks.</p>
+      </div>
     </div>
 
-    <div class="topic-grid" id="topicGrid">
-      
-      <!-- Four Forces of Flight -->
-      <article class="topic-card" data-search="four forces of flight lift drag thrust weight aerodynamics physics">
-        <div class="topic-category">Aerodynamics</div>
-        <h3>The Four Forces of Flight</h3>
-        <p>An aircraft in unaccelerated level flight operates under a balance of four primary forces: Lift (opposing Weight) and Thrust (opposing Drag).</p>
-        <div class="topic-meta">
-          <span>Level: <strong>Fundamentals</strong></span>
-          <span>Module 01</span>
-        </div>
-      </article>
+    <div class="academy-layout">
+      <aside class="lesson-sidebar">
+        <h4>Lessons in Module</h4>
+        <ul class="lesson-nav-list" id="lessonNav"></ul>
+      </aside>
 
-      <!-- High-Bypass Turbofans -->
-      <article class="topic-card" data-search="high bypass turbofan engine jet propulsion engines thrust">
-        <div class="topic-category">Propulsion Systems</div>
-        <h3>High-Bypass Turbofans</h3>
-        <p>Modern airliners rely on high-bypass turbofan engines, routing a majority of intake air around the engine core for maximum fuel efficiency and reduced noise.</p>
-        <div class="topic-meta">
-          <span>Level: <strong>Intermediate</strong></span>
-          <span>Module 02</span>
-        </div>
+      <article class="lesson-content-box" id="lessonContent">
+        <!-- Dynamic content inserted via JavaScript -->
       </article>
-
-      <!-- Air Traffic Control & Radar -->
-      <article class="topic-card" data-search="air traffic control atc radar ads-b transponder navigation squawk">
-        <div class="topic-category">Navigation & Control</div>
-        <h3>Air Traffic Control & ADS-B</h3>
-        <p>How controllers maintain safe separation using primary radar, mode-S transponders, and automatic dependent surveillance-broadcast (ADS-B) tracking.</p>
-        <div class="topic-meta">
-          <span>Level: <strong>Operations</strong></span>
-          <span>Module 03</span>
-        </div>
-      </article>
-
-      <!-- Meteorology & Flight Weather -->
-      <article class="topic-card" data-search="meteorology flight weather turbulence icing metar taf wind shear">
-        <div class="topic-category">Aviation Meteorology</div>
-        <h3>Understanding Flight Weather</h3>
-        <p>How pilots read aviation METAR weather reports, evaluate atmospheric density altitude, and navigate around severe convective weather systems.</p>
-        <div class="topic-meta">
-          <span>Level: <strong>Intermediate</strong></span>
-          <span>Module 04</span>
-        </div>
-      </article>
-
     </div>
   </main>
 
-  <!-- Footer -->
   <footer>
-    <p>&copy; 2026 The Aviation Atlas. Built for aviation enthusiasts, spotters, and students worldwide.</p>
+    <p>&copy; 2026 The Aviation Atlas. Professional Aviation Publishing & Educational Platform.</p>
   </footer>
 
   <script>
-    function toggleMenu() {
-      const links = document.getElementById('navLinks');
-      links.classList.toggle('open');
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+
+    const MODULES = [
+      {
+        title: "Principles of Aerodynamics",
+        lessons: [
+          {
+            title: "The Four Forces of Flight",
+            content: `
+              <h2>The Four Fundamental Forces of Flight</h2>
+              <p>Every aircraft in powered, unaccelerated level flight is acted upon by four vector forces: <strong>Lift</strong>, <strong>Gravity (Weight)</strong>, <strong>Thrust</strong>, and <strong>Drag</strong>.</p>
+              
+              <h3>1. Lift Generation</h3>
+              <p>Lift is generated primarily by the wing (airfoil) as it moves through the air mass. According to <strong>Bernoulli's Principle</strong>, as air velocity increases over the curved upper surface (camber) of an airfoil, static pressure decreases relative to the flatter underside, producing upward pressure differential.</p>
+
+              <div class="tech-spec-box">
+                <p><strong>Lift Equation:</strong> L = ½ · ρ · V² · S · CL</p>
+                <p style="margin-top:0.5rem; color: var(--text-muted);">Where ρ = Air density, V = True airspeed, S = Wing surface area, CL = Coefficient of lift.</p>
+              </div>
+
+              <h3>2. Drag Categories</h3>
+              <p>Drag opposes thrust and is divided into two major classifications: <strong>Parasite Drag</strong> (form drag, skin friction, and interference drag) which increases exponentially with airspeed, and <strong>Induced Drag</strong> (a byproduct of lift generation) which decreases as airspeed increases.</p>
+            `,
+            quiz: {
+              question: "What happens to Parasite Drag as aircraft speed increases?",
+              options: ["It decreases exponentially", "It increases exponentially", "It remains completely constant", "It drops to zero at supersonic speeds"],
+              correct: 1,
+              explanation: "Correct! Parasite drag increases with the square of airspeed."
+            }
+          },
+          {
+            title: "Airfoil Geometry & Stall Physics",
+            content: `
+              <h2>Airfoil Geometry and Critical Angle of Attack</h2>
+              <p>An airfoil is specifically contoured to maximize lift while minimizing drag. Key geometric components include the <strong>leading edge</strong>, <strong>trailing edge</strong>, <strong>chord line</strong>, and <strong>camber line</strong>.</p>
+              
+              <h3>Stall Dynamics</h3>
+              <p>An aerodynamic stall occurs when the <strong>Angle of Attack (AoA)</strong>—the angle between the wing's chord line and the relative wind—exceeds the <em>Critical Angle of Attack</em> (typically between 14° and 18° depending on airfoil profile). At this boundary, airflow over the upper surface becomes turbulent and separates, resulting in a dramatic loss of lift.</p>
+            `,
+            quiz: {
+              question: "An aerodynamic stall is directly caused by exceeding which parameter?",
+              options: ["Maximum Operating Altitude", "Critical Angle of Attack", "Maximum Ramp Weight", "Transonic Speed Limits"],
+              correct: 1,
+              explanation: "Correct! Exceeding the critical angle of attack causes boundary layer airflow separation, initiating a stall regardless of airspeed."
+            }
+          }
+        ]
+      },
+      {
+        title: "Jet Engine Mechanics",
+        lessons: [
+          {
+            title: "High-Bypass Turbofan Operation",
+            content: `
+              <h2>High-Bypass Turbofan Powerplants</h2>
+              <p>Modern commercial airliners rely on high-bypass turbofan engines due to their extreme propulsive efficiency and reduced noise footprint.</p>
+              
+              <h3>Bypass Ratio (BPR)</h3>
+              <p>Bypass ratio refers to the ratio between the mass flow rate of air drawn through the engine fan that bypasses the core, versus the mass flow rate entering the core compressor and combustion chamber. Modern engines like the GE9X or Trent XWB feature BPRs exceeding 10:1.</p>
+            `,
+            quiz: {
+              question: "What defines a high-bypass ratio in modern turbofan engines?",
+              options: ["More air bypasses the core than enters it", "All air passes through the combustion chamber", "Fuel is ignited in the bypass duct", "Exhaust gases operate at Mach 3+"],
+              correct: 0,
+              explanation: "Correct! High-bypass engines channel the majority of incoming air around the engine core through the outer bypass duct."
+            }
+          }
+        ]
+      }
+    ];
+
+    let currentModuleIdx = 0;
+    let currentLessonIdx = 0;
+
+    function loadModule(modIdx) {
+      currentModuleIdx = modIdx;
+      currentLessonIdx = 0;
+      
+      const cards = document.querySelectorAll('.module-card');
+      cards.forEach((card, idx) => {
+        card.classList.toggle('active', idx === modIdx);
+      });
+
+      renderLessonNav();
+      renderLessonContent();
     }
 
-    function filterTopics() {
-      const query = document.getElementById('topicSearch').value.toLowerCase();
-      const cards = document.querySelectorAll('.topic-card');
-
-      cards.forEach(card => {
-        const text = card.getAttribute('data-search').toLowerCase();
-        if (text.includes(query)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
+    function renderLessonNav() {
+      const navList = document.getElementById('lessonNav');
+      navList.innerHTML = '';
+      
+      MODULES[currentModuleIdx].lessons.forEach((lesson, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `lesson-nav-btn ${idx === currentLessonIdx ? 'active' : ''}`;
+        btn.textContent = `${idx + 1}. ${lesson.title}`;
+        btn.onclick = () => {
+          currentLessonIdx = idx;
+          renderLessonNav();
+          renderLessonContent();
+        };
+        navList.appendChild(btn);
       });
     }
+
+    function renderLessonContent() {
+      const box = document.getElementById('lessonContent');
+      const lesson = MODULES[currentModuleIdx].lessons[currentLessonIdx];
+
+      let quizHTML = '';
+      if (lesson.quiz) {
+        quizHTML = `
+          <div class="quiz-box">
+            <h3 style="margin-top:0;">Knowledge Verification Check</h3>
+            <p style="font-weight: 600; color: #fff;">${lesson.quiz.question}</p>
+            ${lesson.quiz.options.map((opt, i) => `
+              <button class="quiz-option" onclick="checkAnswer(${i},${lesson.quiz.correct}, '${lesson.quiz.explanation.replace(/'/g, "\\'")}')">${opt}</button>
+            `).join('')}
+            <div id="quizFeedback" class="quiz-feedback"></div>
+          </div>
+        `;
+      }
+
+      box.innerHTML = lesson.content + quizHTML;
+    }
+
+    function checkAnswer(selected, correct, exp) {
+      const feedback = document.getElementById('quizFeedback');
+      feedback.style.display = 'block';
+      if (selected === correct) {
+        feedback.style.color = '#10b981';
+        feedback.textContent = exp;
+      } else {
+        feedback.style.color = '#ef4444';
+        feedback.textContent = "Incorrect. Review the technical lesson content above and try again.";
+      }
+    }
+
+    // Initial Load
+    loadModule(0);
   </script>
 </body>
 </html>
