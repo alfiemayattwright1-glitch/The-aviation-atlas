@@ -4,209 +4,87 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aviation History Timeline | The Aviation Atlas</title>
-  <meta name="description" content="Explore the historical evolution of flight from the Wright Brothers to supersonic travel and modern aviation.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  
   <style>
-    .page-header {
-      padding: 5rem 1.5rem 3rem;
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--border-subtle);
-      text-align: center;
-    }
-
-    .page-header h1 {
-      font-family: var(--font-heading);
-      font-size: clamp(2.2rem, 4vw, 3rem);
-      margin-bottom: 0.75rem;
-    }
-
-    .page-header p {
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-      font-size: 1.05rem;
-    }
-
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 4rem 1.5rem;
-    }
-
-    .timeline {
-      position: relative;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 140px;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background-color: var(--border-subtle);
-    }
-
-    .timeline-item {
-      display: flex;
-      margin-bottom: 3.5rem;
-      position: relative;
-    }
-
-    .timeline-year {
-      width: 110px;
-      flex-shrink: 0;
-      text-align: right;
-      font-family: var(--font-heading);
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--accent-gold);
-      padding-right: 2rem;
-    }
-
-    .timeline-dot {
-      position: absolute;
-      left: 135px;
-      top: 6px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background-color: var(--accent-gold);
-      border: 3px solid var(--bg-dark);
-    }
-
-    .timeline-content {
-      padding-left: 2.5rem;
-      flex-grow: 1;
-    }
-
-    .timeline-content h3 {
-      font-family: var(--font-heading);
-      font-size: 1.35rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .timeline-content p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    @media (max-width: 640px) {
-      .timeline::before {
-        left: 20px;
-      }
-      .timeline-item {
-        flex-direction: column;
-        padding-left: 40px;
-      }
-      .timeline-year {
-        width: auto;
-        text-align: left;
-        padding-right: 0;
-        margin-bottom: 0.25rem;
-      }
-      .timeline-dot {
-        left: 15px;
-      }
-      .timeline-content {
-        padding-left: 0;
-      }
-    }
+    .page-header { padding: 4rem 1.5rem 2.5rem; background: var(--bg-card); border-bottom: 1px solid var(--border-subtle); text-align: center; }
+    .page-header h1 { font-family: var(--font-heading); font-size: clamp(2.2rem, 4vw, 3rem); margin-bottom: 0.75rem; }
+    .page-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1.05rem; }
+    .container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem; }
+    
+    .timeline { position: relative; padding-left: 2rem; border-left: 2px solid var(--accent-gold); }
+    .timeline-item { position: relative; margin-bottom: 2.5rem; background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 1.75rem; border-radius: 8px; }
+    .timeline-item::before { content: ''; position: absolute; left: -2.35rem; top: 1.5rem; width: 14px; height: 14px; background: var(--accent-gold); border-radius: 50%; border: 3px solid var(--bg-dark); }
+    .timeline-year { color: var(--accent-gold); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.35rem; display: block; }
+    .timeline-item h3 { font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .timeline-item p { color: var(--text-muted); font-size: 0.95rem; }
   </style>
 </head>
 <body>
 
-  <!-- Navigation Header -->
   <header>
     <div class="nav-container">
       <a href="index.html" class="logo">The Aviation <span>Atlas</span></a>
-      <button class="mobile-menu-btn" id="menuBtn" onclick="toggleMenu()">☰</button>
+      <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="aircraft.html">Aircraft</a></li>
         <li><a href="airports.html">Airports</a></li>
-        <li><a href="knowledge.html">Knowledge</a></li>
+        <li><a href="knowledge.html">Academy</a></li>
+        <li><a href="assistant.html">AI Assistant</a></li>
         <li><a href="history.html" class="active">History</a></li>
-        <li><a href="games.html">Games & Quizzes</a></li>
+        <li><a href="games.html">Quizzes</a></li>
       </ul>
     </div>
   </header>
 
-  <!-- Page Header -->
   <section class="page-header">
-    <h1>Aviation History Archive</h1>
-    <p>A chronological journey through the engineering breakthroughs that redefined global human mobility.</p>
+    <h1>Chronological Flight History</h1>
+    <p>Tracing milestone breakthroughs from early powered flight pioneers to modern twin-engine widebodies.</p>
   </section>
 
-  <!-- Timeline Section -->
   <main class="container">
     <div class="timeline">
-      
       <div class="timeline-item">
-        <div class="timeline-year">1903</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h3>The Wright Flyer at Kitty Hawk</h3>
-          <p>Orville and Wilbur Wright accomplish the first successful controlled, sustained, powered heavier-than-air flight in North Carolina.</p>
-        </div>
+        <span class="timeline-year">December 17, 1903</span>
+        <h3>The Wright Brothers at Kitty Hawk</h3>
+        <p>Orville and Wilbur Wright successfully pilot the Wright Flyer at Kitty Hawk, North Carolina, achieving the first sustained, controlled, powered heavier-than-air flight.</p>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-year">1927</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h3>Solo Transatlantic Crossing</h3>
-          <p>Charles Lindbergh flies the Spirit of St. Louis non-stop from New York to Paris in 33.5 hours, captivating global public imagination.</p>
-        </div>
+        <span class="timeline-year">May 20-21, 1927</span>
+        <h3>Charles Lindbergh's Transatlantic Solo</h3>
+        <p>American aviator Charles Lindbergh completes the first solo nonstop transatlantic flight from New York to Paris aboard the Spirit of St. Louis.</p>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-year">1952</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h3>Inauguration of Commercial Jet Travel</h3>
-          <p>The de Havilland Comet enters revenue passenger service with BOAC, introducing smooth, high-altitude commercial jet travel.</p>
-        </div>
+        <span class="timeline-year">May 2, 1952</span>
+        <h3>Dawn of Commercial Jet Aviation</h3>
+        <p>The de Havilland Comet enters scheduled passenger service with BOAC, inaugurating the commercial jet age and cutting travel times in half.</p>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-year">1969</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h3>Maiden Flights: 747 & Concorde</h3>
-          <p>A landmark year featuring both the first flight of the Boeing 747 "Queen of the Skies" widebody airliner and the supersonic Concorde.</p>
-        </div>
+        <span class="timeline-year">January 21, 1976</span>
+        <h3>Commercial Supersonic Flight</h3>
+        <p>Concorde enters scheduled supersonic service with British Airways and Air France, crossing the Atlantic at Mach 2.04.</p>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-year">1988</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h3>Digital Fly-by-Wire Era</h3>
-          <p>The Airbus A320 enters service pioneering full digital fly-by-wire flight control systems in commercial airliners.</p>
-        </div>
+        <span class="timeline-year">Present Day</span>
+        <h3>Modern Twin-Engine Era & Composite Efficiency</h3>
+        <p>Advanced high-bypass turbofans and carbon-composite airframes (Boeing 787, Airbus A350) enable unprecedented ultra-long-haul point-to-point global connectivity.</p>
       </div>
-
     </div>
   </main>
 
-  <!-- Footer -->
   <footer>
-    <p>&copy; 2026 The Aviation Atlas. Built for aviation enthusiasts, spotters, and students worldwide.</p>
+    <p>&copy; 2026 The Aviation Atlas. All rights reserved.</p>
   </footer>
 
   <script>
-    function toggleMenu() {
-      const links = document.getElementById('navLinks');
-      links.classList.toggle('open');
-    }
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
   </script>
 </body>
 </html>
