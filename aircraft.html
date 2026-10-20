@@ -95,7 +95,8 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="aircraft.html" class="active">Aircraft</a></li>
         <li><a href="airports.html">Airports</a></li>
-        <li><a href="knowledge.html">Knowledge</a></li>
+        <li><a href="knowledge.html">Academy</a></li>
+        <li><a href="assistant.html">AI Assistant</a></li>
         <li><a href="history.html">History</a></li>
         <li><a href="games.html">Games & Quizzes</a></li>
       </ul>
@@ -104,7 +105,7 @@
 
   <section class="page-header">
     <h1>Aircraft Fleet Registry</h1>
-    <p>Click any aircraft card to open a complete specification profile and operational history.</p>
+    <p>Search through commercial airliners, military fighters, supersonic jets, and historical airframes.</p>
   </section>
 
   <main class="container">
@@ -112,8 +113,11 @@
       <input type="text" class="search-input" id="aircraftSearch" placeholder="Search by name, manufacturer, or role..." oninput="renderGrid()">
       <select class="filter-select" id="typeFilter" onchange="renderGrid()">
         <option value="all">All Aircraft Types</option>
-        <option value="commercial">Commercial Widebody</option>
-        <option value="supersonic">Supersonic</option>
+        <option value="commercial">Commercial Airliners</option>
+        <option value="military">Military & Fighters</option>
+        <option value="supersonic">Supersonic Transport</option>
+        <option value="cargo">Outsize & Cargo</option>
+        <option value="history">Historical Airframes</option>
       </select>
     </div>
 
@@ -131,17 +135,11 @@
       <h3 style="font-family: var(--font-heading); font-size: 1.1rem; border-bottom: 1px solid var(--accent-gold); padding-bottom: 0.35rem; margin-top: 1rem;">Technical Specifications</h3>
       <table class="modal-specs-table">
         <tr><td>Manufacturer</td><td id="mManufacturer"></td></tr>
-        <tr><td>First Flight</td><td id="mFirstFlight"></td></tr>
-        <tr><td>Operational Status</td><td id="mStatus"></td></tr>
         <tr><td>Max Range</td><td id="mRange"></td></tr>
         <tr><td>Cruising Speed</td><td id="mSpeed"></td></tr>
         <tr><td>Wingspan</td><td id="mWingspan"></td></tr>
         <tr><td>Powerplant</td><td id="mPowerplant"></td></tr>
-        <tr><td>Seating Capacity</td><td id="mCapacity"></td></tr>
       </table>
-
-      <h3 style="font-family: var(--font-heading); font-size: 1.1rem; border-bottom: 1px solid var(--accent-gold); padding-bottom: 0.35rem; margin-top: 1.5rem;">Operational History</h3>
-      <p id="mHistory" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.75rem; line-height: 1.6;"></p>
     </div>
   </div>
 
@@ -149,8 +147,9 @@
     <p>&copy; 2026 The Aviation Atlas. All rights reserved.</p>
   </footer>
 
-  <!-- Include Data and Controller Scripts -->
+  <!-- Data Script -->
   <script src="data-aircraft.js"></script>
+
   <script>
     function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
 
@@ -160,6 +159,11 @@
       const filter = document.getElementById('typeFilter').value;
 
       grid.innerHTML = '';
+
+      if (typeof AIRCRAFT_DATA === 'undefined') {
+        grid.innerHTML = '<p style="color:var(--text-muted);">Loading aircraft data...</p>';
+        return;
+      }
 
       const filtered = AIRCRAFT_DATA.filter(item => {
         const matchesSearch = item.name.toLowerCase().includes(search) || 
@@ -200,14 +204,10 @@
       document.getElementById('mImg').src = item.image;
       document.getElementById('mSummary').textContent = item.summary;
       document.getElementById('mManufacturer').textContent = item.manufacturer;
-      document.getElementById('mFirstFlight').textContent = item.firstFlight;
-      document.getElementById('mStatus').textContent = item.status;
       document.getElementById('mRange').textContent = item.range;
       document.getElementById('mSpeed').textContent = item.speed;
       document.getElementById('mWingspan').textContent = item.wingspan;
       document.getElementById('mPowerplant').textContent = item.powerplant;
-      document.getElementById('mCapacity').textContent = item.capacity;
-      document.getElementById('mHistory').textContent = item.history;
 
       document.getElementById('detailModal').style.display = 'flex';
     }
@@ -216,7 +216,7 @@
       document.getElementById('detailModal').style.display = 'none';
     }
 
-    // Initial render
+    // Render Grid
     renderGrid();
   </script>
 </body>
