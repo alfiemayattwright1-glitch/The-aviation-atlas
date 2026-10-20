@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aircraft Fleet Registry | The Aviation Atlas</title>
-  <meta name="description" content="Explore commercial airliners, military aircraft, supersonic transport, and historical airframes.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
@@ -33,11 +32,11 @@
     .card-specs strong { color: var(--text-main); }
     .click-hint { color: var(--accent-gold); font-size: 0.8rem; font-weight: 700; margin-top: 0.75rem; display: block; }
 
-    /* Modal Styling */
+    /* Modal Popup Styling */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(5, 8, 17, 0.85);
+      background: rgba(5, 8, 17, 0.88);
       backdrop-filter: blur(8px);
       z-index: 2000;
       display: none;
@@ -49,7 +48,7 @@
       background: var(--bg-card);
       border: 1px solid var(--accent-gold);
       border-radius: 8px;
-      max-width: 700px;
+      max-width: 720px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
@@ -60,11 +59,11 @@
       position: absolute;
       top: 1rem; right: 1rem;
       background: none; border: none;
-      color: #fff; font-size: 1.5rem; cursor: pointer;
+      color: #fff; font-size: 1.75rem; cursor: pointer;
     }
     .modal-img {
       width: 100%;
-      height: 280px;
+      height: 300px;
       object-fit: cover;
       border-radius: 6px;
       margin-bottom: 1.5rem;
@@ -75,13 +74,14 @@
       margin-top: 1rem;
     }
     .modal-specs-table td {
-      padding: 0.6rem;
+      padding: 0.65rem;
       border-bottom: 1px solid var(--border-subtle);
       font-size: 0.9rem;
     }
     .modal-specs-table td:first-child {
       color: var(--text-muted);
       font-weight: 600;
+      width: 35%;
     }
   </style>
 </head>
@@ -104,90 +104,44 @@
 
   <section class="page-header">
     <h1>Aircraft Fleet Registry</h1>
-    <p>Click on any aircraft card below to view detailed specifications, dimensions, and operational history.</p>
+    <p>Click any aircraft card to open a complete specification profile and operational history.</p>
   </section>
 
   <main class="container">
     <div class="search-filter-bar">
-      <input type="text" class="search-input" id="aircraftSearch" placeholder="Search by name, manufacturer, or role..." onkeyup="filterAircraft()">
-      <select class="filter-select" id="typeFilter" onchange="filterAircraft()">
+      <input type="text" class="search-input" id="aircraftSearch" placeholder="Search by name, manufacturer, or role..." oninput="renderGrid()">
+      <select class="filter-select" id="typeFilter" onchange="renderGrid()">
         <option value="all">All Aircraft Types</option>
         <option value="commercial">Commercial Widebody</option>
         <option value="supersonic">Supersonic</option>
       </select>
     </div>
 
-    <div class="aircraft-grid" id="aircraftGrid">
-      
-      <!-- Boeing 747-400 (Shows genuine 747 with upper hump) -->
-      <article class="aircraft-card" data-type="commercial" data-search="boeing 747 queen of the skies commercial widebody airliner" onclick="openDetails('Boeing 747-400', 'Boeing', '13,450 km', 'Mach 0.85', '4x Pratt & Whitney PW4000', '65.1 m', 'The Boeing 747-400 is an iconic long-range widebody passenger jet featuring a distinctive double-deck layout and four turbofan engines.', 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80')">
-        <div class="card-img-wrap">
-          <span class="card-tag">Commercial</span>
-          <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80" alt="Boeing 747" loading="lazy">
-        </div>
-        <div class="card-body">
-          <h3>Boeing 747-400</h3>
-          <p>The iconic double-deck widebody airliner that revolutionized high-capacity long-haul travel.</p>
-          <div class="card-specs">
-            <span>Manufacturer: <strong>Boeing</strong></span>
-            <span>Range: <strong>13,450 km</strong></span>
-          </div>
-          <span class="click-hint">Click for full specs &rarr;</span>
-        </div>
-      </article>
-
-      <!-- Airbus A380-800 (Shows genuine double-decker A380) -->
-      <article class="aircraft-card" data-type="commercial" data-search="airbus a380 superjumbo double decker widebody" onclick="openDetails('Airbus A380-800', 'Airbus', '15,200 km', 'Mach 0.85', '4x Engine Alliance GP7200', '79.75 m', 'The Airbus A380 is the world\'s largest commercial passenger jet, equipped with a full-length double deck capable of transporting over 500 passengers in quiet long-haul comfort.', 'https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=800&q=80')">
-        <div class="card-img-wrap">
-          <span class="card-tag">Superjumbo</span>
-          <img src="https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=800&q=80" alt="Airbus A380" loading="lazy">
-        </div>
-        <div class="card-body">
-          <h3>Airbus A380-800</h3>
-          <p>The world's largest commercial passenger jet, featuring a full double deck for high-capacity routes.</p>
-          <div class="card-specs">
-            <span>Manufacturer: <strong>Airbus</strong></span>
-            <span>Wingspan: <strong>79.75 m</strong></span>
-          </div>
-          <span class="click-hint">Click for full specs &rarr;</span>
-        </div>
-      </article>
-
-      <!-- Concorde (Shows genuine supersonic Concorde delta wing) -->
-      <article class="aircraft-card" data-type="supersonic" data-search="concorde supersonic jet bac sud aviation passenger airliner" onclick="openDetails('BAC / Sud Concorde', 'Aérospatiale / BAC', '7,250 km', 'Mach 2.04', '4x Rolls-Royce/Snecma Olympus 593', '25.6 m', 'Concorde was a turbojet-powered supersonic passenger airliner that operated transatlantic routes at more than twice the speed of sound.', 'https://upload.wikimedia.org/wikipedia/commons/ thumb/f/f9/Concorde_Air_France.JPG/1280px-Concorde_Air_France.JPG')">
-        <div class="card-img-wrap">
-          <span class="card-tag">Supersonic</span>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Concorde_Air_France.JPG/1280px-Concorde_Air_France.JPG" alt="Concorde Supersonic Jet" loading="lazy">
-        </div>
-        <div class="card-body">
-          <h3>BAC / Sud Concorde</h3>
-          <p>A supersonic passenger airliner cruising at Mach 2.04 at 60,000 feet, completing transatlantic routes in 3.5 hours.</p>
-          <div class="card-specs">
-            <span>Max Speed: <strong>Mach 2.04</strong></span>
-            <span>Status: <strong>Retired</strong></span>
-          </div>
-          <span class="click-hint">Click for full specs &rarr;</span>
-        </div>
-      </article>
-
-    </div>
+    <div class="aircraft-grid" id="aircraftGrid"></div>
   </main>
 
-  <!-- Detail Modal -->
+  <!-- Modal View -->
   <div class="modal-overlay" id="detailModal">
     <div class="modal-content">
       <button class="modal-close" onclick="closeDetails()">&times;</button>
       <img id="mImg" src="" alt="" class="modal-img">
       <h2 id="mTitle" style="font-family: var(--font-heading); margin-bottom: 0.5rem;"></h2>
-      <p id="mDesc" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;"></p>
+      <p id="mSummary" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem;"></p>
       
+      <h3 style="font-family: var(--font-heading); font-size: 1.1rem; border-bottom: 1px solid var(--accent-gold); padding-bottom: 0.35rem; margin-top: 1rem;">Technical Specifications</h3>
       <table class="modal-specs-table">
         <tr><td>Manufacturer</td><td id="mManufacturer"></td></tr>
-        <tr><td>Operational Range</td><td id="mRange"></td></tr>
+        <tr><td>First Flight</td><td id="mFirstFlight"></td></tr>
+        <tr><td>Operational Status</td><td id="mStatus"></td></tr>
+        <tr><td>Max Range</td><td id="mRange"></td></tr>
         <tr><td>Cruising Speed</td><td id="mSpeed"></td></tr>
-        <tr><td>Powerplant</td><td id="mPowerplant"></td></tr>
         <tr><td>Wingspan</td><td id="mWingspan"></td></tr>
+        <tr><td>Powerplant</td><td id="mPowerplant"></td></tr>
+        <tr><td>Seating Capacity</td><td id="mCapacity"></td></tr>
       </table>
+
+      <h3 style="font-family: var(--font-heading); font-size: 1.1rem; border-bottom: 1px solid var(--accent-gold); padding-bottom: 0.35rem; margin-top: 1.5rem;">Operational History</h3>
+      <p id="mHistory" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.75rem; line-height: 1.6;"></p>
     </div>
   </div>
 
@@ -195,28 +149,65 @@
     <p>&copy; 2026 The Aviation Atlas. All rights reserved.</p>
   </footer>
 
+  <!-- Include Data and Controller Scripts -->
+  <script src="data-aircraft.js"></script>
   <script>
     function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
 
-    function filterAircraft() {
-      const q = document.getElementById('aircraftSearch').value.toLowerCase();
-      const t = document.getElementById('typeFilter').value;
-      document.querySelectorAll('.aircraft-card').forEach(card => {
-        const matchQ = card.getAttribute('data-search').toLowerCase().includes(q);
-        const matchT = t === 'all' || card.getAttribute('data-type') === t;
-        card.style.display = (matchQ && matchT) ? 'flex' : 'none';
+    function renderGrid() {
+      const grid = document.getElementById('aircraftGrid');
+      const search = document.getElementById('aircraftSearch').value.toLowerCase();
+      const filter = document.getElementById('typeFilter').value;
+
+      grid.innerHTML = '';
+
+      const filtered = AIRCRAFT_DATA.filter(item => {
+        const matchesSearch = item.name.toLowerCase().includes(search) || 
+                              item.manufacturer.toLowerCase().includes(search) ||
+                              item.summary.toLowerCase().includes(search);
+        const matchesFilter = filter === 'all' || item.category === filter;
+        return matchesSearch && matchesFilter;
+      });
+
+      filtered.forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'aircraft-card';
+        card.onclick = () => openModal(item.id);
+        card.innerHTML = `
+          <div class="card-img-wrap">
+            <span class="card-tag">${item.tag}</span>
+            <img src="${item.image}" alt="${item.name}" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>${item.name}</h3>
+            <p>${item.summary}</p>
+            <div class="card-specs">
+              <span>Manufacturer: <strong>${item.manufacturer}</strong></span>
+              <span>Range: <strong>${item.range.split(' ')[0]}</strong></span>
+            </div>
+            <span class="click-hint">View full profile &rarr;</span>
+          </div>
+        `;
+        grid.appendChild(card);
       });
     }
 
-    function openDetails(title, manufacturer, range, speed, powerplant, wingspan, desc, imgUrl) {
-      document.getElementById('mTitle').textContent = title;
-      document.getElementById('mManufacturer').textContent = manufacturer;
-      document.getElementById('mRange').textContent = range;
-      document.getElementById('mSpeed').textContent = speed;
-      document.getElementById('mPowerplant').textContent = powerplant;
-      document.getElementById('mWingspan').textContent = wingspan;
-      document.getElementById('mDesc').textContent = desc;
-      document.getElementById('mImg').src = imgUrl;
+    function openModal(id) {
+      const item = AIRCRAFT_DATA.find(a => a.id === id);
+      if (!item) return;
+
+      document.getElementById('mTitle').textContent = item.name;
+      document.getElementById('mImg').src = item.image;
+      document.getElementById('mSummary').textContent = item.summary;
+      document.getElementById('mManufacturer').textContent = item.manufacturer;
+      document.getElementById('mFirstFlight').textContent = item.firstFlight;
+      document.getElementById('mStatus').textContent = item.status;
+      document.getElementById('mRange').textContent = item.range;
+      document.getElementById('mSpeed').textContent = item.speed;
+      document.getElementById('mWingspan').textContent = item.wingspan;
+      document.getElementById('mPowerplant').textContent = item.powerplant;
+      document.getElementById('mCapacity').textContent = item.capacity;
+      document.getElementById('mHistory').textContent = item.history;
 
       document.getElementById('detailModal').style.display = 'flex';
     }
@@ -224,6 +215,9 @@
     function closeDetails() {
       document.getElementById('detailModal').style.display = 'none';
     }
+
+    // Initial render
+    renderGrid();
   </script>
 </body>
 </html>
