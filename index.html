@@ -1,140 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Aviation Atlas | Global Aviation Publication & Hub</title>
-  <meta name="description" content="An aviation publication and discovery portal for spotters, flight historians, and aviation enthusiasts.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+<!-- Real-Time Editorial Dispatch and Live Newsletter Section -->
+<section class="section">
+  <div class="section-title-wrap">
+    <h2>Atlas Dispatch & Newsletter Subscription</h2>
+    <p>Subscribe to receive verified fleet developments, spotter guides, and news updates.</p>
+  </div>
 
-  <!-- Navigation Bar -->
-  <header>
-    <div class="nav-container">
-      <a href="index.html" class="logo">The Aviation <span>Atlas</span></a>
-      <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle Navigation">☰</button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="aircraft.html">Aircraft</a></li>
-        <li><a href="airports.html">Airports</a></li>
-        <li><a href="knowledge.html">Knowledge</a></li>
-        <li><a href="history.html">History</a></li>
-        <li><a href="games.html">Games & Quizzes</a></li>
-      </ul>
-    </div>
-  </header>
+  <div style="background: var(--bg-card); border: 1px solid var(--accent-gold); padding: 2.5rem; border-radius: 8px; text-align: center; max-width: 650px; margin: 0 auto;">
+    <h3 style="font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 0.5rem;">Join The Aviation Atlas Dispatch</h3>
+    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Weekly curated digest of real-world operational changes, route expansions, and aircraft delivery reports.</p>
+    
+    <form id="newsletterForm" onsubmit="handleSubscribe(event)" style="display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;">
+      <input type="email" id="subscriberEmail" placeholder="Enter your email address..." required style="flex: 1; min-width: 260px; background: var(--bg-dark); border: 1px solid var(--border-subtle); color: #fff; padding: 0.85rem 1rem; border-radius: 6px; font-size: 0.95rem;">
+      <button type="submit" class="btn btn-primary" style="border: none; cursor: pointer;">Subscribe Free</button>
+    </form>
+    <div id="subscribeSuccess" style="display: none; color: #10b981; font-weight: 700; margin-top: 1rem;">✓ Success! You are now subscribed to weekly Atlas dispatches.</div>
+  </div>
+</section>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <span class="badge">Aviation Publication &amp; Community Hub</span>
-      <h1>Your Gateway to the World of Flight</h1>
-      <p>Discover in-depth aircraft specifications, explore iconic international airport hubs, learn flight principles, and test your skills with daily spotter challenges.</p>
-      <div class="hero-buttons">
-        <a href="aircraft.html" class="btn btn-primary">Browse Aircraft Catalogue</a>
-        <a href="airports.html" class="btn btn-secondary">Explore Airports</a>
-      </div>
-    </div>
-  </section>
+<script>
+  function handleSubscribe(e) {
+    e.preventDefault();
+    const email = document.getElementById('subscriberEmail').value;
+    
+    // Local persistence
+    let subscribers = JSON.parse(localStorage.getItem('atlas_subscribers') || '[]');
+    subscribers.push({ email: email, date: new Date().toISOString() });
+    localStorage.setItem('atlas_subscribers', JSON.stringify(subscribers));
 
-  <!-- Navigation Portals -->
-  <section class="section">
-    <div class="section-title-wrap">
-      <h2>Explore The Atlas</h2>
-      <p>Select a portal to dive into dedicated aviation archives and interactive guides.</p>
-    </div>
-
-    <div class="hub-grid">
-      <a href="aircraft.html" class="hub-card">
-        <div class="hub-icon">✈️</div>
-        <h3>Aircraft Fleet</h3>
-        <p>Searchable catalogue of commercial airliners, military jets, supersonic aircraft, and detailed specifications.</p>
-        <span class="hub-link-text">Browse Aircraft &rarr;</span>
-      </a>
-
-      <a href="airports.html" class="hub-card">
-        <div class="hub-icon">🛫</div>
-        <h3>Airport Hubs</h3>
-        <p>Discover bird's-eye airfield layouts, runway configurations, ICAO/IATA lookup codes, and terminal specs.</p>
-        <span class="hub-link-text">Explore Airports &rarr;</span>
-      </a>
-
-      <a href="knowledge.html" class="hub-card">
-        <div class="hub-icon">📖</div>
-        <h3>Flight Knowledge</h3>
-        <p>Learn aerodynamics, jet engine mechanics, air traffic control fundamentals, and flight navigation.</p>
-        <span class="hub-link-text">Start Learning &rarr;</span>
-      </a>
-
-      <a href="history.html" class="hub-card">
-        <div class="hub-icon">📜</div>
-        <h3>Aviation History</h3>
-        <p>Chronological timeline tracking the Wright Brothers, early jet pioneers, supersonic flight, and modern twinjets.</p>
-        <span class="hub-link-text">View Timeline &rarr;</span>
-      </a>
-
-      <a href="games.html" class="hub-card">
-        <div class="hub-icon">🎯</div>
-        <h3>Spotter Quizzes</h3>
-        <p>Test your aircraft identification skills and airport code memory with daily score tracking.</p>
-        <span class="hub-link-text">Play Quizzes &rarr;</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- News Section -->
-  <section class="section" style="border-top: 1px solid var(--border-subtle);">
-    <div class="section-title-wrap">
-      <h2>Latest Dispatch &amp; Spotter News</h2>
-      <p>Recent developments across global fleet operations and editorial aviation news.</p>
-    </div>
-
-    <div class="news-grid">
-      <article class="featured-article">
-        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80" alt="Commercial airliner in flight" class="article-img">
-        <div class="article-body">
-          <div class="article-meta">Fleet Analysis • Editorial</div>
-          <h3>The Next Generation of Ultra-Long-Haul Travel</h3>
-          <p>How modern twin-engine airliners are transforming non-stop transatlantic and transpacific routing while replacing classic four-engine widebodies.</p>
-          <a href="knowledge.html" class="btn btn-secondary">Read Aircraft Analysis</a>
-        </div>
-      </article>
-
-      <div class="news-sidebar">
-        <div class="news-item">
-          <div class="article-meta">Spotter Community</div>
-          <h4>Heathrow Queen's Terminal Spotter Guide</h4>
-          <p>Top viewing locations and camera lens recommendations for South Runway departures.</p>
-        </div>
-
-        <div class="news-item">
-          <div class="article-meta">Historical Archive</div>
-          <h4>70 Years of Commercial Jet Aviation</h4>
-          <p>Reflecting on the de Havilland Comet and the inaugural transatlantic jet services.</p>
-        </div>
-
-        <div class="news-item">
-          <div class="article-meta">Academy Update</div>
-          <h4>Understanding High-Bypass Turbofans</h4>
-          <p>A simple breakdown of thrust generation and engine efficiency in modern airliners.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2026 The Aviation Atlas. Built for aviation enthusiasts, spotters, and students worldwide.</p>
-  </footer>
-
-  <script>
-    function toggleMenu() {
-      document.getElementById('navLinks').classList.toggle('open');
-    }
-  </script>
-</body>
-</html>
+    document.getElementById('newsletterForm').style.display = 'none';
+    document.getElementById('subscribeSuccess').style.display = 'block';
+  }
+</script>
